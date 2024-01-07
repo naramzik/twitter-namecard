@@ -1,0 +1,50 @@
+{
+  "name": "application",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "fix": "pnpm run '/^fix:.+$/'",
+    "fix:eslint": "pnpm lint:eslint --fix",
+    "fix:prettier": "pnpm lint:prettier --write",
+    "lint": "pnpm run '/^lint:.+$/'",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:prettier": "prettier --check --ignore-unknown '**/*'",
+    "pre-commit": "lint-staged --verbose --no-stash",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "@eslint/eslintrc": "^2.1.2",
+    "@eslint/js": "^8.52.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "globals": "^13.24.0",
+    "ignore": "^5.2.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "postcss": "^8",
+    "prettier": "^3.1.1",
+    "prettier-plugin-packagejson": "^2.4.9",
+    "prettier-plugin-prisma": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
