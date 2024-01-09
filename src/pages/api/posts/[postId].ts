@@ -1,13 +1,8 @@
 import { Database } from 'fakebase';
+import { Entity } from '../Entity';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-interface Data {
-  post?: PostType;
-  message?: string;
-}
-
-type PostType = {
-  id: string;
+interface PostType extends Entity {
   title: string;
   description: string;
 }
@@ -15,8 +10,8 @@ type PostType = {
 const db = new Database('./data');
 const Post = db.table<PostType>('posts');
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { postId } = req.query;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const postId = req.query.postId as string;
   const { title, description } = req.body;
 
   switch (req.method) {
