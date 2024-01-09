@@ -1,10 +1,5 @@
-import MainLayout from '@/components/layout/MainLayout';
-import { ReactNode } from 'react';
-
 const Page = () => {
-  return <>dd</>;
+  return <>유저의 명함 상세 페이지</>;
 };
-
-Page.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
 
 export default Page;
