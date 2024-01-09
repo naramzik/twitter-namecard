@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react';
 import BottomBar from '@/components/layout/BottomBar';
+import type { ReactNode } from 'react';
 
-type MainLayoutProps = {
+interface MainLayoutProps {
   children: ReactNode;
-};
+}
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <main>
+    <main className="p-5">
       {children}
       <BottomBar />
     </main>
