@@ -6,7 +6,7 @@ interface Data {
   message?: string;
 }
 
-interface PostType {
+type PostType = {
   id: string;
   title: string;
   description: string;
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   switch (req.method) {
     case 'GET':
       try {
-        const post = await Post.findById(postId as string);
+        const post = await Post.findById(postId);
         if (!post) {
           return res.status(404).json({ message: '포스트를 찾을 수 없습니다.' });
         }
@@ -34,11 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     case 'DELETE':
       try {
-        const postToDelete = await Post.findById(postId as string);
+        const postToDelete = await Post.findById(postId);
         if (!postToDelete) {
           return res.status(404).json({ message: '삭제할 포스트를 찾을 수 없습니다.' });
         }
-        await Post.delete(postId as string);
+        await Post.delete(postId);
         res.status(200).json({ message: '포스트가 삭제되었습니다.' });
       } catch (error) {
         res.status(500).json({ message: '서버 에러가 발생했습니다.' });
@@ -47,11 +47,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     case 'PUT':
       try {
-        const postToUpdate = await Post.findById(postId as string);
+        const postToUpdate = await Post.findById(postId);
         if (!postToUpdate) {
           return res.status(404).json({ message: '업데이트할 포스트를 찾을 수 없습니다.' });
         }
-        const updatedPost = await Post.update({ id: postId as string, title, description });
+        const updatedPost = await Post.update({ id: postId, title, description });
         res.status(200).json({ post: updatedPost });
       } catch (error) {
         res.status(500).json({ message: '서버 에러가 발생했습니다.' });

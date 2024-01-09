@@ -7,7 +7,7 @@ interface Data {
   message?: string;
 }
 
-interface PostType {
+type PostType = {
   id: string;
   title: string;
   description: string;
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   switch (req.method) {
     case 'GET':
       try {
-        const posts = (await Post.findAll()) as PostType[];
+        const posts = (await Post.findAll());
         res.status(200).json({ posts });
       } catch (error) {
         res.status(500).json({ message: '서버 에러가 발생했습니다.' });
@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           return res.status(400).json({ message: '제목과 설명을 모두 입력해주세요.' });
         }
 
-        const newPost = (await Post.create({ title, description })) as PostType;
+        const newPost = (await Post.create({ title, description }));
         res.status(201).json({ post: newPost });
       } catch (error) {
         res.status(500).json({ message: '서버 에러가 발생했습니다.' });
