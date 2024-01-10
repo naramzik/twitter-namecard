@@ -12,6 +12,17 @@ interface FormValues {
 }
 
 const Page = () => {
+  const FreeItem = () => {
+    return (
+      <div className="flex flex-col gap-2">
+        <input placeholder="자유항목 제목을 입력해 주세요." />
+        <textarea className="h-24" placeholder="자유항목 내용을 입력해 주세요." />
+      </div>
+    );
+  };
+
+  const [freeItems, setFreeItems] = useState([<FreeItem />]);
+
   const [formData, setFormData] = useState<FormValues>({
     nickname: '',
     twitterId: '',
@@ -41,10 +52,14 @@ const Page = () => {
     setFormData(data);
   };
 
+  const addFreeItem = () => {
+    setFreeItems([...freeItems, <FreeItem />]);
+  };
+
   const requiredSentence = <p>필수 문항입니다.</p>;
 
   return (
-    <>
+    <div className="pb-12">
       <div className="border-2 border-black aspect-nameCard">
         <div>닉네임: {formData.nickname}</div>
         <div>트위터 아이디: {formData.twitterId}</div>
@@ -53,7 +68,7 @@ const Page = () => {
         <div>깃허브 아이디: {formData.githubId}</div>
         <div>블로그 주소: {formData.blog}</div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 py-5">
         <label>
           닉네임
           <input {...register('nickname', { required: true, maxLength: 10 })} />
@@ -84,11 +99,19 @@ const Page = () => {
             <input {...register('blog', { required: false, maxLength: 10 })} />
           </label>
         </fieldset>
+
+        {freeItems.map((item, index) => (
+          <FreeItem key={index} />
+        ))}
+        <button className="w-full h-10 bg-primary" onClick={addFreeItem}>
+          항목 추가하기
+        </button>
+
         <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
