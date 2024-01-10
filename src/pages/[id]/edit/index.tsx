@@ -7,7 +7,7 @@ type FormValues = {
   twitterId: string;
   instagramId: string;
   githubId: string;
-  blogId: string;
+  blog: string;
   hashtag: string;
 };
 
@@ -17,7 +17,7 @@ const Page = () => {
     twitterId: '',
     instagramId: '',
     githubId: '',
-    blogId: '',
+    blog: '',
     hashtag: '',
   });
 
@@ -42,6 +42,7 @@ const Page = () => {
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
+
   return (
     <>
       <div className="border-2 border-black aspect-nameCard">
@@ -64,9 +65,9 @@ const Page = () => {
         <label>해시태그</label>
         <input {...register('hashtag', { required: true, maxLength: 10 })} />
         {errors.hashtag && requiredSentence}
+
         <fieldset className="flex flex-col border border-solid border-gray-300 p-2">
           <legend>SNS 아이디</legend>
-
           <label>인스타</label>
           <input {...register('instagramId', { required: false, maxLength: 10 })} />
           <label>깃허브</label>
