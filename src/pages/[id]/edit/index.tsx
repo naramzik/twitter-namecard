@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -10,6 +10,13 @@ type FormValues = {
 };
 
 const Page = () => {
+  const [formData, setFormData] = useState<FormValues>({
+    nickname: '',
+    twitterId: '',
+    snsId: '',
+    hashtag: '',
+  });
+
   const {
     register,
     handleSubmit,
@@ -25,13 +32,18 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    alert(JSON.stringify(data));
+    setFormData(data);
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
   return (
     <>
-      <div className="border-2 border-black aspect-nameCard">명함 컴포넌트</div>
+      <div className="border-2 border-black aspect-nameCard">
+        <div>{formData.nickname}</div>
+        <div>{formData.twitterId}</div>
+        <div>{formData.hashtag}</div>
+        <div>{formData.snsId}</div>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         <label>닉네임</label>
         <input {...register('nickname', { required: true, maxLength: 10 })} />
