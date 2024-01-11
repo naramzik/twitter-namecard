@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 
@@ -11,17 +11,50 @@ interface FormValues {
   hashtag: string;
 }
 
+interface FreeItemProp {
+  index: number;
+}
+
 const Page = () => {
-  const FreeItem = () => {
+  const [freeItemData, setFreeItemData] = useState<{ id: number; title: string; content: string }[]>([
+    { id: 0, title: '', content: '' },
+  ]);
+
+  const addFreeItem = () => {
+    countRef.current += 1;
+    setFreeItems((prevItems) => [...prevItems, <FreeItem index={countRef.current} />]);
+    setFreeItemData((prevData) => [...prevData, { id: countRef.current, title: '', content: '' }]);
+  };
+
+  const FreeItem = ({ index }: FreeItemProp) => {
+    const item = freeItemData.filter((item) => item.id === index - 1);
     return (
       <div className="flex flex-col gap-2">
-        <input placeholder="자유항목 제목을 입력해 주세요." />
-        <textarea className="h-24" placeholder="자유항목 내용을 입력해 주세요." />
+        <input
+          value={item.title}
+          onChange={(e) =>
+            // id가 index인 item의 title을 e.target.value로 변경
+            setFreeItemData((prevData) =>
+              prevData.map((item) => (item.id === index ? { ...item, title: e.target.value } : item)),
+            )
+          }
+          placeholder="자유항목 제목을 입력해 주세요."
+        />
+        <textarea
+          value={item.content}
+          onChange={(e) =>
+            setFreeItemData((prevData) =>
+              prevData.map((item) => (item.id === index ? { ...item, content: e.target.value } : item)),
+            )
+          }
+          className="h-24"
+          placeholder="자유항목 내용을 입력해 주세요."
+        />
       </div>
     );
   };
 
-  const [freeItems, setFreeItems] = useState([<FreeItem />]);
+  const [freeItems, setFreeItems] = useState<JSX.Element[]>([<FreeItem index={0} />]);
 
   const [formData, setFormData] = useState<FormValues>({
     nickname: '',
@@ -48,15 +81,12 @@ const Page = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log('data: ', data);
     setFormData(data);
   };
 
-  const addFreeItem = () => {
-    setFreeItems([...freeItems, <FreeItem />]);
-  };
-
   const requiredSentence = <p>필수 문항입니다.</p>;
+
+  const countRef = useRef(0);
 
   return (
     <div className="pb-12">
@@ -99,14 +129,10 @@ const Page = () => {
             <input {...register('blog', { required: false, maxLength: 10 })} />
           </label>
         </fieldset>
-
-        {freeItems.map((item, index) => (
-          <FreeItem key={index} />
-        ))}
+        {freeItems.map((item) => item)}
         <button className="w-full h-10 bg-primary" onClick={addFreeItem}>
-          항목 추가하기
+          자유형식 항목 추가하기
         </button>
-
         <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
