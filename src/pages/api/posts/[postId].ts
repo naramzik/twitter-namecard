@@ -1,7 +1,7 @@
 import { Database } from 'fakebase';
-import { Entity } from '../Entity';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { Entity } from '@/types/Entity';
 interface PostType extends Entity {
   title: string;
   description: string;
