@@ -1,4 +1,5 @@
 import BottomBar from '@/components/layout/BottomBar';
+import BasicLayout from './BasicLayout';
 import type { ReactNode } from 'react';
 
 interface MainLayoutProps {
@@ -7,10 +8,10 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <main className="p-5">
+    <BasicLayout>
       {children}
       <BottomBar />
-    </main>
+    </BasicLayout>
   );
 };
 
