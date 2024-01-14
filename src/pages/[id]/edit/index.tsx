@@ -83,6 +83,7 @@ const Page = () => {
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
+  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
 
   const nickname = watch('nickname');
   const twitterId = watch('twitterId');
@@ -101,45 +102,46 @@ const Page = () => {
         <div>깃허브 아이디: {githubId}</div>
         <div>블로그 주소: {blog}</div>
       </div>
-      {/* <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 py-5"> */}
-      <label>
-        닉네임
-        <input {...register('nickname', { required: true, maxLength: 10 })} name="nickname" />
-        {errors.twitterId && requiredSentence}
-      </label>
-      <label>
-        트위터 아이디
-        <input {...register('twitterId', { required: true, maxLength: 10 })} name="twitterId" />
-        {errors.twitterId && requiredSentence}
-      </label>
-      <label>
-        해시태그
-        <input {...register('hashtag', { required: true, maxLength: 10 })} name="hashtag" />
-        {errors.hashtag && requiredSentence}
-      </label>
-      <fieldset className="flex flex-col gap-2">
-        <legend>SNS 아이디</legend>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 py-5">
+        // maxLength는 임시값
         <label>
-          인스타
-          <input {...register('instagramId', { required: false, maxLength: 10 })} name="instagramId" />
+          닉네임
+          <input {...register('nickname', { required: true, maxLength: 10 })} name="nickname" />
+          {errors.twitterId && requiredSentence}
         </label>
         <label>
-          깃허브
-          <input {...register('githubId', { required: false, maxLength: 10 })} name="githubId" />
+          트위터 아이디
+          <input {...register('twitterId', { required: true, maxLength: 10 })} name="twitterId" />
+          {errors.twitterId && requiredSentence}
         </label>
         <label>
-          블로그
-          <input {...register('blog', { required: false, maxLength: 10 })} name="blog" />
+          해시태그
+          <input {...register('hashtag', { required: true, maxLength: 10 })} name="hashtag" />
+          {errors.hashtag && requiredSentence}
         </label>
-      </fieldset>
-      {freeItems}
-      <button className="w-full h-10 bg-primary" onClick={addFreeItem}>
-        자유형식 항목 추가하기
-      </button>
-      <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
-        저장하기
-      </button>
-      {/* </form> */}
+        <fieldset className="flex flex-col gap-2">
+          <legend>SNS 아이디</legend>
+          <label>
+            인스타
+            <input {...register('instagramId', { maxLength: 10 })} name="instagramId" />
+          </label>
+          <label>
+            깃허브
+            <input {...register('githubId', { maxLength: 10 })} name="githubId" />
+          </label>
+          <label>
+            블로그
+            <input {...register('blog', { maxLength: 10 })} name="blog" />
+          </label>
+        </fieldset>
+        {freeItems}
+        <button type="button" className="w-full h-10 bg-primary" onClick={addFreeItem}>
+          자유형식 항목 추가하기
+        </button>
+        <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
+          저장하기
+        </button>
+      </form>
     </div>
   );
 };
