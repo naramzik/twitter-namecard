@@ -103,7 +103,7 @@ const Page = () => {
         <div>블로그 주소: {blog}</div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 py-5">
-        // maxLength는 임시값
+        {/* maxLength는 임시값 */}
         <label>
           닉네임
           <input {...register('nickname', { required: true, maxLength: 10 })} name="nickname" />
