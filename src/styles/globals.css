@@ -9,10 +9,5 @@
 }
 
 body {
-  max-width: 512px;
-  width: 100%;
-  margin: 0 auto;
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-color: #d0ebff;
+  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#d0ebff];
 }
