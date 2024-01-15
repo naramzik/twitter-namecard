@@ -1,8 +1,24 @@
+import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import { useRef } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
+import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
+  const backgroundRef = useRef(null);
+
+  const showBottomSheet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (e.target !== backgroundRef.current) {
+      e.stopPropagation();
+    }
+    NiceModal.show(BottomSheet);
+  };
+
+  const closeBottomSheet = () => {
+    NiceModal.remove(BottomSheet);
+  };
+
   const data = [
     {
       name: '자기소개',
@@ -15,7 +31,7 @@ const Page = () => {
   ];
 
   return (
-    <>
+    <div className="h-full" ref={backgroundRef} onClick={closeBottomSheet}>
       <div className="flex justify-center h-1/4">
         <Image
           src="/card.png"
@@ -28,7 +44,9 @@ const Page = () => {
       </div>
       <div className="text-2xl pt-5 pb-2">김뫄뫄</div>
       <div className="flex justify-between">
-        <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
+        <button onClick={showBottomSheet} className="btn w-5/12 btn-primary text-white">
+          명함 전달하기
+        </button>
         <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
       </div>
 
@@ -40,7 +58,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
