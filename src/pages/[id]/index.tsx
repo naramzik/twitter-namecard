@@ -36,7 +36,7 @@ const Page = () => {
     <div>
       {isOverlayVisible && (
         <div
-          className="h-full z-30 max-w-lg mx-auto opacity-50 bg-slate-900 fixed w-full "
+          className="max-w-lg w-full min-h-screen mx-auto z-30 opacity-50 bg-slate-900 fixed"
           ref={overlayRef}
           onClick={closeBottomSheet}
         ></div>
