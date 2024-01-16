@@ -1,24 +1,15 @@
 import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
 import { ReactNode } from 'react';
-import { useRef, useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
-  const overlayRef = useRef(null);
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const showBottomSheet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (e.target !== overlayRef.current) {
       e.stopPropagation();
     }
-    setIsOverlayVisible(true);
     NiceModal.show(BottomSheet);
-  };
-
-  const closeBottomSheet = () => {
-    setIsOverlayVisible(false);
-    NiceModal.remove(BottomSheet);
   };
 
   const data = [
@@ -34,13 +25,6 @@ const Page = () => {
 
   return (
     <div>
-      {isOverlayVisible && (
-        <div
-          className="max-w-lg w-full min-h-screen mx-auto z-30 opacity-50 bg-slate-900 fixed"
-          ref={overlayRef}
-          onClick={closeBottomSheet}
-        ></div>
-      )}
       <div className="p-5">
         <div className="flex justify-center h-1/4 ">
           <Image
