@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const url = `https://twitter.com/${nickname}`;
+  const url = `https://nitter.1d4.us/${nickname}`;
   return errorHandler(req, res, async () => {
     const response = await axios.get(url, {
       headers: {
@@ -23,13 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const html = response.data;
     const $ = cheerio.load(html);
 
-    const bio = $(`div[data-testid='UserDescription']`);
-
-    console.log(bio[0]);
-    // .attr('src');
+    const bio = $(`.profile-bio`);
 
     res.status(200).json({
-      bio,
+      bio: bio.text(),
     });
   });
 }
