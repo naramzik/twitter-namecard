@@ -1,5 +1,6 @@
 import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
@@ -37,7 +38,10 @@ const Page = () => {
         <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
           명함 전달하기
         </button>
-        <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
+        <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
+        <Link href="/login" className="btn w-5/12 btn-primary text-white">
+          명함 수정하기
+        </Link>
       </div>
       <div className="pt-5">
         {data.map((item) => (
