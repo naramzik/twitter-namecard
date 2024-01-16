@@ -1,6 +1,7 @@
 import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
@@ -10,6 +11,9 @@ const Page = () => {
     NiceModal.show(BottomSheet);
   };
 
+  const router = useRouter();
+  const query = router.query;
+  const path = `/${query.id}/login`;
   const data = [
     {
       name: '자기소개',
@@ -39,8 +43,8 @@ const Page = () => {
           명함 전달하기
         </button>
         <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
-        <Link href="/login" className="btn w-5/12 btn-primary text-white">
-          명함 수정하기
+        <Link href={path} className="btn w-5/12 btn-primary text-white">
+          s 명함 수정하기
         </Link>
       </div>
       <div className="pt-5">
