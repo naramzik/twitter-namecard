@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 
@@ -29,7 +30,9 @@ const Page = () => {
       <div className="text-2xl pt-5 pb-2">김뫄뫄</div>
       <div className="flex justify-between">
         <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
-        <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
+        <Link href="/login" className="btn w-5/12 btn-primary text-white">
+          명함 수정하기
+        </Link>
       </div>
 
       <div className="pt-5">
