@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+
 export default function Home() {
   const dummyCards = [
     {
@@ -28,13 +31,13 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      <main className="flex flex-col gap-5 mx-5 mt-5 my-20">
         {dummyCards.map((card) => (
-          <div key={card.id} className="card bg-base-100 shadow-xl m-5">
+          <div key={card.id} className="card bg-base-100 shadow-xl pt-8">
             <figure>
-              <img src={card.cardImage} width="70%" alt="" />
+              <img src={card.cardImage} width="80%" alt="명함" />
             </figure>
-            <div className="card-body">
+            <div className="card-body p-5">
               <h2 className="card-title">
                 {card.name}
                 <div className="badge badge-secondary">NEW</div>
@@ -48,3 +51,5 @@ export default function Home() {
     </>
   );
 }
+
+Home.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
