@@ -5,7 +5,7 @@ interface BasicLayoutProps {
 }
 
 const BasicLayout = ({ children }: BasicLayoutProps) => {
-  return <main className="h-screen">{children}</main>;
+  return <main className="h-screen overflow-x-auto">{children}</main>;
 };
 
 export default BasicLayout;
