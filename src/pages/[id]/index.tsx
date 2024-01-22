@@ -21,7 +21,7 @@ const Page = () => {
   ];
 
   return (
-    <div className="p-5">
+    <>
       <div className="flex justify-center h-1/4 ">
         <Image
           src="/card.png"
@@ -47,7 +47,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
