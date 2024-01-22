@@ -11,7 +11,7 @@ const BottomSheet = () => {
   return (
     <>
       <div
-        className="max-w-lg w-full min-h-screen mx-auto z-30 opacity-50 bg-slate-900 fixed"
+        className="max-w-lg w-full min-h-screen mx-auto fixed bottom-0 left-0 right-0 opacity-60 bg-slate-900 z-30"
         ref={overlayRef}
         onClick={closeBottomSheet}
       />

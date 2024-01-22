@@ -5,10 +5,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
-  const showBottomSheet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (e.target !== overlayRef.current) {
-      e.stopPropagation();
-    }
+  const showBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
 
