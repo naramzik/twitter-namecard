@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }));
 
         if (!nickname || !twitter) {
-          return res.status(400).json({ message: '닉네임과 트위터 아이디를 적어주세요.' });
+          return res.status(400).json({ message: '닉네임 또는 트위터 아이디를 적어주세요.' });
         }
         // TODO JWT 토큰을 확인
         if (!password) {
