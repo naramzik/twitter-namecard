@@ -1,3 +1,4 @@
+import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -20,7 +21,7 @@ const Page: NextPageWithLayout = () => {
 
   return (
     <>
-      <div className="flex justify-center h-1/4">
+      <div className="flex justify-center h-1/4 ">
         <Image
           src="/card.png"
           width={0}
@@ -37,7 +38,6 @@ const Page: NextPageWithLayout = () => {
           명함 수정하기
         </Link>
       </div>
-
       <div className="pt-5">
         {data.map((item) => (
           <div key={item.name} className="flex flex-col pb-5">
