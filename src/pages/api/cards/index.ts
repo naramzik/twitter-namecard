@@ -47,8 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }));
 
         if (!nickname || !twitter) {
-          return res.status(400).json({ message: '닉네임과 트위터 아이디를 적어주세요.' });
+          return res.status(400).json({ message: '닉네임 또는 트위터 아이디를 적어주세요.' });
         }
+        // TODO JWT 토큰을 확인
         if (!password) {
           return res.status(400).json({ message: '비밀번호는 필수입니다.' });
         }
@@ -68,6 +69,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).json(`${req.method}는 허용되지 않습니다.`);
-      break;
   }
 }

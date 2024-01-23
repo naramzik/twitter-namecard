@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await errorHandler(req, res, async () => {
         const { password } = req.body;
         const card = await Card.findById(cardId);
+        // TODO JWT query 를 주기
         if (password === card?.password) {
           return res.status(201).json('비밀번호가 일치합니다.');
         } else {
@@ -27,6 +28,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
 
     default:
-      break;
   }
 }
