@@ -4,8 +4,7 @@ import errorHandler from '@/utils/errorHandler';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface LinkType extends Entity {
-  cardId: string;
-  shortLinks: string[];
+  links: Record<string, string>;
 }
 
 const db = new Database('./data');
@@ -19,28 +18,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const nanoid = customAlphabet(cardId, 5);
 
         const shortLink = nanoid();
-        const existingLink = await Link.findOne((link) => link.cardId === cardId);
 
-        if (existingLink) {
-          await Link.update({
-            id: existingLink.id,
-            cardId: existingLink.cardId,
-            shortLinks: [...existingLink.shortLinks, shortLink],
-          });
-        } else {
-          Link.create({
-            cardId,
-            shortLinks: [shortLink],
-          });
-        }
+        Link.create({
+          links: { [shortLink]: cardId },
+        });
 
         res.status(200).json({ shortLink });
-      });
-      break;
-    case 'GET':
-      await errorHandler(req, res, async () => {
-        const links = await Link.findAll();
-        res.status(200).json({ links });
       });
       break;
 
