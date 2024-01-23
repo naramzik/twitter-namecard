@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#d0ebff];
+}
