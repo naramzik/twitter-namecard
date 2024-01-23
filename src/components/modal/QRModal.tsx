@@ -13,7 +13,7 @@ const QRModal = () => {
         className="max-w-lg w-full min-h-screen mx-auto fixed bottom-0 left-0 right-0 opacity-60 bg-slate-900 z-30"
         onClick={handleCloseQRModal}
       />
-      <section className="w-full h-[50vh] z-50 flex fixed top-0 left-0 items-center justify-center flex-col">
+      <section className="w-full h-[calc(100vh-10rem)] z-50 flex fixed top-0 left-0 items-center justify-center flex-col">
         <h1 className="text-primary text-4xl mb-4 font-bold text-center">QR CODE</h1>
         <QRCodeCanvas
           className="border-primary border-4 rounded-xl"
@@ -27,7 +27,6 @@ const QRModal = () => {
             excavate: false,
           }}
         />
-        {/* here the "value" is the prop. You can give any link here. */}
       </section>
     </>
   );
