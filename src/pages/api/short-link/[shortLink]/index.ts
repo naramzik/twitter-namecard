@@ -3,8 +3,7 @@ import errorHandler from '@/utils/errorHandler';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface LinkType extends Entity {
-  cardId: string;
-  shortLinks: string[];
+  links: Record<string, string>;
 }
 
 const db = new Database('./data');
@@ -15,10 +14,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'GET':
       await errorHandler(req, res, async () => {
         const shortLink = req.query.shortLink as string;
-        const foundLink = await Link.findOne((link) => link.shortLinks.includes(shortLink));
+        const allLinks = await Link.findAll();
+        const foundLink = allLinks.find(
+          (link) => link.links && Object.prototype.hasOwnProperty.call(link.links, shortLink),
+        );
 
         if (foundLink) {
-          res.redirect(202, `/${foundLink.cardId}`);
+          const cardId = foundLink.links[shortLink];
+          res.redirect(202, `/${cardId}`);
         } else {
           res.redirect(404, '/404');
         }
