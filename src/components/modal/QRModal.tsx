@@ -24,7 +24,6 @@ const QRModal = ({ shortLink }: ShortLink) => {
           className="border-primary border-4 rounded-xl"
           fgColor="#393E46"
           size={250}
-          // TODO: 현재 링크를 백으로 보내서 숏링크 받아오기
           value={shortLink}
           imageSettings={{
             // TODO: 명함 페이지에 있는 정보 중 이미지 가져오기
