@@ -1,11 +1,9 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import axios from 'axios';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useRef } from 'react';
-import { SortLink } from '@/types/shortLink';
-import type { GetServerSidePropsContext } from 'next';
+import { ShortLink } from '@/types/shortLink';
 
-const QRModal = ({ sortLink }: SortLink) => {
+const QRModal = ({ shortLink }: ShortLink) => {
   const modal = useModal();
   const qrModalRef = useRef(null);
 
@@ -27,7 +25,7 @@ const QRModal = ({ sortLink }: SortLink) => {
           fgColor="#393E46"
           size={250}
           // TODO: 현재 링크를 백으로 보내서 숏링크 받아오기
-          value={sortLink}
+          value={shortLink}
           imageSettings={{
             // TODO: 명함 페이지에 있는 정보 중 이미지 가져오기
             src: 'https://www.wonju.go.kr/DATA/bbs/136/202107031124275466AEAEDB644417BBG.jpg',
@@ -42,14 +40,3 @@ const QRModal = ({ sortLink }: SortLink) => {
 };
 
 export default NiceModal.create(QRModal);
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { id } = context.query;
-  const url = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/${id}`;
-  const apiEndPoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/short-link`;
-  const res = await axios.post(apiEndPoint, url);
-  const sortLink = await res.data.shortLink;
-  return {
-    props: { sortLink },
-  };
-}
