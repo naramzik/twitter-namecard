@@ -1,3 +1,3 @@
-export interface SortLink {
-  sortLink: string;
+export interface ShortLink {
+  shortLink: string;
 }
