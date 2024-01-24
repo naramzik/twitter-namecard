@@ -1,11 +1,21 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import QRModal from '@/components/modal/QRModal';
+import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 
 const BottomSheet = () => {
+  const { mutate: createShortLink } = useCreateShortLink();
   const modal = useModal();
 
   const handleShowQRModal = () => {
-    NiceModal.show(QRModal);
+    const cardId = '';
+    createShortLink(
+      { cardId },
+      {
+        onSuccess: ({ data }) => {
+          NiceModal.show(QRModal, { shortLink: data.shortLink });
+        },
+      },
+    );
   };
 
   const handleCloseBottomSheet = () => {
