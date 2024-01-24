@@ -11,7 +11,7 @@ const db = new Database('./data');
 const Card = db.table<CardType>('cards');
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const cardId = req.query.cardId as string;
+  const cardId = req.query.id as string;
 
   switch (req.method) {
     case 'POST':
