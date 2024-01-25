@@ -40,10 +40,10 @@ export default function Home() {
             <div className="card-body p-5">
               <h2 className="card-title">
                 {card.name}
-                <div className="badge badge-secondary">NEW</div>
+                <span className="badge badge-secondary">NEW</span>
               </h2>
               <p className="w-full text-ellipsis overflow-hidden whitespace-nowrap">{card.introduction}</p>
-              <div className="justify-start">{card.createdAt}</div>
+              <time className="justify-start">{card.createdAt}</time>
             </div>
           </div>
         ))}
