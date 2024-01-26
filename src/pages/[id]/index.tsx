@@ -6,8 +6,7 @@ import MainLayout from '@/components/layout/MainLayout';
 
 const Page = () => {
   const router = useRouter();
-  const query = router.query;
-  const path = `/${query.id}/login`;
+  const path = `/${router.query.id}/login`;
   const data = [
     {
       name: '자기소개',
