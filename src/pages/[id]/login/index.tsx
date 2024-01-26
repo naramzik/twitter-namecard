@@ -30,20 +30,20 @@ const Page: NextPageWithLayout = () => {
   });
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit(handleSubmitHandler)} className="">
+    <div className="flex flex-col items-center h-screen">
+      <div className="text-center text-3xl my-32">본인 인증</div>
+      <form onSubmit={handleSubmit(handleSubmitHandler)} className="w-full">
         <div className="flex flex-col">
-          <label htmlFor="pw">비밀번호</label>
           <input
-            id="pw"
-            className="input"
+            className="input input-md"
+            placeholder="비밀번호"
             {...register('password', {
               required: '비밀번호를 입력해 주세요.',
               validate: {},
             })}
           />
-          <div>{errors.password?.message}</div>
-          <button type="submit" className="btn">
+          <div className="h-6 text-sm text-red-500">{errors.password?.message}</div>
+          <button type="submit" className="btn bg-accent text-white">
             로그인
           </button>
         </div>
