@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
+import { NextPageWithLayout } from '@/types/page';
 
-const Page = () => {
+const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const path = `/${router.query.id}/login`;
   const data = [
@@ -50,6 +50,8 @@ const Page = () => {
   );
 };
 
-Page.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
+Page.getLayout = function getLayout(page) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export default Page;

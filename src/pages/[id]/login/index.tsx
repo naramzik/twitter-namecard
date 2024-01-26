@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import BasicLayout from '@/components/layout/BasicLayout';
+import { NextPageWithLayout } from '@/types/page';
 
 interface Password {
   password: string;
 }
 
-const Page = () => {
+const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const path = `/${router.query.id}/edit`;
   const handleSubmitHandler = (data: Password) => {
@@ -28,21 +30,30 @@ const Page = () => {
   });
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitHandler)} className="">
-      <label>
-        비밀번호
-        <input
-          {...register('password', {
-            required: '필수 입력 항목입니다.',
-            maxLength: { value: 10, message: '짧아요' },
-            validate: {},
-          })}
-        />
-        {errors.password?.message}
-      </label>
-      <button type="submit">로그인</button>
-    </form>
+    <div className="flex justify-center items-center h-screen">
+      <form onSubmit={handleSubmit(handleSubmitHandler)} className="">
+        <div className="flex flex-col">
+          <label htmlFor="pw">비밀번호</label>
+          <input
+            id="pw"
+            className="input"
+            {...register('password', {
+              required: '비밀번호를 입력해 주세요.',
+              validate: {},
+            })}
+          />
+          <div>{errors.password?.message}</div>
+          <button type="submit" className="btn">
+            로그인
+          </button>
+        </div>
+      </form>
+    </div>
   );
+};
+
+Page.getLayout = function getLayout(page) {
+  return <BasicLayout>{page}</BasicLayout>;
 };
 
 export default Page;
