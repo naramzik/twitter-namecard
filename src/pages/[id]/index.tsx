@@ -5,7 +5,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
-  const showBottomSheet = () => {
+  const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
 
@@ -34,7 +34,7 @@ const Page = () => {
       </div>
       <div className="text-2xl pt-5 pb-2">김뫄뫄</div>
       <div className="flex justify-between">
-        <button onClick={showBottomSheet} className="btn w-5/12 btn-primary text-white">
+        <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
           명함 전달하기
         </button>
         <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
