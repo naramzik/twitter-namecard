@@ -1,5 +1,8 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import BasicLayout from '@/components/layout/BasicLayout';
+import { NextPageWithLayout } from '@/types/page';
+import { showToast } from '@/utils/showToast';
 
 // interface Data {
 //   password: string;
@@ -7,13 +10,14 @@ import { useForm } from 'react-hook-form';
 
 const Page = () => {
   const router = useRouter();
-  const query = router.query;
-  const path = `/${query.id}/edit`;
-  const handleSubmitHandler = () => {
-    // TODO: data.password를 서버로 보내서 비밀번호가 맞는지 확인
-    // 맞으면 명함 수정 페이지로 이동
-    router.push(path);
-    // 틀리면 틀렸다고 알려주고 이동하지 않음
+  const path = `/${router.query.id}/edit`;
+  const handleSubmitHandler = (data: Password) => {
+    // TODO: 비밀번호가 맞는지 확인하는 로직 추가
+    if (data.password === 'testPassword') {
+      router.push(path);
+    } else {
+      showToast('error message', 'error');
+    }
   };
 
   const {
@@ -28,14 +32,24 @@ const Page = () => {
 
   const requiredSentence = '필수 입력 항목입니다.';
   return (
-    <form onSubmit={handleSubmit(handleSubmitHandler)} className="">
-      <label>
-        비밀번호
-        <input {...register('password', { required: true, maxLength: 10 })} />
-        {errors.password && requiredSentence}
-      </label>
-      <button type="submit">로그인</button>
-    </form>
+    <div className="flex flex-col items-center h-screen">
+      <div className="text-center text-3xl my-32">본인 인증</div>
+      <form onSubmit={handleSubmit(handleSubmitHandler)} className="w-full">
+        <div className="flex flex-col gap-1">
+          <input
+            className="input input-md"
+            placeholder="비밀번호"
+            {...register('password', {
+              required: '비밀번호를 입력해 주세요.',
+            })}
+          />
+          <div className="text-sm text-red-500">{errors.password?.message}</div>
+          <button type="submit" className="btn bg-accent text-white">
+            로그인
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
