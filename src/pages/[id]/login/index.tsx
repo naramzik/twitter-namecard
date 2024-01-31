@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { NextPageWithLayout } from '@/types/page';
+import { showToast } from '@/utils/showToast';
 
 interface Password {
   password: string;
@@ -15,7 +16,7 @@ const Page: NextPageWithLayout = () => {
     if (data.password === 'testPassword') {
       router.push(path);
     } else {
-      console.log('비밀번호가 틀렸습니다.');
+      showToast('error message', 'error');
     }
   };
 
@@ -33,16 +34,15 @@ const Page: NextPageWithLayout = () => {
     <div className="flex flex-col items-center h-screen">
       <div className="text-center text-3xl my-32">본인 인증</div>
       <form onSubmit={handleSubmit(handleSubmitHandler)} className="w-full">
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           <input
             className="input input-md"
             placeholder="비밀번호"
             {...register('password', {
               required: '비밀번호를 입력해 주세요.',
-              validate: {},
             })}
           />
-          <div className="h-6 text-sm text-red-500">{errors.password?.message}</div>
+          <div className="text-sm text-red-500">{errors.password?.message}</div>
           <button type="submit" className="btn bg-accent text-white">
             로그인
           </button>
