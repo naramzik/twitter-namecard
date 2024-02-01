@@ -21,9 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (foundLink) {
           const cardId = foundLink.links[shortLink];
-          res.redirect(202, `/${cardId}`);
+          res.status(200).json({ redirectUrl: `/${cardId}` });
         } else {
-          res.redirect(404, '/404');
+          res.status(404).json({ redirectUrl: `/404` });
         }
       });
       break;
