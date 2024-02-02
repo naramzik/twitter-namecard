@@ -1,5 +1,5 @@
 import { ReactNode, useRef, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 
 interface Data {
@@ -11,18 +11,18 @@ interface Data {
   hashtag: string;
 }
 
-interface FreeItemProp {
+interface CustomItem {
   index: number;
 }
 
-interface FreeItemData {
+interface CustomFields {
   id: number;
-  title: string;
-  content: string;
+  key: string;
+  contents: string;
 }
 
 const Page = () => {
-  const [freeItemData, setFreeItemData] = useState<FreeItemData[]>([{ id: 0, title: '', content: '' }]);
+  const [customFields, setCustomFields] = useState<CustomFields[]>([{ id: 0, key: '', contents: '' }]);
 
   const {
     register,
@@ -42,24 +42,24 @@ const Page = () => {
 
   const countRef = useRef(0);
 
-  const FreeItem = ({ index }: FreeItemProp) => {
-    const item = freeItemData.filter((item) => item.id === index - 1);
+  const FreeItem = ({ index }: CustomItem) => {
+    const item = customFields.filter((item) => item.id === index - 1);
     return (
       <div className="flex flex-col gap-2">
         <input
-          value={item.title}
+          value={item.key}
           onChange={(e) =>
-            setFreeItemData((prevData) =>
-              prevData.map((item) => (item.id === index ? { ...item, title: e.target.value } : item)),
+            setCustomFields((prevData) =>
+              prevData.map((item) => (item.id === index ? { ...item, key: e.target.value } : item)),
             )
           }
           placeholder="자유항목 제목을 입력해 주세요."
         />
         <textarea
-          value={item.content}
+          value={item.contents}
           onChange={(e) =>
-            setFreeItemData((prevData) =>
-              prevData.map((item) => (item.id === index ? { ...item, content: e.target.value } : item)),
+            setCustomFields((prevData) =>
+              prevData.map((item) => (item.id === index ? { ...item, contents: e.target.value } : item)),
             )
           }
           className="min-h-24 resize-y"
@@ -73,13 +73,21 @@ const Page = () => {
   const [freeItems, setFreeItems] = useState<JSX.Element[]>([<FreeItem index={0} />]);
 
   const onSubmit = (data: Data) => {
-    console.log(data);
+    const allData = {
+      customFields,
+      socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
+      nickname: data.nickname,
+      twitterId: data.twitterId,
+      hashtag: data.hashtag,
+    };
+    console.log(allData);
+    return allData;
   };
 
   const addFreeItem = () => {
     countRef.current += 1;
     setFreeItems((prevItems) => [...prevItems, <FreeItem index={countRef.current} />]);
-    setFreeItemData((prevData) => [...prevData, { id: countRef.current, title: '', content: '' }]);
+    setCustomFields((prevData) => [...prevData, { id: countRef.current, key: '', contents: '' }]);
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
@@ -116,8 +124,7 @@ const Page = () => {
         </label>
         <label>
           해시태그
-          <input {...register('hashtag', { required: true, maxLength: 10 })} name="hashtag" />
-          {errors.hashtag && requiredSentence}
+          <input {...register('hashtag', { maxLength: 10 })} name="hashtag" />
         </label>
         <fieldset className="flex flex-col gap-2">
           <legend>SNS 아이디</legend>
