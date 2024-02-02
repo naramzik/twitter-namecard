@@ -7,13 +7,13 @@ import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
+  const router = useRouter();
+  const path = `/${router.query.id}/login`;
+
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
 
-  const router = useRouter();
-  const query = router.query;
-  const path = `/${query.id}/login`;
   const data = [
     {
       name: '자기소개',
@@ -42,9 +42,8 @@ const Page = () => {
         <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
           명함 전달하기
         </button>
-        <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
         <Link href={path} className="btn w-5/12 btn-primary text-white">
-          s 명함 수정하기
+          명함 수정하기
         </Link>
       </div>
       <div className="pt-5">

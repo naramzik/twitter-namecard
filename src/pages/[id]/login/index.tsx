@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import BasicLayout from '@/components/layout/BasicLayout';
-import { NextPageWithLayout } from '@/types/page';
 import { showToast } from '@/utils/showToast';
 
-// interface Data {
-//   password: string;
-// }
+interface Password {
+  password: string;
+}
 
 const Page = () => {
   const router = useRouter();
@@ -30,7 +28,6 @@ const Page = () => {
     },
   });
 
-  const requiredSentence = '필수 입력 항목입니다.';
   return (
     <div className="flex flex-col items-center h-screen">
       <div className="text-center text-3xl my-32">본인 인증</div>
