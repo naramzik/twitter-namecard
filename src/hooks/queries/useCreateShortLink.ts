@@ -7,7 +7,7 @@ interface CardId {
 
 const getShortLink = async (cardId: CardId) => {
   const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/short-link`, cardId);
-  return data;
+  return data.cards;
 };
 
 export const useCreateShortLink = () => {
