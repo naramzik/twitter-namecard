@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import type { CardType } from '@/types/cards';
-const Card = ({ card }: CardType) => {
+const Card = (card: CardType) => {
   const router = useRouter();
 
   const openDetailPageHandler = () => {
@@ -16,10 +16,12 @@ const Card = ({ card }: CardType) => {
           {card.twitter}
           <span className="badge badge-secondary">NEW</span>
         </h2>
-        <p className="w-full text-ellipsis overflow-hidden whitespace-nowrap">
-          {card.customFields[0].key}: {card.customFields[0].contents}
-        </p>
-
+        {card.customFields && (
+          <p className="w-full text-ellipsis overflow-hidden whitespace-nowrap">
+            {card.customFields[0]?.key}: {card.customFields[0]?.contents}
+          </p>
+        )}
+        {/* TODO: 추후 updatedAt api가 추가되면 수정 예정 */}
         <time className="justify-start text-xs">마지막 업데이트: {card.updatedAt}</time>
       </div>
     </div>
