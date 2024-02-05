@@ -3,11 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import MainLayout from '@/components/layout/MainLayout';
-import { NextPageWithLayout } from '@/types/page';
+import BottomSheet from '@/components/modal/BottomSheet';
 
-const Page: NextPageWithLayout = () => {
+const Page = () => {
   const router = useRouter();
   const path = `/${router.query.id}/login`;
+
+  const handleShowBottomSheet = () => {
+    NiceModal.show(BottomSheet);
+  };
+
   const data = [
     {
       name: '자기소개',
@@ -33,7 +38,9 @@ const Page: NextPageWithLayout = () => {
       </div>
       <div className="text-2xl pt-5 pb-2">김뫄뫄</div>
       <div className="flex justify-between">
-        <button className="btn w-5/12 btn-primary text-white">명함 전달하기</button>
+        <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
+          명함 전달하기
+        </button>
         <Link href={path} className="btn w-5/12 btn-primary text-white">
           명함 수정하기
         </Link>
