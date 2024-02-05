@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import type { CardType } from '@/types/cards';
-const Card = (card: CardType) => {
+const Card = ({ card }: { card: CardType }) => {
   const router = useRouter();
 
   const openDetailPageHandler = () => {
