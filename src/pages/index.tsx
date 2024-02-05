@@ -1,52 +1,16 @@
 import { ReactNode } from 'react';
+import Card from '@/components/card/Card';
 import MainLayout from '@/components/layout/MainLayout';
+import { useGetCards } from '@/hooks/queries/useGetCards';
+import type { CardType } from '@/types/cards';
 
 export default function Home() {
-  const dummyCards = [
-    {
-      id: 1,
-      name: '김뫄뫄',
-      introduction:
-        '안녕하세요1 저는 김뫄뫄고요 고양이를 좋아하고요 안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요',
-      createdAt: '2024-01-16',
-      cardImage: '/card.png',
-    },
-    {
-      id: 2,
-      name: '김뫄뫄2',
-      introduction:
-        '안녕하세요22 저는 김뫄뫄고요 고양이를 좋아하고요 안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요',
-      createdAt: '2024-01-02',
-      cardImage: '/card.png',
-    },
-    {
-      id: 3,
-      name: '김뫄뫄3',
-      introduction:
-        '안녕하세요333 저는 김뫄뫄고요 고양이를 좋아하고요 안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요안녕하세요 저는 김뫄뫄고요 고양이를 좋아하고요',
-      createdAt: '2023-12-27',
-      cardImage: '/card.png',
-    },
-  ];
+  const { cards } = useGetCards();
 
   return (
     <>
       <main className="flex flex-col gap-5 mx-5 mt-5 my-20">
-        {dummyCards.map((card) => (
-          <div key={card.id} className="card bg-base-100 shadow-xl pt-8">
-            <figure>
-              <img src={card.cardImage} width="80%" alt="명함" />
-            </figure>
-            <div className="card-body p-5">
-              <h2 className="card-title">
-                {card.name}
-                <span className="badge badge-secondary">NEW</span>
-              </h2>
-              <p className="w-full text-ellipsis overflow-hidden whitespace-nowrap">{card.introduction}</p>
-              <time className="justify-start">{card.createdAt}</time>
-            </div>
-          </div>
-        ))}
+        {cards?.map((card: CardType) => <Card card={card} />)}
       </main>
     </>
   );
