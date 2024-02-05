@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
@@ -155,6 +155,8 @@ const Page = () => {
   );
 };
 
-Page.getLayout = (page: ReactNode) => <BasicLayout>{page}</BasicLayout>;
+Page.getLayout = function getLayout(page) {
+  return <BasicLayout>{page}</BasicLayout>;
+};
 
 export default Page;

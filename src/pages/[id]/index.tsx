@@ -1,7 +1,7 @@
 import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import Link from 'next/link';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 import type { GetServerSidePropsContext } from 'next';
@@ -32,7 +32,9 @@ const Page = ({ card }: { card: CardType }) => {
         <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
           명함 전달하기
         </button>
-        <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
+        <Link href={path} className="btn w-5/12 btn-primary text-white">
+          명함 수정하기
+        </Link>
       </div>
       <div className="pt-5">
         {card.customFields?.map((field) => (
@@ -46,7 +48,9 @@ const Page = ({ card }: { card: CardType }) => {
   );
 };
 
-Page.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
+Page.getLayout = function getLayout(page) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const twitterId = context.params?.id;
