@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
+import { usePostPassword } from '@/hooks/queries/usePostPassword';
 import { NextPageWithLayout } from '@/types/page';
 import { showToast } from '@/utils/showToast';
 
@@ -9,15 +10,28 @@ interface Password {
 }
 
 const Page: NextPageWithLayout = () => {
+  const { mutate: postPassword } = usePostPassword();
+
   const router = useRouter();
-  const path = `/${router.query.id}/edit`;
+  // TODO: 전역상태로 cardId 저장해서 사용하기
+  const cardId = 'test';
+  const path = `/${cardId}/edit`;
+
   const handleSubmitHandler = (data: Password) => {
-    // TODO: 비밀번호가 맞는지 확인하는 로직 추가
-    if (data.password === 'testPassword') {
-      router.push(path);
-    } else {
-      showToast('error message', 'error');
-    }
+    postPassword(
+      {
+        password: data.password,
+      },
+      {
+        onSuccess: () => {
+          router.push(path);
+        },
+        onError: (error) => {
+          console.log(error);
+          showToast(error.message, 'error');
+        },
+      },
+    );
   };
 
   const {
