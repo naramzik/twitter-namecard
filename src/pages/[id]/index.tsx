@@ -1,10 +1,14 @@
 import NiceModal from '@ebay/nice-modal-react';
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
 
 const Page = () => {
+  const router = useRouter();
+  const path = `/${router.query.id}/login`;
+
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
@@ -37,7 +41,9 @@ const Page = () => {
         <button onClick={handleShowBottomSheet} className="btn w-5/12 btn-primary text-white">
           명함 전달하기
         </button>
-        <button className="btn w-5/12 btn-primary text-white">명함 수정하기</button>
+        <Link href={path} className="btn w-5/12 btn-primary text-white">
+          명함 수정하기
+        </Link>
       </div>
       <div className="pt-5">
         {data.map((item) => (
@@ -51,6 +57,8 @@ const Page = () => {
   );
 };
 
-Page.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
+Page.getLayout = function getLayout(page) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export default Page;

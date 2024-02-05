@@ -1,6 +1,7 @@
-import { ReactNode, useRef, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
+import { NextPageWithLayout } from '@/types/page';
 
 interface Data {
   nickname: string;
@@ -21,7 +22,7 @@ interface FreeItemData {
   content: string;
 }
 
-const Page = () => {
+const Page: NextPageWithLayout = () => {
   const [freeItemData, setFreeItemData] = useState<FreeItemData[]>([{ id: 0, title: '', content: '' }]);
 
   const {
@@ -146,6 +147,8 @@ const Page = () => {
   );
 };
 
-Page.getLayout = (page: ReactNode) => <BasicLayout>{page}</BasicLayout>;
+Page.getLayout = function getLayout(page) {
+  return <BasicLayout>{page}</BasicLayout>;
+};
 
 export default Page;

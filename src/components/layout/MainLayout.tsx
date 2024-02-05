@@ -1,4 +1,4 @@
-import BottomBar from '@/components/layout/BottomBar';
+import BottomBar from '@/components/ui/BottomBar';
 import BasicLayout from './BasicLayout';
 import type { ReactNode } from 'react';
 
