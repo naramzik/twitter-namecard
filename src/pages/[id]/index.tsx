@@ -2,17 +2,26 @@ import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
+import { cardIdState } from '@/store/cardId';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
+  const setCardId = useSetRecoilState(cardIdState);
+
   const path = `/${card.twitter}/login`;
 
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
+
+  useEffect(() => {
+    setCardId(card.twitter);
+  }, [card.twitter]);
 
   return (
     <>

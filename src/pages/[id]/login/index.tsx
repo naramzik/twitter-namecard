@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
+import { cardIdState } from '@/store/cardId';
 import { NextPageWithLayout } from '@/types/page';
 
 interface Password {
@@ -9,16 +11,18 @@ interface Password {
 }
 
 const Page: NextPageWithLayout = () => {
+  const cardId = useRecoilValue(cardIdState);
+
   const { mutate: postPassword } = usePostPassword();
 
   const router = useRouter();
   // TODO: 전역상태로 cardId 저장해서 사용하기
-  const cardId = 'test';
   const path = `/${cardId}/edit`;
 
   const handleSubmitHandler = (data: Password) => {
     postPassword(
       {
+        cardId,
         password: data.password,
       },
       {
