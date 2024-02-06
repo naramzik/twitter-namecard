@@ -8,6 +8,8 @@ import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
+  const path = `/${card.twitter}/login`;
+
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };

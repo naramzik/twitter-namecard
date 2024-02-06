@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
 import { NextPageWithLayout } from '@/types/page';
-import { showToast } from '@/utils/showToast';
 
 interface Password {
   password: string;
@@ -25,10 +24,6 @@ const Page: NextPageWithLayout = () => {
       {
         onSuccess: () => {
           router.push(path);
-        },
-        onError: (error) => {
-          console.log(error);
-          showToast(error.message, 'error');
         },
       },
     );
