@@ -1,6 +1,9 @@
 import '@/styles/globals.css';
-import { NextPageWithLayout } from '@/types';
 
+import NiceModal from '@ebay/nice-modal-react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
+import { NextPageWithLayout } from '@/types';
 import type { AppProps } from 'next/app';
 
 type AppPropsWithLayout = AppProps & {
@@ -8,7 +11,13 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const queryClient = new QueryClient();
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Toaster />
+      <NiceModal.Provider>{getLayout(<Component {...pageProps} />)}</NiceModal.Provider>
+    </QueryClientProvider>
+  );
 }
