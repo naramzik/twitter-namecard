@@ -10,6 +10,7 @@ interface Data {
   githubId: string;
   blog: string;
   hashtag: string;
+  password: string;
 }
 
 interface CustomItems {
@@ -19,7 +20,6 @@ interface CustomItems {
 }
 
 const Page = () => {
-  const password = 'test';
   const [customItems, setCustomItems] = useState<CustomItems[]>([{ id: 0, key: '', contents: '' }]);
   const { mutate: createCard } = useCreateCard();
   const {
@@ -35,6 +35,7 @@ const Page = () => {
       githubId: '',
       blog: '',
       hashtag: '',
+      password: '',
     },
   });
 
@@ -76,8 +77,9 @@ const Page = () => {
       nickname: data.nickname,
       twitter: data.twitter,
       hashtag: data.hashtag,
-      password,
+      password: data.password,
     };
+
     createCard(allData, {
       onSuccess: (data) => {
         console.log('명함 만들기 성공');
@@ -114,6 +116,11 @@ const Page = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 py-5">
         {/* maxLength는 임시값 */}
+        <div>
+          비밀번호
+          <input type="password" {...register('password', { required: true })} name="password" />
+          {errors.password && requiredSentence}
+        </div>
         <label>
           닉네임
           <input {...register('nickname', { required: true, maxLength: 10 })} name="nickname" />
@@ -147,6 +154,7 @@ const Page = () => {
         <button type="button" className="w-full h-10 bg-primary" onClick={addCustomItem}>
           자유형식 항목 추가하기
         </button>
+
         <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
