@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
@@ -12,24 +11,24 @@ interface Data {
   blog: string;
   hashtag: string;
   password: string;
+  customFields: CustomFields[];
 }
 
-interface CustomItems {
-  id: number;
+interface CustomFields {
   key: string;
   contents: string;
 }
 
 const Page = () => {
   const router = useRouter();
-  const [customItems, setCustomItems] = useState<CustomItems[]>([{ id: 0, key: '', contents: '' }]);
   const { mutate: createCard } = useCreateCard();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+    setValue,
+  } = useForm<Data>({
     defaultValues: {
       nickname: '',
       twitter: '',
@@ -38,43 +37,13 @@ const Page = () => {
       blog: '',
       hashtag: '',
       password: '',
+      customFields: [],
     },
   });
 
-  const countRef = useRef(0);
-
-  const CustomForm = ({ index }: { index: number }) => {
-    const item = customItems.find((item) => item.id === index - 1);
-    return (
-      <div className="flex flex-col gap-2">
-        <input
-          value={item?.key}
-          onChange={(e) =>
-            setCustomItems((prevData) =>
-              prevData.map((item) => (item.id === index ? { ...item, key: e.target.value } : item)),
-            )
-          }
-          placeholder="자유항목 제목을 입력해 주세요."
-        />
-        <textarea
-          value={item?.contents}
-          onChange={(e) =>
-            setCustomItems((prevData) =>
-              prevData.map((item) => (item.id === index ? { ...item, contents: e.target.value } : item)),
-            )
-          }
-          className="min-h-24 resize-y"
-          placeholder="자유항목 내용을 입력해 주세요."
-        />
-      </div>
-    );
-  };
-
-  const [customFields, setCustomFields] = useState<JSX.Element[]>([<CustomForm index={0} />]);
-
   const onSubmit = (data: Data) => {
     const allData = {
-      customFields: customItems,
+      customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
       nickname: data.nickname,
       twitter: data.twitter,
@@ -91,12 +60,6 @@ const Page = () => {
         router.push(`/${data.data.newCard.twitter}`);
       },
     });
-  };
-
-  const addCustomItem = () => {
-    countRef.current += 1;
-    setCustomFields((prevItems) => [...prevItems, <CustomForm index={countRef.current} />]);
-    setCustomItems((prevData) => [...prevData, { id: countRef.current, key: '', contents: '' }]);
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
@@ -153,11 +116,28 @@ const Page = () => {
           </label>
           <label>
             블로그
-            <input {...register('blog', { maxLength: 10 })} name="blog" />
+            <input {...register('blog')} name="blog" />
           </label>
         </fieldset>
-        {customFields}
-        <button type="button" className="w-full h-10 bg-primary" onClick={addCustomItem}>
+
+        {watch('customFields').map((_, index) => (
+          <div key={index}>
+            <label>
+              제목
+              <input type="text" {...register(`customFields.${index}.key`)} />
+            </label>
+            <label>
+              내용
+              <textarea {...register(`customFields.${index}.contents`)} />
+            </label>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="w-full h-10 bg-primary"
+          onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+        >
           자유형식 항목 추가하기
         </button>
 
