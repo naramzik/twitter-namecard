@@ -1,18 +1,15 @@
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
-import { cardIdState } from '@/store/cardId';
 import { NextPageWithLayout } from '@/types/page';
 
 interface Password {
   password: string;
 }
 
-const Page: NextPageWithLayout = () => {
-  const cardId = useRecoilValue(cardIdState);
-
+const Page: NextPageWithLayout = ({ cardId }) => {
   const { mutate: postPassword } = usePostPassword();
 
   const router = useRouter();
@@ -27,6 +24,8 @@ const Page: NextPageWithLayout = () => {
       },
       {
         onSuccess: () => {
+          console.log(cardId, data.password);
+          console.log('성공');
           router.push(path);
         },
       },
@@ -49,6 +48,7 @@ const Page: NextPageWithLayout = () => {
       <form onSubmit={handleSubmit(handleSubmitHandler)} className="w-full">
         <div className="flex flex-col gap-1">
           <input
+            type="password"
             className="input input-md"
             placeholder="비밀번호"
             {...register('password', {
@@ -67,6 +67,13 @@ const Page: NextPageWithLayout = () => {
 
 Page.getLayout = function getLayout(page) {
   return <BasicLayout>{page}</BasicLayout>;
+};
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const cardId = context.params?.id;
+  return {
+    props: { cardId },
+  };
 };
 
 export default Page;

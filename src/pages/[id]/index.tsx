@@ -2,26 +2,17 @@ import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 import MainLayout from '@/components/layout/MainLayout';
 import BottomSheet from '@/components/modal/BottomSheet';
-import { cardIdState } from '@/store/cardId';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
-  const setCardId = useSetRecoilState(cardIdState);
-
-  const path = `/${card.twitter}/login`;
+  const path = `/${card.id}/login`;
 
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
-
-  useEffect(() => {
-    setCardId(card.twitter);
-  }, [card.twitter]);
 
   return (
     <>
@@ -64,10 +55,10 @@ Page.getLayout = function getLayout(page) {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const twitterId = context.params?.id;
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${twitterId}`);
+  const cardId = context.params?.id;
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${cardId}`);
   return {
-    props: { card: data.foundCard },
+    props: { card: data?.foundCard },
   };
 };
 
