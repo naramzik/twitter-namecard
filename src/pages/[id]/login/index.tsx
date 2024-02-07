@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
@@ -9,11 +8,11 @@ interface Password {
   password: string;
 }
 
-const Page: NextPageWithLayout = ({ cardId }) => {
+const Page: NextPageWithLayout = () => {
   const { mutate: postPassword } = usePostPassword();
 
   const router = useRouter();
-  // TODO: 전역상태로 cardId 저장해서 사용하기
+  const cardId = router.query.id as string;
   const path = `/${cardId}/edit`;
 
   const handleSubmitHandler = (data: Password) => {
@@ -67,13 +66,6 @@ const Page: NextPageWithLayout = ({ cardId }) => {
 
 Page.getLayout = function getLayout(page) {
   return <BasicLayout>{page}</BasicLayout>;
-};
-
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const cardId = context.params?.id;
-  return {
-    props: { cardId },
-  };
 };
 
 export default Page;
