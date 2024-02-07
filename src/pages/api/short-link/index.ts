@@ -1,14 +1,7 @@
-import { Database, Entity } from 'fakebase';
 import { customAlphabet } from 'nanoid';
 import errorHandler from '@/utils/errorHandler';
+import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-interface LinkType extends Entity {
-  links: Record<string, string>;
-}
-
-const db = new Database('./data');
-const Link = db.table<LinkType>('links');
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -19,16 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const shortLink = nanoid();
 
-        Link.create({
-          links: { [shortLink]: cardId },
-        });
-
-        res.status(200).json({ shortLink });
+        const { data: link, error } = await supabase.from('links').insert({ shortLink, redirectUrl: cardId });
+        if (error) throw error;
+        res.status(200).json(link);
       });
       break;
 
     default:
-      res.setHeader('Allow', ['POST', 'GET']);
+      res.setHeader('Allow', ['POST']);
       res.status(405).json(`${req.method}는 허용되지 않습니다.`);
   }
 }

@@ -1,27 +1,19 @@
-import { Database, Entity } from 'fakebase';
 import errorHandler from '@/utils/errorHandler';
+import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-interface LinkType extends Entity {
-  links: Record<string, string>;
-}
-
-const db = new Database('./data');
-const Link = db.table<LinkType>('links');
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
       await errorHandler(req, res, async () => {
         const shortLink = req.query.shortLink as string;
-        const allLinks = await Link.findAll();
-        const foundLink = allLinks.find(
-          (link) => link.links && Object.prototype.hasOwnProperty.call(link.links, shortLink),
-        );
+        const { data: links, error } = await supabase.from('links').select('*').eq('shortLink', shortLink);
 
-        if (foundLink) {
-          const cardId = foundLink.links[shortLink];
-          res.status(200).json({ redirectUrl: `/${cardId}` });
+        if (error) throw error;
+
+        if (links && links.length > 0) {
+          const redirectUrl = links[0].redirectUrl;
+          res.status(200).json({ redirectUrl: `/${redirectUrl}` });
         } else {
           res.status(404).json({ redirectUrl: `/404` });
         }
@@ -29,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
 
     default:
-      res.setHeader('Allow', ['POST', 'GET']);
+      res.setHeader('Allow', ['GET']);
       res.status(405).json(`${req.method}는 허용되지 않습니다.`);
   }
 }
