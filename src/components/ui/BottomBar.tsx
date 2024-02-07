@@ -2,10 +2,9 @@ import { useRouter } from 'next/router';
 
 const BottomBar = () => {
   const router = useRouter();
-  const { id } = router.query;
 
   const cardCreateHandler = () => {
-    router.push(`/${id}/edit`);
+    router.push(`/default/edit`);
   };
 
   return (

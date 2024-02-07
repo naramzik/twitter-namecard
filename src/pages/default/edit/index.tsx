@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
@@ -20,6 +21,7 @@ interface CustomItems {
 }
 
 const Page = () => {
+  const router = useRouter();
   const [customItems, setCustomItems] = useState<CustomItems[]>([{ id: 0, key: '', contents: '' }]);
   const { mutate: createCard } = useCreateCard();
   const {
@@ -84,6 +86,9 @@ const Page = () => {
       onSuccess: (data) => {
         console.log('명함 만들기 성공');
         console.log(data.data.newCard.id);
+        // 추후 api 변경되면 바꾸기
+        // router.push(`/${data.data.newCard.id}`);
+        router.push(`/${data.data.newCard.twitter}`);
       },
     });
   };
@@ -106,7 +111,7 @@ const Page = () => {
 
   return (
     <div className="pb-12">
-      <h1 className="text-3xl">내 명함 수정하기</h1>
+      <h1 className="text-3xl">내 명함 만들어보기</h1>
       <div className="border-2 border-black aspect-nameCard">
         <div>닉네임: {nickname}</div>
         <div>트위터 아이디: {twitter}</div>

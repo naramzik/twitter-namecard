@@ -27,6 +27,7 @@ const Page = ({ card }: { card: CardType }) => {
         />
       </div>
       <div className="flex justify-between items-center py-3">
+        <div className="text-3xl font-bold">{card.nickname}</div>
         <div className="text-2xl ">{card.twitter}</div>
         <button className="btn w-7/12 btn-secondary">명함 이미지 다운로드</button>
       </div>
