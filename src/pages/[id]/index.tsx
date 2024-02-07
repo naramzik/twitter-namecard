@@ -8,6 +8,8 @@ import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
+  const path = `/${card.id}/login`;
+
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
@@ -53,10 +55,10 @@ Page.getLayout = function getLayout(page) {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const twitterId = context.params?.id;
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${twitterId}`);
+  const cardId = context.params?.id;
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${cardId}`);
   return {
-    props: { card: data.foundCard },
+    props: { card: data?.foundCard },
   };
 };
 

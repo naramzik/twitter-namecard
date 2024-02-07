@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
 import type { CardType } from '@/types/cards';
+
 const Card = ({ card }: { card: CardType }) => {
   const router = useRouter();
-
   const openDetailPageHandler = () => {
+    // api 변경되면 바꾸기
+    // router.push(`/${card.id}`);
     router.push(`/${card.twitter}`);
   };
 

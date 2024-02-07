@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import BasicLayout from '@/components/layout/BasicLayout';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
 import { NextPageWithLayout } from '@/types/page';
-import { showToast } from '@/utils/showToast';
 
 interface Password {
   password: string;
@@ -13,22 +12,20 @@ const Page: NextPageWithLayout = () => {
   const { mutate: postPassword } = usePostPassword();
 
   const router = useRouter();
-  // TODO: 전역상태로 cardId 저장해서 사용하기
-  const cardId = 'test';
+  const cardId = router.query.id as string;
   const path = `/${cardId}/edit`;
 
   const handleSubmitHandler = (data: Password) => {
     postPassword(
       {
+        cardId,
         password: data.password,
       },
       {
         onSuccess: () => {
+          console.log(cardId, data.password);
+          console.log('성공');
           router.push(path);
-        },
-        onError: (error) => {
-          console.log(error);
-          showToast(error.message, 'error');
         },
       },
     );
@@ -50,6 +47,7 @@ const Page: NextPageWithLayout = () => {
       <form onSubmit={handleSubmit(handleSubmitHandler)} className="w-full">
         <div className="flex flex-col gap-1">
           <input
+            type="password"
             className="input input-md"
             placeholder="비밀번호"
             {...register('password', {
