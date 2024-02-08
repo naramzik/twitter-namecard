@@ -9,14 +9,14 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6">
-        <div className="flex">
-          <Link href="/">홈</Link>
-          <h1 className="text-2xl font-bold" onClick={cardCreateHandler}>
-            내 명함 만들기
-          </h1>
-        </div>
+    <header className="fixed h-10 top-0 left-0 w-screen p-4">
+      <nav className="flex items-center justify-around">
+        <Link href="/" className="text-lg">
+          홈
+        </Link>
+        <button className="text-lg" onClick={cardCreateHandler}>
+          명함 만들기
+        </button>
       </nav>
     </header>
   );

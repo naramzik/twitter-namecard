@@ -14,10 +14,13 @@ const Card = ({ card }: { card: CardType }) => {
     <div key={card.id} className="card bg-base-100 shadow-xl pt-8" onClick={openDetailPageHandler}>
       <div className="mx-auto w-72 h-40 bg-blue-200">명함 컴포넌트</div>
       <div className="card-body p-5">
-        <h2 className="card-title">
-          {card.twitter}
-          <span className="badge badge-secondary">NEW</span>
-        </h2>
+        <div className="flex justify-between">
+          <div className="flex gap-4">
+            <h2 className="card-title">{card.nickname}</h2>
+            <h3 className="">{card.twitter}</h3>
+          </div>
+          <div className="badge badge-secondary">NEW</div>
+        </div>
         {card.customFields && (
           <p className="w-full text-ellipsis overflow-hidden whitespace-nowrap">
             {card.customFields[0]?.key}: {card.customFields[0]?.contents}
