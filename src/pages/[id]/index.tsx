@@ -2,7 +2,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import MainLayout from '@/components/layout/MainLayout';
+import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
@@ -52,7 +52,7 @@ const Page = ({ card }: { card: CardType }) => {
 };
 
 Page.getLayout = function getLayout(page) {
-  return <MainLayout>{page}</MainLayout>;
+  return <LayoutWithHeader>{page}</LayoutWithHeader>;
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {

@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed h-10 top-0 left-0 w-screen p-4">
+    <header className="fixed h-12 top-0 left-0 w-screen p-2 bg-primary z-10 text-white">
       <nav className="flex items-center justify-around">
         <Link href="/" className="text-lg">
           홈

@@ -2,11 +2,11 @@ import Header from '../ui/Header';
 import BasicLayout from './BasicLayout';
 import type { ReactNode } from 'react';
 
-interface MainLayoutProps {
+interface LayoutWithHeaderProps {
   children: ReactNode;
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const LayoutWithHeader = ({ children }: LayoutWithHeaderProps) => {
   return (
     <BasicLayout>
       <Header />
@@ -15,4 +15,4 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   );
 };
 
-export default MainLayout;
+export default LayoutWithHeader;

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Card from '@/components/card/Card';
-import MainLayout from '@/components/layout/MainLayout';
+import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import { useGetCards } from '@/hooks/queries/useGetCards';
 import type { CardType } from '@/types/cards';
 
@@ -16,4 +16,4 @@ export default function Home() {
   );
 }
 
-Home.getLayout = (page: ReactNode) => <MainLayout>{page}</MainLayout>;
+Home.getLayout = (page: ReactNode) => <LayoutWithHeader>{page}</LayoutWithHeader>;
