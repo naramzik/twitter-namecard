@@ -8,6 +8,9 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      pre: ['Pretendard'],
+    },
     extend: {
       aspectRatio: {
         nameCard: '16/9',
@@ -20,8 +23,10 @@ const config: Config = {
       {
         mytheme: {
           primary: '#71ccfe',
-          secondary: '#f6d860',
+          secondary: '#FCFFC8',
           accent: '#1da0f1',
+          neutral: '#FFF586',
+          yellow: '#F6F700',
         },
       },
     ],
