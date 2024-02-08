@@ -3,7 +3,7 @@ import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const cardId = req.query.id as string;
+  const cardId = req.query.cardId as string;
 
   switch (req.method) {
     case 'POST':
