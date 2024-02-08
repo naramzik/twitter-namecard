@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import BasicLayout from '@/components/layout/BasicLayout';
+import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
 import { NextPageWithLayout } from '@/types/page';
 
@@ -55,7 +55,7 @@ const Page: NextPageWithLayout = () => {
             })}
           />
           <div className="text-sm text-red-500">{errors.password?.message}</div>
-          <button type="submit" className="btn bg-accent text-white">
+          <button type="submit" className="btn bg-primary text-white">
             로그인
           </button>
         </div>
@@ -65,7 +65,7 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = function getLayout(page) {
-  return <BasicLayout>{page}</BasicLayout>;
+  return <LayoutWithTitle title="">{page}</LayoutWithTitle>;
 };
 
 export default Page;

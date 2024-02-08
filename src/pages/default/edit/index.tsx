@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import BasicLayout from '@/components/layout/BasicLayout';
+import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 
 interface Data {
@@ -74,7 +74,6 @@ const Page = () => {
 
   return (
     <div className="pb-12">
-      <h1 className="text-3xl">내 명함 만들어보기</h1>
       <div className="border-2 border-black aspect-nameCard">
         <div>닉네임: {nickname}</div>
         <div>트위터 아이디: {twitter}</div>
@@ -150,7 +149,7 @@ const Page = () => {
 };
 
 Page.getLayout = function getLayout(page) {
-  return <BasicLayout>{page}</BasicLayout>;
+  return <LayoutWithTitle title="명함 만들기">{page}</LayoutWithTitle>;
 };
 
 export default Page;

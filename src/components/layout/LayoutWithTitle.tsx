@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
-import LeftArrow from '../icon/LeftArrow';
+import Title from '@/components/ui/Title';
+import BasicLayout from './BasicLayout';
+import type { ReactNode } from 'react';
 
-const LayoutWithTitle = () => {
-  const router = useRouter();
+interface LayoutWithTitleProps {
+  title: string;
+  children: ReactNode;
+}
 
-  const handleBack = () => {
-    router.back();
-  };
-
+const LayoutWithTitle = ({ title, children }: LayoutWithTitleProps) => {
   return (
-    <div className="fixed top-0 z-10 grid items-center w-full max-w-[512px] mx-auto left-0 right-0 grid-cols-3 px-3 h-20 bg-white">
-      <LeftArrow className="flex justify-start" onClick={handleBack} />
-      <h1 className="text-xl font-bold text-center text-gray-dark">'수정하기 / 생성하기 '</h1>
-    </div>
+    <BasicLayout>
+      <Title title={title} />
+      {children}
+    </BasicLayout>
   );
 };
 

@@ -10,7 +10,7 @@ const LayoutWithHeader = ({ children }: LayoutWithHeaderProps) => {
   return (
     <BasicLayout>
       <Header />
-      <div className="pt-10">{children}</div>
+      {children}
     </BasicLayout>
   );
 };
