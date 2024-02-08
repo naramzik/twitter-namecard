@@ -52,9 +52,7 @@ const CardForm = () => {
 
     createCard(allData, {
       onSuccess: (data) => {
-        console.log('명함 만들기 성공');
-        console.log(data.data.newCard.id);
-        router.push(`/${data.data.newCard.id}`);
+        router.push(`/${data.data.newCard[0].id}`);
       },
     });
   };
