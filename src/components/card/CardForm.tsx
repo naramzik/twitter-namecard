@@ -54,9 +54,7 @@ const CardForm = () => {
       onSuccess: (data) => {
         console.log('명함 만들기 성공');
         console.log(data.data.newCard.id);
-        // 추후 api 변경되면 바꾸기
-        // router.push(`/${data.data.newCard.id}`);
-        router.push(`/${data.data.newCard.twitter}`);
+        router.push(`/${data.data.newCard.id}`);
       },
     });
   };
