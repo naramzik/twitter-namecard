@@ -5,9 +5,7 @@ const CardItem = ({ card }: { card: CardType }) => {
   console.log(card);
   const router = useRouter();
   const openDetailPageHandler = () => {
-    // api 변경되면 바꾸기
-    // router.push(`/${card.id}`);
-    router.push(`/${card.twitter}`);
+    router.push(`/${card.id}`);
   };
 
   return (
