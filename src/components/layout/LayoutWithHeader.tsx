@@ -1,5 +1,4 @@
 import Header from '../ui/Header';
-import BasicLayout from './BasicLayout';
 import type { ReactNode } from 'react';
 
 interface LayoutWithHeaderProps {
@@ -8,10 +7,10 @@ interface LayoutWithHeaderProps {
 
 const LayoutWithHeader = ({ children }: LayoutWithHeaderProps) => {
   return (
-    <BasicLayout>
+    <main className="p-5 mt-16 overflow-x-auto">
       <Header />
       {children}
-    </BasicLayout>
+    </main>
   );
 };
 

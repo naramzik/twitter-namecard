@@ -1,5 +1,4 @@
 import Title from '@/components/ui/Title';
-import BasicLayout from './BasicLayout';
 import type { ReactNode } from 'react';
 
 interface LayoutWithTitleProps {
@@ -9,10 +8,10 @@ interface LayoutWithTitleProps {
 
 const LayoutWithTitle = ({ title, children }: LayoutWithTitleProps) => {
   return (
-    <BasicLayout>
+    <main className="p-5 mt-16 overflow-x-auto">
       <Title title={title} />
       {children}
-    </BasicLayout>
+    </main>
   );
 };
 
