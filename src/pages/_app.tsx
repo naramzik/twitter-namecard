@@ -4,7 +4,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { NextPageWithLayout } from '@/types';
-import { showToastErrorMessage } from '@/utils/showToastErrorMessage';
+import { showToastErrorMessage } from '@/utils/showToastMessage';
 import type { AppProps } from 'next/app';
 
 type AppPropsWithLayout = AppProps & {
