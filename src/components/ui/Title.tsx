@@ -20,7 +20,7 @@ const Title = ({ title }: Title) => {
         src="/left-arrow.png"
         onClick={handleBack}
         className="flex justify-start ml-2"
-        alt="왼쪽을 향하는 화살표"
+        alt="뒤로가기"
       />
       <div className="text-lg text-center">{title}</div>
     </div>
