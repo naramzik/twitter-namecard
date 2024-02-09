@@ -8,12 +8,12 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      pre: ['Pretendard'],
-    },
     extend: {
       aspectRatio: {
         nameCard: '16/9',
+      },
+      fontFamily: {
+        sans: ['var(--font-nanum-gothic)'],
       },
     },
   },
