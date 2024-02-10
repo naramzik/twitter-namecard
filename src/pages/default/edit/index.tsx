@@ -6,7 +6,7 @@ const Page = () => {
 };
 
 Page.getLayout = function getLayout(page) {
-  return <LayoutWithTitle title="명함 수정하기">{page}</LayoutWithTitle>;
+  return <LayoutWithTitle title="명함 만들기">{page}</LayoutWithTitle>;
 };
 
 export default Page;

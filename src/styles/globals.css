@@ -9,5 +9,5 @@
 }
 
 body {
-  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#d0ebff];
+  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#F4F7FF];
 }
