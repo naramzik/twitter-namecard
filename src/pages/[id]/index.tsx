@@ -8,6 +8,7 @@ import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
+  console.log('card: ', card);
   const path = `/${card.id}/login`;
 
   const handleShowBottomSheet = () => {
@@ -46,13 +47,23 @@ const Page = ({ card }: { card: CardType }) => {
           </Link>
         </div>
       </div>
-      <div className="pt-5">
-        {card.customFields?.map((field) => (
-          <div key={card.twitter} className="flex flex-col pb-5">
-            <div className="text-sm font-bold pb-1">{field.key}</div>
-            <div className="text-lg">{field.contents}</div>
-          </div>
-        ))}
+      <div>
+        <div className="pt-5 ">
+          <div className="text-sm font-bold pb-1">소셜 미디어</div>
+          <div className="text-lg">트위터: {card.twitter}</div>
+          <div className="text-lg">인스타그램: {card.socialMedia?.instagram}</div>
+          <div className="text-lg">깃허브: {card.socialMedia?.github}</div>
+          <div className="text-lg">블로그: {card.socialMedia?.blog}</div>
+        </div>
+        <div className="pt-5 ">
+          {card.customFields?.map((field) => (
+            <div key={card.twitter} className="flex flex-col pb-5">
+              <div className="text-sm font-bold pb-1">{field.key}</div>
+              <div className="text-lg">{field.contents}</div>
+            </div>
+          ))}
+        </div>
+        <div className="pt-5 ">해시태그: {card.hashtag}</div>
       </div>
     </>
   );

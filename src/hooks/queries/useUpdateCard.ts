@@ -1,0 +1,26 @@
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+
+interface SubmittedCard {
+  customFields: {
+    key: string;
+    contents: string;
+  }[];
+  socialMedia: {
+    instagram: string;
+    github: string;
+    blog: string;
+  };
+  nickname: string;
+  twitter: string;
+  hashtag: string;
+  password: string;
+}
+
+export const useUpdateCard = () => {
+  return useMutation({
+    mutationFn: (data: SubmittedCard) => {
+      return axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards`, data);
+    },
+  });
+};
