@@ -5,7 +5,7 @@ import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-qu
 import { Nanum_Gothic } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import { NextPageWithLayout } from '@/types';
-import { showToastErrorMessage } from '@/utils/showToastErrorMessage';
+import { showToastErrorMessage } from '@/utils/showToastMessage';
 import type { AppProps } from 'next/app';
 
 type AppPropsWithLayout = AppProps & {

@@ -14,3 +14,7 @@ export const showToastErrorMessage = (error: unknown) => {
   const errorResponse = JSON.stringify(axiosError.response?.data).replace(/"/gi, '');
   errorResponse && toastMessage(errorResponse, 'error');
 };
+
+export const showToastSuccessMessage = (message: string) => {
+  toastMessage(message, 'success');
+};
