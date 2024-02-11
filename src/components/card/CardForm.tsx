@@ -11,7 +11,7 @@ interface Data {
   instagramId: string;
   githubId: string;
   blog: string;
-  hashtag: string[];
+  hashtags: string[];
   password: string;
   customFields: CustomFields[];
 }
@@ -21,7 +21,7 @@ interface CustomFields {
   contents: string;
 }
 
-const CardForm = ({ cardId }: { cardId: string }) => {
+const CardForm = ({ cardId }: { cardId: string | null }) => {
   console.log('cardId cardForm: ', cardId);
   const router = useRouter();
   const { mutate: createCard } = useCreateCard();
@@ -29,8 +29,6 @@ const CardForm = ({ cardId }: { cardId: string }) => {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
-  const res = axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard);
-  console.log('res: ', res);
   const {
     register,
     handleSubmit,
@@ -38,7 +36,19 @@ const CardForm = ({ cardId }: { cardId: string }) => {
     formState: { errors },
     setValue,
   } = useForm<Data>({
-    defaultValues: async () => await axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard),
+    defaultValues:
+      cardId === null
+        ? {
+            nickname: '',
+            twitter: '',
+            instagramId: '',
+            githubId: '',
+            blog: '',
+            hashtags: [],
+            password: '',
+            customFields: [],
+          }
+        : async () => await axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard),
   });
   // { defaultValues: async () => axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard) })
   const removeHashtag = (index: number) => {
@@ -70,17 +80,40 @@ const CardForm = ({ cardId }: { cardId: string }) => {
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
       nickname: data.nickname,
       twitter: data.twitter,
-      hashtag: data.hashtag,
+      hashtags: data.hashtags,
       password: data.password,
     };
 
-    const hook = router.pathname === '/[id]/edit' ? createCard : updateCard;
-    console.log('allData: ', allData);
-    hook(allData, {
-      onSuccess: (data) => {
-        router.push(`/${data.data.newCard[0].id}`);
-      },
-    });
+    // const hook = router.pathname === '/[id]/edit' ? updateCard : createCard;
+    // console.log('allData: ', allData);
+    // hook(allData, {
+    //   onSuccess: (data) => {
+    //     router.push(`/${data.data.newCard[0].id}`);
+    //   },
+    // });
+
+    if (router.pathname === '/[id]/edit') {
+      updateCard(
+        {
+          cardId: cardId as string,
+          allData,
+        },
+        {
+          onSuccess: (data) => {
+            console.log('update 성공');
+            console.log('data.data[0].id: ', data.data[0].id);
+            router.push(`/${data.data[0].id}`);
+          },
+        },
+      );
+    } else if (router.pathname === '/default/edit') {
+      createCard(allData, {
+        onSuccess: (data) => {
+          console.log('create 성공');
+          router.push(`/${data.data.newCard[0].id}`);
+        },
+      });
+    }
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
@@ -91,7 +124,7 @@ const CardForm = ({ cardId }: { cardId: string }) => {
   const instagramId = watch('instagramId');
   const githubId = watch('githubId');
   const blog = watch('blog');
-  const hashtag = watch('hashtag');
+  const hashtag = watch('hashtags');
 
   const Dropdown = () =>
     hashtagInput && (
@@ -158,7 +191,7 @@ const CardForm = ({ cardId }: { cardId: string }) => {
               placeholder=""
               className="input w-full max-w-xs shadow-sm"
               value={hashtagInput}
-              {...register('hashtag')}
+              {...register('hashtags')}
               onChange={handleHashtagInputChange}
               onKeyDown={handleHashtagInputKeyDown}
               name="hashtag"
