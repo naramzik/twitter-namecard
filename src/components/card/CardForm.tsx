@@ -124,6 +124,16 @@ const CardForm = () => {
               내용
               <textarea {...register(`customFields.${index}.contents`)} />
             </label>
+            <button
+              onClick={() =>
+                setValue(
+                  'customFields',
+                  [...watch('customFields')].filter((_, i) => i !== index),
+                )
+              }
+            >
+              X
+            </button>
           </div>
         ))}
 
