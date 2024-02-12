@@ -148,7 +148,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <div>{hashtag}</div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-10">
         {/* maxLength는 임시값 */}
         <fieldset>
           <legend className="font-bold">명함정보</legend>
@@ -261,41 +261,38 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           </label>
         </fieldset>
         <fieldset>
+          <legend className="font-bold">자유 형식</legend>
           {watch('customFields')?.map((_, index) => (
             <div className="flex flex-col gap-2 my-2" key={index}>
               <label>
-                제목
                 <input
                   type="text"
+                  placeholder="자유형식 제목"
                   className="input w-full shadow-sm placeholder:text-sm"
                   {...register(`customFields.${index}.key`)}
                 />
               </label>
               <label>
-                내용
                 <textarea
-                  className="min-h-24 resize-y textarea shadow-sm"
+                  placeholder="자유형식 내용"
+                  className="min-h-24 resize-y textarea shadow-sm w-full placeholder:text-sm"
                   {...register(`customFields.${index}.contents`)}
                 />
               </label>
             </div>
           ))}
-
-          <button
-            type="button"
-            className="w-full h-10 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
-            onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
-          >
-            자유형식 항목 추가하기
-          </button>
-
-          <button
-            type="submit"
-            className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold"
-          >
-            저장하기
-          </button>
         </fieldset>
+        <button
+          type="button"
+          className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
+          onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+        >
+          자유형식 항목 추가하기
+        </button>
+
+        <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
+          저장하기
+        </button>
       </form>
     </div>
   );
