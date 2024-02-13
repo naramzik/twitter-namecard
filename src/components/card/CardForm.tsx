@@ -225,67 +225,30 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </div>
           </label>
         </fieldset>
-        <fieldset className="flex flex-col">
-          <legend className="font-bold">소셜 미디어</legend>
-          <label>
-            <div className="label">
-              <span className="label-text">인스타그램</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('instagramId')}
-              name="instagramId"
-            />
-          </label>
-          <label>
-            <div className="label">
-              <span className="label-text">깃허브</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('githubId')}
-              name="githubId"
-            />
-          </label>
-          <label>
-            <div className="label">
-              <span className="label-text">블로그</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('blog')}
-              name="blog"
-            />
-          </label>
-        </fieldset>
-        <fieldset>
-          <legend className="font-bold">자유 형식</legend>
-          {watch('customFields')?.map((_, index) => (
-            <div className="flex flex-col gap-2 my-2" key={index}>
-              <label>
-                <input
-                  type="text"
-                  placeholder="자유형식 제목"
-                  className="input w-full shadow-sm placeholder:text-sm"
-                  {...register(`customFields.${index}.key`)}
-                />
-              </label>
-              <label>
-                <textarea
-                  placeholder="자유형식 내용"
-                  className="min-h-24 resize-y textarea shadow-sm w-full placeholder:text-sm"
-                  {...register(`customFields.${index}.contents`)}
-                />
-              </label>
-            </div>
-          ))}
-        </fieldset>
+
+        {watch('customFields').map((_, index) => (
+          <div key={index}>
+            <label>
+              제목
+              <input type="text" {...register(`customFields.${index}.key`)} />
+            </label>
+            <label>
+              내용
+              <textarea {...register(`customFields.${index}.contents`)} />
+            </label>
+            <button
+              onClick={() =>
+                setValue(
+                  'customFields',
+                  [...watch('customFields')].filter((_, i) => i !== index),
+                )
+              }
+            >
+              X
+            </button>
+          </div>
+        ))}
+
         <button
           type="button"
           className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
