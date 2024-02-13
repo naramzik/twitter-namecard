@@ -82,7 +82,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const onSubmit = (data: Data) => {
-    console.log('data: ', data);
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
@@ -91,14 +90,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       hashtags: data.hashtags,
       password: data.password,
     };
-
-    // const hook = router.pathname === '/[id]/edit' ? updateCard : createCard;
-    // console.log('allData: ', allData);
-    // hook(allData, {
-    //   onSuccess: (data) => {
-    //     router.push(`/${data.data.newCard[0].id}`);
-    //   },
-    // });
 
     if (router.pathname === '/[id]/edit') {
       updateCard(
