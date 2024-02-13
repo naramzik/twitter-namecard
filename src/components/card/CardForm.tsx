@@ -22,7 +22,6 @@ interface CustomFields {
 }
 
 const CardForm = ({ cardId }: { cardId: string | null }) => {
-  console.log('cardId cardForm: ', cardId);
   const router = useRouter();
   const { mutate: createCard } = useCreateCard();
   const { mutate: updateCard } = useUpdateCard();
@@ -48,7 +47,16 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             password: '',
             customFields: [],
           }
-        : async () => await axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard),
+        : async () =>
+            await axios.get(`/api/cards/${cardId}`).then((res) => {
+              const { socialMedia, ...rest } = res.data.foundCard;
+              return {
+                ...rest,
+                blog: socialMedia.blog,
+                githubId: socialMedia.github,
+                instagramId: socialMedia.instagram,
+              };
+            }),
   });
   // { defaultValues: async () => axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard) })
   const removeHashtag = (index: number) => {
@@ -100,8 +108,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         },
         {
           onSuccess: (data) => {
-            console.log('update 성공');
-            console.log('data.data[0].id: ', data.data[0].id);
             router.push(`/${data.data[0].id}`);
           },
         },
@@ -109,7 +115,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
-          console.log('create 성공');
           router.push(`/${data.data.newCard[0].id}`);
         },
       });
