@@ -169,7 +169,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               name="nickname"
             />
             <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.twitter && requiredSentence}</span>
+              <span className="label-text text-red-500 font-semibold">{errors.nickname && requiredSentence}</span>
             </div>
           </label>
           <label className="form-control w-full max-w-xs">
@@ -181,7 +181,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               placeholder=""
               className="input w-full max-w-xs shadow-sm"
               {...register('twitter', { required: true })}
-              name="twitterId"
+              name="twitter"
             />
             <div className="label">
               <span className="label-text text-red-500 font-semibold"> {errors.twitter && requiredSentence}</span>
