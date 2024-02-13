@@ -7,15 +7,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET': {
       await errorHandler(req, res, async () => {
-        const { nickname } = req.body;
-        if (!nickname) {
+        const twitterId = req.query.twitterId as string;
+
+        if (!twitterId) {
           return res.status(400).json({
             message: '유저이름을 적어주세요.',
           });
         }
         const USER_AGENT =
           'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/120.0.0.0 Mobile/15E148 Safari/604.1';
-        const url = `${process.env.NITTER_HOST}/${nickname}`;
+        const url = `${process.env.NITTER_HOST}/${twitterId}`;
         const response = await axios.get(url, {
           headers: {
             'User-Agent': USER_AGENT,
