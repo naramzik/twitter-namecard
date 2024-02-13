@@ -82,6 +82,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const onSubmit = (data: Data) => {
+    console.log('data: ', data);
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
