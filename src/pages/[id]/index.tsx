@@ -8,9 +8,6 @@ import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
-  console.log('card: ', card);
-  const path = `/${card.id}/login`;
-
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet);
   };
@@ -37,11 +34,17 @@ const Page = ({ card }: { card: CardType }) => {
           <div className="text-sm">명함 전달하기</div>
         </button>
         <div className="flex justify-center items-center">
-          <Link href={path} className="w-16 btn-secondary flex flex-col justify-center items-center">
+          <Link
+            href={`/${card.id}/login?mode=edit`}
+            className="w-16 btn-secondary flex flex-col justify-center items-center"
+          >
             <Image src="/edit.png" width={25} height={25} alt="수정 이미지" />
             <div className="text-sm">수정하기</div>
           </Link>
-          <Link href={path} className="w-16 btn-secondary flex flex-col justify-center items-center">
+          <Link
+            href={`/${card.id}/login?mode=delete`}
+            className="w-16 btn-secondary flex flex-col justify-center items-center"
+          >
             <Image src="/delete.png" width={25} height={25} alt="삭제 이미지" />
             <div className="text-sm">삭제하기</div>
           </Link>
