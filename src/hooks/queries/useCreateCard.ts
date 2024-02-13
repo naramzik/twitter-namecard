@@ -13,7 +13,7 @@ interface SubmittedCard {
   };
   nickname: string;
   twitter: string;
-  hashtag: string;
+  hashtags: string[];
   password: string;
 }
 

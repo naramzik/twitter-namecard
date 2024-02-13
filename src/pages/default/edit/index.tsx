@@ -2,7 +2,7 @@ import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 
 const Page = () => {
-  return <CardForm />;
+  return <CardForm cardId={null} />;
 };
 
 Page.getLayout = function getLayout(page) {
