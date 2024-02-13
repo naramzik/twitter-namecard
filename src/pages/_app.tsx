@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <Toaster />
       <NiceModal.Provider>
-        <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>,
+        <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
       </NiceModal.Provider>
     </QueryClientProvider>
   );
