@@ -82,7 +82,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const onSubmit = (data: Data) => {
-    console.log('data: ', data);
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
@@ -91,14 +90,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       hashtags: data.hashtags,
       password: data.password,
     };
-
-    // const hook = router.pathname === '/[id]/edit' ? updateCard : createCard;
-    // console.log('allData: ', allData);
-    // hook(allData, {
-    //   onSuccess: (data) => {
-    //     router.push(`/${data.data.newCard[0].id}`);
-    //   },
-    // });
 
     if (router.pathname === '/[id]/edit') {
       updateCard(
@@ -169,7 +160,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               name="nickname"
             />
             <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.twitter && requiredSentence}</span>
+              <span className="label-text text-red-500 font-semibold">{errors.nickname && requiredSentence}</span>
             </div>
           </label>
           <label className="form-control w-full max-w-xs">
@@ -181,7 +172,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               placeholder=""
               className="input w-full max-w-xs shadow-sm"
               {...register('twitter', { required: true })}
-              name="twitterId"
+              name="twitter"
             />
             <div className="label">
               <span className="label-text text-red-500 font-semibold"> {errors.twitter && requiredSentence}</span>
