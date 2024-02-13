@@ -48,7 +48,16 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             password: '',
             customFields: [],
           }
-        : async () => await axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard),
+        : async () =>
+            await axios.get(`/api/cards/${cardId}`).then((res) => {
+              const { socialMedia, ...rest } = res.data.foundCard;
+              return {
+                ...rest,
+                blog: socialMedia.blog,
+                githubId: socialMedia.github,
+                instagramId: socialMedia.instagram,
+              };
+            }),
   });
   // { defaultValues: async () => axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard) })
   const removeHashtag = (index: number) => {
