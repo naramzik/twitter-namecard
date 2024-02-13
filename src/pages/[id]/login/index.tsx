@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
@@ -13,22 +14,38 @@ const Page: NextPageWithLayout = () => {
 
   const router = useRouter();
   const cardId = router.query.id as string;
-  const path = `/${cardId}/edit`;
+  const mode = router.query.mode;
 
   const handleSubmitHandler = (data: Password) => {
-    postPassword(
-      {
-        cardId,
-        password: data.password,
-      },
-      {
-        onSuccess: () => {
-          console.log(cardId, data.password);
-          console.log('성공');
-          router.push(path);
-        },
-      },
-    );
+    switch (mode) {
+      case 'edit':
+        postPassword(
+          {
+            cardId,
+            password: data.password,
+          },
+          {
+            onSuccess: () => {
+              router.push(`/${cardId}/edit`);
+            },
+          },
+        );
+        break;
+      case 'delete':
+        postPassword(
+          {
+            cardId,
+            password: data.password,
+          },
+          {
+            onSuccess: () => {
+              axios.delete(`/api/cards/${cardId}`);
+              router.push('/');
+            },
+          },
+        );
+        break;
+    }
   };
 
   const {
