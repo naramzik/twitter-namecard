@@ -22,7 +22,6 @@ interface CustomFields {
 }
 
 const CardForm = ({ cardId }: { cardId: string | null }) => {
-  console.log('cardId cardForm: ', cardId);
   const router = useRouter();
   const { mutate: createCard } = useCreateCard();
   const { mutate: updateCard } = useUpdateCard();
@@ -83,7 +82,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const onSubmit = (data: Data) => {
-    console.log('data: ', data);
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
@@ -109,8 +107,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         },
         {
           onSuccess: (data) => {
-            console.log('update 성공');
-            console.log('data.data[0].id: ', data.data[0].id);
             router.push(`/${data.data[0].id}`);
           },
         },
@@ -118,7 +114,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
-          console.log('create 성공');
           router.push(`/${data.data.newCard[0].id}`);
         },
       });
