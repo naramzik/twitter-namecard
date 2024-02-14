@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -118,6 +119,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     }
   };
 
+  const searchHandler = () => {
+    console.log('search');
+  };
+
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
 
@@ -183,13 +188,23 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 트위터 아이디<span className="text-xs text-red-500 ml-1">*</span>
               </span>
             </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitterId', { required: true })}
-              name="twitterId"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                {...register('twitterId', { required: true })}
+                name="twitterId"
+              />
+              <Image
+                onClick={searchHandler}
+                className="absolute top-2 right-2"
+                width={20}
+                height={20}
+                src="/search.png"
+                alt="검색"
+              />
+            </div>
             {errors.twitterId && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">{requiredSentence}</span>
@@ -219,12 +234,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             <div className="label pb-0.5">
               <span className="label-text">바이오(자기소개)</span>
             </div>
-            <input
-              type="text"
+            <textarea
+              className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
               placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitterBio', { required: true })}
-              name="twitterBio"
+              {...register('twitterBio')}
             />
           </label>
           <label className="form-control w-full max-w-xs">
@@ -235,7 +248,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               type="text"
               placeholder=""
               className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitterImage', { required: true })}
+              {...register('twitterImage')}
               name="twitterImage"
             />
           </label>
