@@ -145,7 +145,24 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-10">
-        {/* maxLength는 임시값 */}
+        <fieldset>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">비밀번호</span>
+            </div>
+            <input
+              type="password"
+              placeholder="이후에 명함을 수정, 삭제할 때 필요합니다."
+              className="input w-full max-w-xs shadow-sm placeholder:text-sm"
+              {...register('password', { required: true })}
+              name="password"
+            />
+            <div className="label">
+              <span className="label-text text-red-500 font-semibold">{errors.password && requiredSentence}</span>
+            </div>
+          </label>
+        </fieldset>
+
         <fieldset>
           <legend className="font-bold">명함정보</legend>
           <label className="form-control w-full max-w-xs">
@@ -212,34 +229,85 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 </div>
               ))}
             </div>
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold"> {errors.hashtag && requiredSentence}</span>
-            </div>
           </label>
         </fieldset>
 
-        {watch('customFields').map((_, index) => (
-          <div key={index}>
-            <label>
-              제목
-              <input type="text" {...register(`customFields.${index}.key`)} />
-            </label>
-            <label>
-              내용
-              <textarea {...register(`customFields.${index}.contents`)} />
-            </label>
-            <button
-              onClick={() =>
-                setValue(
-                  'customFields',
-                  [...watch('customFields')].filter((_, i) => i !== index),
-                )
-              }
-            >
-              X
-            </button>
-          </div>
-        ))}
+        <fieldset>
+          <legend className="font-bold">SNS</legend>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">인스타그램 아이디</span>
+            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="input w-full max-w-xs shadow-sm"
+              {...register('instagramId')}
+              name="instagramId"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">깃허브 아이디</span>
+            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="input w-full max-w-xs shadow-sm"
+              {...register('githubId')}
+              name="githubId"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">블로그</span>
+            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="input w-full max-w-xs shadow-sm"
+              {...register('blog')}
+              name="blog"
+            />
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend className="font-bold">자유형식</legend>
+          {watch('customFields')?.map((_, index) => (
+            <div key={index} className="pt-2 flex justify-between">
+              <div className="flex flex-col w-full">
+                <label className="form-control w-full max-w-xs">
+                  <input
+                    className="input w-full max-w-xs shadow-sm placeholder:text-sm text-sm"
+                    type="text"
+                    placeholder="제목"
+                    {...register(`customFields.${index}.key`)}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs pt-1">
+                  <textarea
+                    className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-sm"
+                    placeholder="내용"
+                    {...register(`customFields.${index}.contents`)}
+                  />
+                </label>
+              </div>
+              <div>
+                <button
+                  className="text-xl"
+                  onClick={() =>
+                    setValue(
+                      'customFields',
+                      [...watch('customFields')].filter((_, i) => i !== index),
+                    )
+                  }
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          ))}
+        </fieldset>
 
         <button
           type="button"
