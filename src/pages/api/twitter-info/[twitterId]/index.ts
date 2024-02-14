@@ -26,9 +26,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const $ = cheerio.load(html);
 
         const bio = $(`.profile-bio`).text();
+        const nickname = $(`.profile-card-fullname`).text();
         const image = `${process.env.NITTER_HOST}${$('.profile-card-avatar').attr('href')}`;
 
         res.status(200).json({
+          nickname,
           bio,
           image,
         });
