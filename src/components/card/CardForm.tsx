@@ -146,63 +146,74 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-10">
         <fieldset>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">비밀번호</span>
-            </div>
+          <legend className="font-bold">
+            비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
+          </legend>
+          <label className="form-control w-full max-w-xs mt-2">
             <input
               type="password"
-              placeholder="이후에 명함을 수정, 삭제할 때 필요합니다."
-              className="input w-full max-w-xs shadow-sm placeholder:text-sm"
+              placeholder="명함을 수정, 삭제할 때 필요해요."
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('password', { required: true })}
               name="password"
             />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.password && requiredSentence}</span>
-            </div>
+            {errors.password && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500 ">{requiredSentence}</span>
+              </div>
+            )}
           </label>
         </fieldset>
 
         <fieldset>
-          <legend className="font-bold">명함정보</legend>
+          <legend className="font-bold">트위터 정보</legend>
           <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">닉네임</span>
+            <div className="label pb-0.5">
+              <span className="label-text">
+                트위터 아이디<span className="text-xs text-red-500 ml-1">*</span>
+              </span>
             </div>
             <input
               type="text"
               placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('nickname', { required: true })}
-              name="nickname"
-            />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.nickname && requiredSentence}</span>
-            </div>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">트위터 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('twitter', { required: true })}
               name="twitter"
             />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold"> {errors.twitter && requiredSentence}</span>
-            </div>
+            {errors.twitter && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500 ">{requiredSentence}</span>
+              </div>
+            )}
           </label>
           <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">해시태그</span>
+            <div className="label pb-0.5">
+              <span className="label-text">
+                닉네임<span className="text-xs text-red-500 ml-1">*</span>
+              </span>
             </div>
             <input
               type="text"
               placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+              {...register('nickname', { required: true })}
+              name="nickname"
+            />
+            {errors.nickname && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500">{requiredSentence}</span>
+              </div>
+            )}
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend className="font-bold">해시태그</legend>
+          <label className="form-control w-full max-w-xs mt-2">
+            <input
+              type="text"
+              placeholder="엔터를 쳐서 저장할 수  있어요."
+              className="input h-10 w-full max-w-xs shadow-s placeholder:text-sm placeholder:text-xs"
               value={hashtagInput}
               {...register('hashtags')}
               onChange={handleHashtagInputChange}
@@ -235,37 +246,37 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         <fieldset>
           <legend className="font-bold">SNS</legend>
           <label className="form-control w-full max-w-xs">
-            <div className="label">
+            <div className="label pb-0.5">
               <span className="label-text">인스타그램 아이디</span>
             </div>
             <input
               type="text"
               placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('instagramId')}
               name="instagramId"
             />
           </label>
           <label className="form-control w-full max-w-xs">
-            <div className="label">
+            <div className="label pb-0.5">
               <span className="label-text">깃허브 아이디</span>
             </div>
             <input
               type="text"
               placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('githubId')}
               name="githubId"
             />
           </label>
           <label className="form-control w-full max-w-xs">
-            <div className="label">
+            <div className="label pb-0.5">
               <span className="label-text">블로그</span>
             </div>
             <input
               type="text"
               placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('blog')}
               name="blog"
             />
@@ -274,19 +285,19 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         <fieldset>
           <legend className="font-bold">자유형식</legend>
           {watch('customFields')?.map((_, index) => (
-            <div key={index} className="pt-2 flex justify-between">
+            <div key={index} className=" pt-2 pb-4 flex justify-between">
               <div className="flex flex-col w-full">
                 <label className="form-control w-full max-w-xs">
                   <input
-                    className="input w-full max-w-xs shadow-sm placeholder:text-sm text-sm"
+                    className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs text-sm"
                     type="text"
                     placeholder="제목"
                     {...register(`customFields.${index}.key`)}
                   />
                 </label>
-                <label className="form-control w-full max-w-xs pt-1">
+                <label className="form-control w-full max-w-xs pt-2">
                   <textarea
-                    className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-sm"
+                    className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
                     placeholder="내용"
                     {...register(`customFields.${index}.contents`)}
                   />
@@ -294,7 +305,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
               <div>
                 <button
-                  className="text-xl"
+                  className="text-3xl text-gray-500"
                   onClick={() =>
                     setValue(
                       'customFields',
@@ -302,7 +313,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                     )
                   }
                 >
-                  x
+                  -
                 </button>
               </div>
             </div>
