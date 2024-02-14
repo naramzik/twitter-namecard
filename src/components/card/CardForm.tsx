@@ -6,8 +6,10 @@ import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
 
 interface Data {
-  nickname: string;
-  twitter: string;
+  twitterNickname: string;
+  twitterId: string;
+  twitterBio: string;
+  twitterImage: string;
   instagramId: string;
   githubId: string;
   blog: string;
@@ -38,8 +40,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     defaultValues:
       cardId === null
         ? {
-            nickname: '',
-            twitter: '',
+            twitterNickname: '',
+            twitterId: '',
+            twitterBio: '',
+            twitterImage: '',
             instagramId: '',
             githubId: '',
             blog: '',
@@ -85,8 +89,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
-      nickname: data.nickname,
-      twitter: data.twitter,
+      nickname: data.twitterNickname,
+      twitter: data.twitterId,
+      bio: data.twitterBio,
+      image: data.twitterImage,
       hashtags: data.hashtags,
       password: data.password,
     };
@@ -115,8 +121,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
 
-  const nickname = watch('nickname');
-  const twitter = watch('twitter');
+  const twitterNickname = watch('twitterNickname');
+  const twitterId = watch('twitterId');
+  const twitterBio = watch('twitterBio');
+  const twitterImage = watch('twitterImage');
   const instagramId = watch('instagramId');
   const githubId = watch('githubId');
   const blog = watch('blog');
@@ -135,8 +143,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
         <div className="card-body">
-          <h1>{nickname}</h1>
-          <div>{twitter ? `@${twitter}` : ''}</div>
+          <h1>{twitterNickname}</h1>
+          <div>{twitterId ? `@${twitterId}` : ''}</div>
+          <div>{twitterBio}</div>
+          <div>{twitterImage}</div>
           <div>{hashtags}</div>
           <div>{instagramId}</div>
           <div>{githubId}</div>
@@ -144,7 +154,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <div>{hashtag}</div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-10">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-8">
         <fieldset>
           <legend className="font-bold">
             비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
@@ -152,7 +162,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <label className="form-control w-full max-w-xs mt-2">
             <input
               type="password"
-              placeholder="명함을 수정, 삭제할 때 필요해요."
+              placeholder="명함을 수정하거나 삭제할 때 필요해요."
               className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('password', { required: true })}
               name="password"
@@ -177,10 +187,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               type="text"
               placeholder=""
               className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitter', { required: true })}
-              name="twitter"
+              {...register('twitterId', { required: true })}
+              name="twitterId"
             />
-            {errors.twitter && (
+            {errors.twitterId && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">{requiredSentence}</span>
               </div>
@@ -196,14 +206,38 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               type="text"
               placeholder=""
               className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('nickname', { required: true })}
-              name="nickname"
+              {...register('twitterNickname', { required: true })}
+              name="twitterNickname"
             />
-            {errors.nickname && (
+            {errors.twitterNickname && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500">{requiredSentence}</span>
               </div>
             )}
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label pb-0.5">
+              <span className="label-text">바이오(자기소개)</span>
+            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+              {...register('twitterBio', { required: true })}
+              name="twitterBio"
+            />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label pb-0.5">
+              <span className="label-text">인장(프로필 이미지)</span>
+            </div>
+            <input
+              type="text"
+              placeholder=""
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+              {...register('twitterImage', { required: true })}
+              name="twitterImage"
+            />
           </label>
         </fieldset>
 
