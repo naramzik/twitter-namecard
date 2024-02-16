@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
@@ -31,6 +31,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
   const {
     register,
     handleSubmit,
@@ -122,7 +123,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
 
   const searchHandler = async () => {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
-    setValue('twitterNickname', res.data.name);
+    setIsTwitterFieldVisible(true);
+    setValue('twitterNickname', res.data.nickname);
     setValue('twitterBio', res.data.bio);
     setValue('twitterImage', res.data.image);
   };
@@ -148,6 +150,13 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       </ul>
     );
 
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const { ...rest } = register('twitterImage');
+  const fileUploadHandler = () => {
+    // const file = event.target.files[0];
+    // TODO: 서버에 프로필 파일 업로드해서 URL 받아오기
+    setValue('twitterImage', 'https://www.wonju.go.kr/DATA/bbs/136/202107031124275466AEAEDB644417BBG.jpg');
+  };
   return (
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
@@ -184,86 +193,108 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           </label>
         </fieldset>
 
+        {/* -------------------------------------------------------------------------------------- */}
+        {/* 트위터 정보필드 */}
+
         <fieldset>
-          <legend className="font-bold">트위터 정보</legend>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">
-                트위터 아이디<span className="text-xs text-red-500 ml-1">*</span>
-              </span>
+          <legend className="font-bold">
+            프로필 가져오기 <span className="text-xs text-red-500 ml-1">*</span>
+          </legend>
+
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="트위터 아이디를 입력해 주세요."
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+              {...register('twitterId', { required: true })}
+              name="twitterId"
+            />
+            <Image
+              onClick={searchHandler}
+              className="absolute top-2 right-10"
+              width={20}
+              height={20}
+              src="/search.png"
+              alt="검색"
+            />
+          </div>
+          {errors.twitterId && (
+            <div className="label pt-0.5">
+              <span className="label-text text-red-500 ">{requiredSentence}</span>
             </div>
-            <div className="relative">
+          )}
+        </fieldset>
+        {isTwitterFieldVisible && (
+          <fieldset>
+            <legend className="font-bold">프로필</legend>
+
+            {/* ---------- 인장 끝 ---------- */}
+            <label className="form-control w-full max-w-xs">
+              <div className="label pb-0.5">
+                <span className="label-text">
+                  닉네임<span className="text-xs text-red-500 ml-1">*</span>
+                </span>
+              </div>
               <input
                 type="text"
                 placeholder=""
                 className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-                {...register('twitterId', { required: true })}
-                name="twitterId"
+                {...register('twitterNickname', { required: true })}
+                name="twitterNickname"
               />
-              <Image
-                onClick={searchHandler}
-                className="absolute top-2 right-2"
-                width={20}
-                height={20}
-                src="/search.png"
-                alt="검색"
+              {errors.twitterNickname && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500">{requiredSentence}</span>
+                </div>
+              )}
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <div className="label pb-0.5">
+                <span className="label-text">자기소개</span>
+              </div>
+              <textarea
+                className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
+                placeholder=""
+                {...register('twitterBio')}
               />
-            </div>
-            {errors.twitterId && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500 ">{requiredSentence}</span>
+            </label>
+            {/* ---------- 인장 시작 ---------- */}
+            <label className="form-control w-full max-w-xs">
+              {/* 라벨 - 제목(Profile picture) */}
+              <div className="label pb-0.5">
+                <span className="label-text">
+                  <b>이미지</b>
+                </span>
               </div>
-            )}
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">
-                닉네임<span className="text-xs text-red-500 ml-1">*</span>
-              </span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitterNickname', { required: true })}
-              name="twitterNickname"
-            />
-            {errors.twitterNickname && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500">{requiredSentence}</span>
-              </div>
-            )}
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">바이오(자기소개)</span>
-            </div>
-            <textarea
-              className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
-              placeholder=""
-              {...register('twitterBio')}
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">인장(프로필 이미지)</span>
-            </div>
-            <input
-              type="file"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('twitterImage')}
-              name="twitterImage"
-            />
-          </label>
-        </fieldset>
+              {/* 프로필 이미지가 들어갈 부분 */}
+              {twitterImage && <img src={twitterImage} alt="프로필 이미지" className="w-40 h-40" />}
+              <input
+                {...rest}
+                type="file"
+                ref={hiddenInputRef}
+                placeholder=""
+                className="hidden input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                name="twitterImage"
+                onClick={fileUploadHandler}
+              />
+              {/* 업로드 버튼이 들어갈 부분(UPLOAD IMAGE) */}
+              <button
+                className="btn btn-success text-white btn-sm text-xs w-1/2 mt-1"
+                onClick={() => hiddenInputRef.current?.click()}
+              >
+                이미지 변경하기
+              </button>
+            </label>
+          </fieldset>
+        )}
+        {/* -------------------------------------------------------------------------------------- */}
 
         <fieldset>
           <legend className="font-bold">해시태그</legend>
           <label className="form-control w-full max-w-xs mt-2">
             <input
               type="text"
-              placeholder="엔터를 쳐서 저장할 수  있어요."
+              placeholder="엔터를 쳐서 태그를 저장할 수  있어요."
               className="input h-10 w-full max-w-xs shadow-s placeholder:text-sm placeholder:text-xs"
               value={hashtagInput}
               {...register('hashtags')}
@@ -296,42 +327,44 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
 
         <fieldset>
           <legend className="font-bold">SNS</legend>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">인스타그램 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('instagramId')}
-              name="instagramId"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">깃허브 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('githubId')}
-              name="githubId"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label pb-0.5">
-              <span className="label-text">블로그</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('blog')}
-              name="blog"
-            />
-          </label>
+          <div className="flex flex-col gap-2">
+            <label className="flex flex-row gap-3 form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">인스타그램 아이디</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-1/2 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('instagramId')}
+                name="instagramId"
+              />
+            </label>
+            <label className="form-control gap-3 flex flex-row  w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">깃허브 아이디</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input w-1/2 h-10 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('githubId')}
+                name="githubId"
+              />
+            </label>
+            <label className="form-control gap-3 flex flex-row  w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">블로그 주소</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-2/3 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('blog')}
+                name="blog"
+              />
+            </label>
+          </div>
         </fieldset>
         <fieldset>
           <legend className="font-bold">자유형식</legend>
