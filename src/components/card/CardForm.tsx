@@ -113,14 +113,18 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
+          console.log('저장하기 눌렀을 때 data: ', data);
           router.push(`/${data.data.newCard[0].id}`);
         },
       });
     }
   };
 
-  const searchHandler = () => {
-    console.log('search');
+  const searchHandler = async () => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
+    setValue('twitterNickname', res.data.name);
+    setValue('twitterBio', res.data.bio);
+    setValue('twitterImage', res.data.image);
   };
 
   const requiredSentence = <p>필수 문항입니다.</p>;
@@ -245,7 +249,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               <span className="label-text">인장(프로필 이미지)</span>
             </div>
             <input
-              type="text"
+              type="file"
               placeholder=""
               className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('twitterImage')}
