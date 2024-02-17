@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
+import { showToastErrorMessage, showToastLoadingMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
 
 interface Data {
   twitterNickname: string;
@@ -32,6 +33,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -121,14 +123,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     }
   };
 
-  const searchHandler = async () => {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
-    setIsTwitterFieldVisible(true);
-    setValue('twitterNickname', res.data.nickname);
-    setValue('twitterBio', res.data.bio);
-    setValue('twitterImage', res.data.image);
-  };
-
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
 
@@ -140,6 +134,25 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const githubId = watch('githubId');
   const blog = watch('blog');
   const hashtag = watch('hashtags');
+
+  const searchHandler = async () => {
+    try {
+      showToastLoadingMessage('데이터를 불러오는 중입니다.');
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
+      const twitterInfo = res.data;
+      setValue('twitterNickname', twitterInfo.nickname);
+      setValue('twitterBio', twitterInfo.bio);
+      setValue('twitterImage', twitterInfo.image);
+      showTwitterField();
+      showToastSuccessMessage('프로필을 가져왔습니다.');
+    } catch (error) {
+      showToastErrorMessage(error);
+    }
+  };
+
+  const showTwitterField = () => {
+    setIsTwitterFieldVisible(true);
+  };
 
   const Dropdown = () =>
     hashtagInput && (

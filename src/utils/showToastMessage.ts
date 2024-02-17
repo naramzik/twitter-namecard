@@ -18,3 +18,10 @@ export const showToastErrorMessage = (error: unknown) => {
 export const showToastSuccessMessage = (message: string) => {
   toastMessage(message, 'success');
 };
+
+export const showToastLoadingMessage = (message: string) => {
+  toast(message, {
+    icon: '⏳',
+    duration: 2000,
+  });
+};
