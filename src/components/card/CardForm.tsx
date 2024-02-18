@@ -33,7 +33,9 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
-
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const requiredSentence = <p>필수 문항입니다.</p>;
+  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const {
     register,
     handleSubmit,
@@ -66,7 +68,17 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               };
             }),
   });
-  // { defaultValues: async () => axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard) })
+
+  const twitterNickname = watch('twitterNickname');
+  const twitterId = watch('twitterId');
+  const twitterBio = watch('twitterBio');
+  const twitterImage = watch('twitterImage');
+  const instagramId = watch('instagramId');
+  const githubId = watch('githubId');
+  const blog = watch('blog');
+  const hashtag = watch('hashtags');
+  const { ...rest } = register('twitterImage');
+
   const removeHashtag = (index: number) => {
     setHashtags((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
   };
@@ -89,7 +101,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     setHashtagInput(event.target.value);
   };
 
-  const onSubmit = (data: Data) => {
+  const submitHandler = (data: Data) => {
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
@@ -116,24 +128,11 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
-          console.log('저장하기 눌렀을 때 data: ', data);
           router.push(`/${data.data.newCard[0].id}`);
         },
       });
     }
   };
-
-  const requiredSentence = <p>필수 문항입니다.</p>;
-  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
-
-  const twitterNickname = watch('twitterNickname');
-  const twitterId = watch('twitterId');
-  const twitterBio = watch('twitterBio');
-  const twitterImage = watch('twitterImage');
-  const instagramId = watch('instagramId');
-  const githubId = watch('githubId');
-  const blog = watch('blog');
-  const hashtag = watch('hashtags');
 
   const searchHandler = async () => {
     try {
@@ -163,13 +162,21 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       </ul>
     );
 
-  const hiddenInputRef = useRef<HTMLInputElement>(null);
-  const { ...rest } = register('twitterImage');
-  const fileUploadHandler = () => {
-    // const file = event.target.files[0];
+  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 업로드한 파일 가져오기
+    const file = e.target.files?.[0];
+
+    // 파일을 로컬에서 url로 변환
     // TODO: 서버에 프로필 파일 업로드해서 URL 받아오기
-    setValue('twitterImage', 'https://www.wonju.go.kr/DATA/bbs/136/202107031124275466AEAEDB644417BBG.jpg');
+    if (file) {
+      const binaryData = [file];
+      const urlImage = URL.createObjectURL(new Blob(binaryData, { type: 'image' }));
+
+      // 이미지 URL을 src로 설정
+      setValue('twitterImage', urlImage);
+    }
   };
+
   return (
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
@@ -185,7 +192,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <div>{hashtag}</div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-8">
+      <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
         <fieldset>
           <legend className="font-bold">
             비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
@@ -205,15 +212,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             )}
           </label>
         </fieldset>
-
-        {/* -------------------------------------------------------------------------------------- */}
-        {/* 트위터 정보필드 */}
-
         <fieldset>
           <legend className="font-bold">
             프로필 가져오기 <span className="text-xs text-red-500 ml-1">*</span>
           </legend>
-
           <div className="relative">
             <input
               type="text"
@@ -240,8 +242,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         {isTwitterFieldVisible && (
           <fieldset>
             <legend className="font-bold">프로필</legend>
-
-            {/* ---------- 인장 끝 ---------- */}
             <label className="form-control w-full max-w-xs">
               <div className="label pb-0.5">
                 <span className="label-text">
@@ -271,15 +271,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 {...register('twitterBio')}
               />
             </label>
-            {/* ---------- 인장 시작 ---------- */}
             <label className="form-control w-full max-w-xs">
-              {/* 라벨 - 제목(Profile picture) */}
               <div className="label pb-0.5">
                 <span className="label-text">
                   <b>이미지</b>
                 </span>
               </div>
-              {/* 프로필 이미지가 들어갈 부분 */}
               {twitterImage && <img src={twitterImage} alt="프로필 이미지" className="w-40 h-40" />}
               <input
                 {...rest}
@@ -288,9 +285,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 placeholder=""
                 className="hidden input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
                 name="twitterImage"
-                onClick={fileUploadHandler}
+                onChange={fileUploadHandler}
               />
-              {/* 업로드 버튼이 들어갈 부분(UPLOAD IMAGE) */}
               <button
                 className="btn btn-success text-white btn-sm text-xs w-1/2 mt-1"
                 onClick={() => hiddenInputRef.current?.click()}
@@ -300,8 +296,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </label>
           </fieldset>
         )}
-        {/* -------------------------------------------------------------------------------------- */}
-
         <fieldset>
           <legend className="font-bold">해시태그</legend>
           <label className="form-control w-full max-w-xs mt-2">
@@ -337,7 +331,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </div>
           </label>
         </fieldset>
-
         <fieldset>
           <legend className="font-bold">SNS</legend>
           <div className="flex flex-col gap-2">
@@ -416,7 +409,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </div>
           ))}
         </fieldset>
-
         <button
           type="button"
           className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
@@ -424,7 +416,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         >
           자유형식 항목 추가하기
         </button>
-
         <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
