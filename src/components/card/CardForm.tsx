@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
@@ -17,6 +17,7 @@ interface Data {
   blog: string;
   hashtags: string[];
   password: string;
+  passwordCheck: string;
   customFields: CustomFields[];
 }
 
@@ -37,6 +38,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
+  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
   const {
     register,
     handleSubmit,
@@ -156,6 +159,14 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const showTwitterField = () => {
     setIsTwitterFieldVisible(true);
   };
+  const nickname = watch('nickname');
+  const twitter = watch('twitter');
+  const instagramId = watch('instagramId');
+  const githubId = watch('githubId');
+  const blog = watch('blog');
+  const hashtag = watch('hashtags');
+  const password = watch('password');
+  const passwordCheck = watch('passwordCheck');
 
   const Dropdown = () =>
     hashtagInput && (
@@ -180,6 +191,15 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       setValue('twitterImage', urlImage);
     }
   };
+  useEffect(() => {
+    if (password !== passwordCheck) {
+      setIsPasswordDifferent(true);
+    } else {
+      setIsPasswordDifferent(false);
+    }
+  }, [password, passwordCheck]);
+
+  console.log('passwordCheck', passwordCheck);
 
   return (
     <div className="pb-12">
@@ -202,10 +222,13 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
           </legend>
           <label className="form-control w-full max-w-xs mt-2">
+            <div className="label">
+              <span className="label-text">비밀번호</span>
+            </div>
             <div className="flex h-10 relative">
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
-                placeholder="명함을 수정하거나 삭제할 때 필요해요."
+                placeholder="비밀번호를 입력해 주세요."
                 className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
                 {...register('password', { required: true })}
                 name="password"
@@ -225,6 +248,41 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             {errors.password && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">{requiredSentence}</span>
+              </div>
+            )}
+          </label>
+          <label className="form-control w-full max-w-xs mt-2">
+            <div className="label">
+              <span className="label-text">비밀번호 확인</span>
+            </div>
+            <div className="flex h-10 relative">
+              <input
+                type={isPasswordCheckVisible ? 'text' : 'password'}
+                placeholder="비밀번호를 한 번 더 입력해주세요."
+                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                {...register('passwordCheck', { required: true })}
+                name="passwordCheck"
+              />
+              <button
+                type="button"
+                className="h-10 absolute top-0 right-2"
+                onClick={() => setIsPasswordCheckVisible((prev) => !prev)}
+              >
+                {isPasswordCheckVisible ? (
+                  <Image width={22} height={22} src="/hide.png" alt="숨김" />
+                ) : (
+                  <Image width={22} height={22} src="/view.png" alt="보임" />
+                )}
+              </button>
+            </div>
+            {errors.passwordCheck && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500 ">{requiredSentence}</span>
+              </div>
+            )}
+            {isPasswordDifferent && passwordCheck !== '' && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500 ">비밀번호가 일치하지 않습니다.</span>
               </div>
             )}
           </label>
