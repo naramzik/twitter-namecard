@@ -36,6 +36,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const hiddenInputRef = useRef<HTMLInputElement | null>(null);
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const {
     register,
     handleSubmit,
@@ -201,13 +202,26 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
           </legend>
           <label className="form-control w-full max-w-xs mt-2">
-            <input
-              type="password"
-              placeholder="명함을 수정하거나 삭제할 때 필요해요."
-              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-              {...register('password', { required: true })}
-              name="password"
-            />
+            <div className="flex h-10 relative">
+              <input
+                type={isPasswordVisible ? 'text' : 'password'}
+                placeholder="명함을 수정하거나 삭제할 때 필요해요."
+                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                {...register('password', { required: true })}
+                name="password"
+              />
+              <button
+                type="button"
+                className="h-10 absolute top-0 right-2"
+                onClick={() => setIsPasswordVisible((prev) => !prev)}
+              >
+                {isPasswordVisible ? (
+                  <Image width={22} height={22} src="/hide.png" alt="숨김" />
+                ) : (
+                  <Image width={22} height={22} src="/view.png" alt="보임" />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">{requiredSentence}</span>
