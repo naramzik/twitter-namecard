@@ -19,4 +19,5 @@ export interface CardType {
   }[];
   password: string;
   updated_at: string;
+  bio: string;
 }
