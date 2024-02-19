@@ -9,7 +9,9 @@ import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
   const handleShowBottomSheet = () => {
-    NiceModal.show(BottomSheet);
+    NiceModal.show(BottomSheet, {
+      nickname: card.nickname,
+    });
   };
 
   return (
