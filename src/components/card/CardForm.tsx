@@ -271,12 +271,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 {...register('twitterBio')}
               />
             </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label pb-0.5">
+            <div className="form-control w-full max-w-xs">
+              <label className="label pb-0.5">
                 <span className="label-text">
                   <b>이미지</b>
                 </span>
-              </div>
+              </label>
               {twitterImage && <img src={twitterImage} alt="프로필 이미지" className="w-40 h-40" />}
               <input
                 {...rest}
@@ -288,12 +288,15 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 onChange={fileUploadHandler}
               />
               <button
+                type="button"
                 className="btn btn-success text-white btn-sm text-xs w-1/2 mt-1"
-                onClick={() => hiddenInputRef.current?.click()}
+                onClick={() => {
+                  hiddenInputRef.current?.click();
+                }}
               >
                 이미지 변경하기
               </button>
-            </label>
+            </div>
           </fieldset>
         )}
         <fieldset>
