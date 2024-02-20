@@ -216,7 +216,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <legend className="font-bold">
             프로필 가져오기 <span className="text-xs text-red-500 ml-1">*</span>
           </legend>
-          <div className="relative">
+          <div className="relative max-w-xs">
             <input
               type="text"
               placeholder="트위터 아이디를 입력해 주세요."
@@ -226,7 +226,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             />
             <Image
               onClick={searchHandler}
-              className="absolute top-2 right-10"
+              className="absolute top-2.5 right-3"
               width={20}
               height={20}
               src="/search.png"
