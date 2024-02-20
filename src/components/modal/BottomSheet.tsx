@@ -5,7 +5,7 @@ import QRModal from '@/components/modal/QRModal';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 
-const BottomSheet = () => {
+const BottomSheet = ({ nickname }: { nickname: string }) => {
   const { mutate: createShortLink } = useCreateShortLink();
   const modal = useModal();
 
@@ -20,6 +20,13 @@ const BottomSheet = () => {
         },
       },
     );
+  };
+
+  const handleShareOnTwitter = () => {
+    const share_text = `${nickname}의 명함을 공유합니다! 🎉`;
+    const link = window.location.href;
+    const twitterIntent = `https://twitter.com/intent/tweet?text=${share_text}&url=${link}`;
+    window.open(twitterIntent, '_blank');
   };
 
   const handleCloseBottomSheet = () => {
@@ -38,16 +45,15 @@ const BottomSheet = () => {
           QR코드로 공유하기
         </button>
         <CopyToClipboard
-          // text={`${BASE_URL}/${cardId}`}
-          text="https://www.wonju.go.kr/www/selectBbsNttView.do?key=203&bbsNo=136&nttNo=372323&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=7&integrDeptCode="
-          onCopy={() => showToastSuccessMessage('초대링크가 복사되었습니다.')}
+          text={`${window.location.href}`}
+          onCopy={() => showToastSuccessMessage('명함 링크가 복사되었습니다.')}
         >
           <button className="w-full flex gap-3 ml-3">
             <Image width={25} height={25} src="/copy.png" alt="링크 복사" />
             링크 복사하기
           </button>
         </CopyToClipboard>
-        <button className="flex gap-3 btn w-full btn-primary">
+        <button className="flex gap-3 btn w-full btn-primary" onClick={handleShareOnTwitter}>
           <Image width={25} height={25} src="/twitter.png" alt="트위터" />
           트위터에 공유하기
         </button>
