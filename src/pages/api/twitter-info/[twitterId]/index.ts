@@ -14,12 +14,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const USER_AGENT =
     'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/120.0.0.0 Mobile/15E148 Safari/604.1';
   const url = `${process.env.NITTER_HOST}/${twitterId}`;
-  const response = await axios.get(url, {
-    headers: {
-      'User-Agent': USER_AGENT,
-    },
-  });
-  const html = response.data;
+  const response = await axios
+    .get(url, {
+      headers: {
+        'User-Agent': USER_AGENT,
+      },
+    })
+    .catch(function (error) {
+      if (error) {
+        throw res.status(404).json({ message: '카드를 찾을 수 없습니다.' });
+      }
+    });
+
+  const html = response && response.data;
   const $ = cheerio.load(html);
 
   const bio = $(`.profile-bio`).text();
