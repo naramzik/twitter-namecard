@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
@@ -39,7 +39,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
-  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
   const {
     register,
     handleSubmit,
@@ -186,10 +185,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     }
   };
 
-  useEffect(() => {
-    setIsPasswordDifferent(passwordCheck !== '' && password !== passwordCheck);
-  }, [password, passwordCheck]);
-
   return (
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
@@ -270,7 +265,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 <span className="label-text text-red-500 ">{requiredSentence}</span>
               </div>
             )}
-            {isPasswordDifferent && passwordCheck !== '' && (
+
+            {password !== passwordCheck && passwordCheck !== '' && passwordCheck !== undefined && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">비밀번호가 일치하지 않습니다.</span>
               </div>
