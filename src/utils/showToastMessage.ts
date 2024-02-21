@@ -18,3 +18,21 @@ export const showToastErrorMessage = (error: unknown) => {
 export const showToastSuccessMessage = (message: string) => {
   toastMessage(message, 'success');
 };
+
+export const showToastLoadingMessage = (message: string) => {
+  toast(message, {
+    icon: '⏳',
+    duration: 2000,
+  });
+};
+
+export const showToastPromiseMessage = (promise, message) => {
+  toast.promise(promise, {
+    loading: message.loading,
+    success: message.success,
+    error: (error) => {
+      console.log('error', error);
+      return error.response.data.message;
+    },
+  });
+};

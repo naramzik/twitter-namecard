@@ -1,13 +1,17 @@
 import axios from 'axios';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
+import { showToastPromiseMessage } from '@/utils/showToastMessage';
 
 interface Data {
-  nickname: string;
-  twitter: string;
+  twitterNickname: string;
+  twitterId: string;
+  twitterBio: string;
+  twitterImage: string;
   instagramId: string;
   githubId: string;
   blog: string;
@@ -28,6 +32,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
+  const hiddenInputRef = useRef<HTMLInputElement | null>(null);
+  const requiredSentence = <p>필수 문항입니다.</p>;
+  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const {
     register,
     handleSubmit,
@@ -38,8 +46,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     defaultValues:
       cardId === null
         ? {
-            nickname: '',
-            twitter: '',
+            twitterNickname: '',
+            twitterId: '',
+            twitterBio: '',
+            twitterImage: '',
             instagramId: '',
             githubId: '',
             blog: '',
@@ -58,7 +68,17 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               };
             }),
   });
-  // { defaultValues: async () => axios.get(`/api/cards/${cardId}`).then((res) => res.data.foundCard) })
+
+  const twitterNickname = watch('twitterNickname');
+  const twitterId = watch('twitterId');
+  const twitterBio = watch('twitterBio');
+  const twitterImage = watch('twitterImage');
+  const instagramId = watch('instagramId');
+  const githubId = watch('githubId');
+  const blog = watch('blog');
+  const hashtag = watch('hashtags');
+  const { ref: registerRef, ...rest } = register('twitterImage');
+
   const removeHashtag = (index: number) => {
     setHashtags((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
   };
@@ -81,12 +101,14 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     setHashtagInput(event.target.value);
   };
 
-  const onSubmit = (data: Data) => {
+  const submitHandler = (data: Data) => {
     const allData = {
       customFields: data.customFields,
       socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
-      nickname: data.nickname,
-      twitter: data.twitter,
+      nickname: data.twitterNickname,
+      twitter: data.twitterId,
+      bio: data.twitterBio,
+      image: data.twitterImage,
       hashtags: data.hashtags,
       password: data.password,
     };
@@ -112,15 +134,27 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     }
   };
 
-  const requiredSentence = <p>필수 문항입니다.</p>;
-  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
+  const searchHandler = async () => {
+    const message = {
+      loading: '트위터 프로필을 불러오고 있어요.',
+      success: '프로필을 성공적으로 불러왔어요!',
+    };
 
-  const nickname = watch('nickname');
-  const twitter = watch('twitter');
-  const instagramId = watch('instagramId');
-  const githubId = watch('githubId');
-  const blog = watch('blog');
-  const hashtag = watch('hashtags');
+    const fetchTwitterInfo = async () => {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
+      setValue('twitterNickname', res.data.nickname);
+      setValue('twitterBio', res.data.bio);
+      setValue('twitterImage', res.data.image);
+      showTwitterField();
+      return res.data;
+    };
+
+    showToastPromiseMessage(fetchTwitterInfo(), message);
+  };
+
+  const showTwitterField = () => {
+    setIsTwitterFieldVisible(true);
+  };
 
   const Dropdown = () =>
     hashtagInput && (
@@ -131,12 +165,29 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       </ul>
     );
 
+  const fileUploadHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 업로드한 파일 가져오기
+    const file = e.target.files?.[0];
+
+    // 파일을 로컬에서 url로 변환
+    // TODO: 서버에 프로필 파일 업로드해서 URL 받아오기
+    if (file) {
+      const binaryData = [file];
+      const urlImage = URL.createObjectURL(new Blob(binaryData, { type: 'image' }));
+
+      // 이미지 URL을 src로 설정
+      setValue('twitterImage', urlImage);
+    }
+  };
+
   return (
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
         <div className="card-body">
-          <h1>{nickname}</h1>
-          <div>{twitter ? `@${twitter}` : ''}</div>
+          <h1>{twitterNickname}</h1>
+          <div>{twitterId ? `@${twitterId}` : ''}</div>
+          <div>{twitterBio}</div>
+          <div>{twitterImage}</div>
           <div>{hashtags}</div>
           <div>{instagramId}</div>
           <div>{githubId}</div>
@@ -144,65 +195,123 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <div>{hashtag}</div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 gap-10">
+      <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
         <fieldset>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">비밀번호</span>
-            </div>
+          <legend className="font-bold">
+            비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
+          </legend>
+          <label className="form-control w-full max-w-xs mt-2">
             <input
               type="password"
-              placeholder="이후에 명함을 수정, 삭제할 때 필요합니다."
-              className="input w-full max-w-xs shadow-sm placeholder:text-sm"
+              placeholder="명함을 수정하거나 삭제할 때 필요해요."
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
               {...register('password', { required: true })}
               name="password"
             />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.password && requiredSentence}</span>
-            </div>
+            {errors.password && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500 ">{requiredSentence}</span>
+              </div>
+            )}
           </label>
         </fieldset>
-
         <fieldset>
-          <legend className="font-bold">명함정보</legend>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">닉네임</span>
-            </div>
+          <legend className="font-bold">
+            프로필 가져오기 <span className="text-xs text-red-500 ml-1">*</span>
+          </legend>
+          <div className="relative max-w-xs">
             <input
               type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('nickname', { required: true })}
-              name="nickname"
+              placeholder="트위터 아이디를 입력해 주세요."
+              className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+              {...register('twitterId', { required: true })}
+              name="twitterId"
             />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold">{errors.nickname && requiredSentence}</span>
-            </div>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">트위터 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('twitter', { required: true })}
-              name="twitter"
+            <Image
+              onClick={searchHandler}
+              className="absolute top-2.5 right-3"
+              width={20}
+              height={20}
+              src="/search.png"
+              alt="검색"
             />
-            <div className="label">
-              <span className="label-text text-red-500 font-semibold"> {errors.twitter && requiredSentence}</span>
+          </div>
+          {errors.twitterId && (
+            <div className="label pt-0.5">
+              <span className="label-text text-red-500 ">{requiredSentence}</span>
             </div>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">해시태그</span>
+          )}
+        </fieldset>
+        {isTwitterFieldVisible && (
+          <fieldset>
+            <legend className="font-bold">프로필</legend>
+            <label className="form-control w-full max-w-xs">
+              <div className="label pb-0.5">
+                <span className="label-text">
+                  닉네임<span className="text-xs text-red-500 ml-1">*</span>
+                </span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                {...register('twitterNickname', { required: true })}
+                name="twitterNickname"
+              />
+              {errors.twitterNickname && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500">{requiredSentence}</span>
+                </div>
+              )}
+            </label>
+            <label className="form-control w-full max-w-xs">
+              <div className="label pb-0.5">
+                <span className="label-text">자기소개</span>
+              </div>
+              <textarea
+                className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
+                placeholder=""
+                {...register('twitterBio')}
+              />
+            </label>
+            <div className="form-control w-full max-w-xs">
+              <label className="label pb-0.5">
+                <span className="label-text">
+                  <b>이미지</b>
+                </span>
+              </label>
+              {twitterImage && <img src={twitterImage} alt="프로필 이미지" className="w-40 h-40" />}
+              <input
+                {...rest}
+                type="file"
+                ref={(e) => {
+                  registerRef(e);
+                  hiddenInputRef.current = e;
+                }}
+                placeholder=""
+                className="hidden input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                name="twitterImage"
+                onChange={fileUploadHandler}
+              />
+              <button
+                type="button"
+                className="btn btn-success text-white btn-sm text-xs w-1/2 mt-1"
+                onClick={() => {
+                  hiddenInputRef.current?.click();
+                }}
+              >
+                이미지 변경하기
+              </button>
             </div>
+          </fieldset>
+        )}
+        <fieldset>
+          <legend className="font-bold">해시태그</legend>
+          <label className="form-control w-full max-w-xs mt-2">
             <input
               type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
+              placeholder="엔터를 쳐서 태그를 저장할 수  있어요."
+              className="input h-10 w-full max-w-xs shadow-s placeholder:text-xs"
               value={hashtagInput}
               {...register('hashtags')}
               onChange={handleHashtagInputChange}
@@ -231,62 +340,63 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </div>
           </label>
         </fieldset>
-
         <fieldset>
           <legend className="font-bold">SNS</legend>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">인스타그램 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('instagramId')}
-              name="instagramId"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">깃허브 아이디</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('githubId')}
-              name="githubId"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">블로그</span>
-            </div>
-            <input
-              type="text"
-              placeholder=""
-              className="input w-full max-w-xs shadow-sm"
-              {...register('blog')}
-              name="blog"
-            />
-          </label>
+          <div className="flex flex-col gap-2">
+            <label className="flex flex-row gap-3 form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">인스타그램 아이디</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-1/2 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('instagramId')}
+                name="instagramId"
+              />
+            </label>
+            <label className="form-control gap-3 flex flex-row  w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">깃허브 아이디</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input w-1/2 h-10 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('githubId')}
+                name="githubId"
+              />
+            </label>
+            <label className="form-control gap-3 flex flex-row  w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">블로그 주소</span>
+              </div>
+              <input
+                type="text"
+                placeholder=""
+                className="input h-10 w-2/3 max-w-xs shadow-sm placeholder:text-xs"
+                {...register('blog')}
+                name="blog"
+              />
+            </label>
+          </div>
         </fieldset>
         <fieldset>
           <legend className="font-bold">자유형식</legend>
           {watch('customFields')?.map((_, index) => (
-            <div key={index} className="pt-2 flex justify-between">
+            <div key={index} className=" pt-2 pb-4 flex justify-between">
               <div className="flex flex-col w-full">
                 <label className="form-control w-full max-w-xs">
                   <input
-                    className="input w-full max-w-xs shadow-sm placeholder:text-sm text-sm"
+                    className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs text-sm"
                     type="text"
                     placeholder="제목"
                     {...register(`customFields.${index}.key`)}
                   />
                 </label>
-                <label className="form-control w-full max-w-xs pt-1">
+                <label className="form-control w-full max-w-xs pt-2">
                   <textarea
-                    className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-sm"
+                    className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
                     placeholder="내용"
                     {...register(`customFields.${index}.contents`)}
                   />
@@ -294,7 +404,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
               <div>
                 <button
-                  className="text-xl"
+                  className="text-3xl text-gray-500"
                   onClick={() =>
                     setValue(
                       'customFields',
@@ -302,13 +412,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                     )
                   }
                 >
-                  x
+                  -
                 </button>
               </div>
             </div>
           ))}
         </fieldset>
-
         <button
           type="button"
           className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
@@ -316,7 +425,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         >
           자유형식 항목 추가하기
         </button>
-
         <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
