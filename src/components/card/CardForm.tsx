@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { showToastErrorMessage, showToastLoadingMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
+import { showToastPromiseMessage } from '@/utils/showToastMessage';
 
 interface Data {
   twitterNickname: string;
@@ -135,18 +135,21 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const searchHandler = async () => {
-    try {
-      showToastLoadingMessage('데이터를 불러오는 중입니다.');
+    const message = {
+      loading: '트위터 프로필을 불러오고 있어요.',
+      success: '프로필을 성공적으로 불러왔어요!',
+    };
+
+    const fetchTwitterInfo = async () => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/twitter-info/${twitterId}`);
-      const twitterInfo = res.data;
-      setValue('twitterNickname', twitterInfo.nickname);
-      setValue('twitterBio', twitterInfo.bio);
-      setValue('twitterImage', twitterInfo.image);
+      setValue('twitterNickname', res.data.nickname);
+      setValue('twitterBio', res.data.bio);
+      setValue('twitterImage', res.data.image);
       showTwitterField();
-      showToastSuccessMessage('프로필을 가져왔습니다.');
-    } catch (error) {
-      showToastErrorMessage(error);
-    }
+      return res.data;
+    };
+
+    showToastPromiseMessage(fetchTwitterInfo(), message);
   };
 
   const showTwitterField = () => {

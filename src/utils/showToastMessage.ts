@@ -25,3 +25,14 @@ export const showToastLoadingMessage = (message: string) => {
     duration: 2000,
   });
 };
+
+export const showToastPromiseMessage = (promise, message) => {
+  toast.promise(promise, {
+    loading: message.loading,
+    success: message.success,
+    error: (error) => {
+      console.log('error', error);
+      return error.response.data.message;
+    },
+  });
+};
