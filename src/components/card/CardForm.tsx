@@ -33,7 +33,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
-  const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement | null>(null);
   const requiredSentence = <p>필수 문항입니다.</p>;
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const {
@@ -77,7 +77,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const githubId = watch('githubId');
   const blog = watch('blog');
   const hashtag = watch('hashtags');
-  const { ...rest } = register('twitterImage');
+  const { ref: registerRef, ...rest } = register('twitterImage');
 
   const removeHashtag = (index: number) => {
     setHashtags((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
@@ -281,7 +281,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               <input
                 {...rest}
                 type="file"
-                ref={hiddenInputRef}
+                ref={(e) => {
+                  registerRef(e);
+                  hiddenInputRef.current = e;
+                }}
                 placeholder=""
                 className="hidden input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
                 name="twitterImage"
@@ -305,7 +308,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             <input
               type="text"
               placeholder="엔터를 쳐서 태그를 저장할 수  있어요."
-              className="input h-10 w-full max-w-xs shadow-s placeholder:text-sm placeholder:text-xs"
+              className="input h-10 w-full max-w-xs shadow-s placeholder:text-xs"
               value={hashtagInput}
               {...register('hashtags')}
               onChange={handleHashtagInputChange}
