@@ -185,12 +185,9 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       setValue('twitterImage', urlImage);
     }
   };
+
   useEffect(() => {
-    if (password !== passwordCheck) {
-      setIsPasswordDifferent(true);
-    } else {
-      setIsPasswordDifferent(false);
-    }
+    setIsPasswordDifferent(passwordCheck !== '' && password !== passwordCheck);
   }, [password, passwordCheck]);
 
   return (
