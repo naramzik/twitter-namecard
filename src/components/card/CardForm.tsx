@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
@@ -81,6 +81,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const githubId = watch('githubId');
   const blog = watch('blog');
   const hashtag = watch('hashtags');
+  const password = watch('password');
+  const passwordCheck = watch('passwordCheck');
   const { ref: registerRef, ...rest } = register('twitterImage');
 
   const removeHashtag = (index: number) => {
@@ -159,14 +161,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const showTwitterField = () => {
     setIsTwitterFieldVisible(true);
   };
-  const nickname = watch('nickname');
-  const twitter = watch('twitter');
-  const instagramId = watch('instagramId');
-  const githubId = watch('githubId');
-  const blog = watch('blog');
-  const hashtag = watch('hashtags');
-  const password = watch('password');
-  const passwordCheck = watch('passwordCheck');
 
   const Dropdown = () =>
     hashtagInput && (
