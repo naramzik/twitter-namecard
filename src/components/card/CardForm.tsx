@@ -193,8 +193,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     }
   }, [password, passwordCheck]);
 
-  console.log('passwordCheck', passwordCheck);
-
   return (
     <div className="pb-12">
       <div className="card glass bg-white shadow-md aspect-nameCard">
@@ -232,11 +230,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 className="h-10 absolute top-0 right-2"
                 onClick={() => setIsPasswordVisible((prev) => !prev)}
               >
-                {isPasswordVisible ? (
-                  <Image width={22} height={22} src="/hide.png" alt="숨김" />
-                ) : (
-                  <Image width={22} height={22} src="/view.png" alt="보임" />
-                )}
+                <Image
+                  width={22}
+                  height={22}
+                  src={isPasswordVisible ? '/hide.png' : '/view.png'}
+                  alt={isPasswordCheckVisible ? '숨김' : '보임'}
+                />
               </button>
             </div>
             {errors.password && (
