@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import { NextPageWithLayout } from '@/types';
 import { showToastErrorMessage } from '@/utils/showToastMessage';
 import type { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -20,6 +21,12 @@ const single = Nanum_Gothic({
 });
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const queryClient = new QueryClient({
     defaultOptions: {
       mutations: {
@@ -34,13 +41,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <NiceModal.Provider>
-          <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
-        </NiceModal.Provider>
-      </QueryClientProvider>
-    </RecoilRoot>
+    isClient && (
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <NiceModal.Provider>
+            <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
+          </NiceModal.Provider>
+        </QueryClientProvider>
+      </RecoilRoot>
+    )
   );
 }
