@@ -15,6 +15,8 @@ interface SubmittedCard {
   twitter: string;
   hashtags: string[];
   password: string;
+  bio: string;
+  image: string;
 }
 
 export const useCreateCard = () => {
