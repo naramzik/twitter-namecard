@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { type ComponentProps, memo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedCardIdState } from '@/store/cardId';
-import { getNavItemStatus } from '@/utils/route';
 import CardIcon from '../icons/CardIcon';
 import CreateIcon from '../icons/CreateIcon';
 import HomeIcon from '../icons/HomeIcon';
@@ -19,17 +18,18 @@ export const navIconColors = {
 
 export default function BottomNavigation() {
   const selectedCardId = useRecoilValue(selectedCardIdState);
+
   const NAV_ITEMS = [
-    { href: '/', Icon: HomeIcon, label: '홈' },
-    { href: `/${selectedCardId}`, Icon: CardIcon, label: '명함 보기' },
-    { href: '/default/edit', Icon: CreateIcon, label: '명함 만들기' },
+    { href: '/', pathname: ['/'], Icon: HomeIcon, label: '홈' },
+    { href: `/${selectedCardId}`, pathname: ['/[id]', '/default'], Icon: CardIcon, label: '명함 보기' },
+    { href: '/default/edit', pathname: ['/default/edit'], Icon: CreateIcon, label: '명함 만들기' },
   ];
 
   type NavItemProps = (typeof NAV_ITEMS)[number];
 
-  const NavItem = memo(({ href, Icon, label }: NavItemProps) => {
+  const NavItem = memo(({ pathname, href, Icon, label }: NavItemProps) => {
     const router = useRouter();
-    const color = navIconColors[getNavItemStatus(router.asPath, href)];
+    const color = navIconColors[pathname.includes(router.pathname) ? 'selected' : 'default'];
 
     return (
       <Link href={href}>
