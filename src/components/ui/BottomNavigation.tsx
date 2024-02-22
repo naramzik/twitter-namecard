@@ -21,7 +21,7 @@ export default function BottomNavigation() {
   const selectedCardId = useRecoilValue(selectedCardIdState);
   const NAV_ITEMS = [
     { href: '/', Icon: HomeIcon, label: '홈' },
-    { href: `/${selectedCardId}`, Icon: CardIcon, label: '명함 상세 보기' },
+    { href: `/${selectedCardId}`, Icon: CardIcon, label: '명함 보기' },
     { href: '/default/edit', Icon: CreateIcon, label: '명함 만들기' },
   ];
 
