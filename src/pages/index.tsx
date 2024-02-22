@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col gap-5 mx-5">{cards?.map((card: CardType) => <CardItem card={card} />)}</main>
+      <main className="flex flex-col gap-5 mx-1">{cards?.map((card: CardType) => <CardItem card={card} />)}</main>
     </>
   );
 }

@@ -14,7 +14,7 @@ export type NavIconProps = ComponentProps<'svg'> & {
 
 export const navIconColors = {
   default: '#BDBDBD',
-  selected: '#71ccfe',
+  selected: '#1da0f1',
 } as const;
 
 export default function BottomNavigation() {
@@ -34,7 +34,7 @@ export default function BottomNavigation() {
 
     return (
       <Link href={href}>
-        <Icon color={color} />
+        <Icon className="h-12" color={color} />
         <span className="text-xs">{label}</span>
       </Link>
     );
