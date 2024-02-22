@@ -12,9 +12,10 @@ export const useGetCards = () => {
     data: cards,
     isLoading,
     isError,
+    isSuccess,
   } = useQuery({
     queryKey: ['cards'],
     queryFn: () => getCards(),
   });
-  return { cards, isLoading, isError };
+  return { cards, isLoading, isError, isSuccess };
 };
