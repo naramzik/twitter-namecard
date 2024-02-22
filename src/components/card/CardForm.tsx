@@ -30,7 +30,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const router = useRouter();
   const { mutate: createCard } = useCreateCard();
   const { mutate: updateCard } = useUpdateCard();
-  const [hashtags, setHashtags] = useState<string[]>([]);
+  const [hashtagList, setHashtagList] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
@@ -79,13 +79,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const instagramId = watch('instagramId');
   const githubId = watch('githubId');
   const blog = watch('blog');
-  const hashtag = watch('hashtags');
   const password = watch('password');
   const passwordCheck = watch('passwordCheck');
   const { ref: registerRef, ...rest } = register('twitterImage');
 
   const removeHashtag = (index: number) => {
-    setHashtags((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
+    setHashtagList((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
   };
 
   const handleHashtagInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -93,8 +92,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
 
-      if (newHashtag && !hashtags.includes(newHashtag)) {
-        setHashtags([...hashtags, newHashtag]); // 새 해시태그 추가
+      if (newHashtag && !hashtagList.includes(newHashtag)) {
+        setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
       }
@@ -114,7 +113,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       twitter: data.twitterId,
       bio: data.twitterBio,
       image: data.twitterImage,
-      hashtags: data.hashtags,
+      hashtags: hashtagList,
       password: data.password,
     };
 
@@ -193,11 +192,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           <div>{twitterId ? `@${twitterId}` : ''}</div>
           <div>{twitterBio}</div>
           <div>{twitterImage}</div>
-          <div>{hashtags}</div>
+          <div>{hashtagList}</div>
           <div>{instagramId}</div>
           <div>{githubId}</div>
           <div>{blog}</div>
-          <div>{hashtag}</div>
         </div>
       </div>
       <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
@@ -371,14 +369,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               placeholder="엔터를 쳐서 태그를 저장할 수  있어요."
               className="input h-10 w-full max-w-xs shadow-s placeholder:text-xs"
               value={hashtagInput}
-              {...register('hashtags')}
               onChange={handleHashtagInputChange}
               onKeyDown={handleHashtagInputKeyDown}
-              name="hashtag"
             />
             {showDropdown && <Dropdown />}
             <div className="flex flex-wrap gap-2 mt-2">
-              {hashtags?.map((hashtag, index) => (
+              {hashtagList?.map((hashtag, index) => (
                 <div
                   className="badge border-none bg-slate-100 text-slate-400 flex items-center justify-center"
                   key={index}

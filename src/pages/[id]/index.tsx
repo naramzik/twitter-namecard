@@ -68,7 +68,7 @@ const Page = ({ card }: { card: CardType }) => {
             </div>
           ))}
         </div>
-        <div className="pt-5 ">해시태그: {card.hashtag}</div>
+        {card.hashtags?.map((hashtag) => <div className="pt-5 ">{hashtag}</div>)}
       </div>
     </>
   );
