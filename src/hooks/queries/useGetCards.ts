@@ -8,14 +8,9 @@ const getCards = async () => {
 };
 
 export const useGetCards = () => {
-  const {
-    data: cards,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useQuery({
+  const { data: cards } = useQuery({
     queryKey: ['cards'],
     queryFn: () => getCards(),
   });
-  return { cards, isLoading, isError, isSuccess };
+  return { cards };
 };

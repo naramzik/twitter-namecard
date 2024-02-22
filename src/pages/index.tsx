@@ -6,12 +6,7 @@ import type { CardType } from '@/types/cards';
 import { showToastLoadingMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
 
 export default function Home() {
-  const { cards, isLoading, isSuccess } = useGetCards();
-
-  useEffect(() => {
-    if (isLoading) showToastLoadingMessage('트위터 명함 목록을 불러오는 중이에요.');
-    if (isSuccess) showToastSuccessMessage('트위터 명함 목록을 불러왔어요!');
-  }, []);
+  const { cards } = useGetCards();
 
   return (
     <div>
