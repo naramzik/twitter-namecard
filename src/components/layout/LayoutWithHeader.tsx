@@ -1,4 +1,4 @@
-import Header from '../ui/Header';
+import BottomNavigation from '../ui/BottomNavigation';
 import type { ReactNode } from 'react';
 
 interface LayoutWithHeaderProps {
@@ -7,8 +7,8 @@ interface LayoutWithHeaderProps {
 
 const LayoutWithHeader = ({ children }: LayoutWithHeaderProps) => {
   return (
-    <main className="p-5 mt-16 overflow-x-auto">
-      <Header />
+    <main className="p-5 overflow-x-auto">
+      <BottomNavigation />
       {children}
     </main>
   );
