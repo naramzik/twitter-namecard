@@ -8,6 +8,10 @@
   margin: 0;
 }
 
+html {
+  background-color: #eef6ff;
+}
+
 body {
-  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#F4F7FF];
+  @apply max-w-lg w-full min-h-screen mx-auto overflow-x-hidden bg-[#EEF6FF];
 }
