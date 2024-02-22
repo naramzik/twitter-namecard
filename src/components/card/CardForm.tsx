@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
 import { showToastPromiseMessage } from '@/utils/showToastMessage';
+import NameCard from './NameCard';
 
 interface Data {
   twitterNickname: string;
@@ -80,7 +81,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const instagramId = watch('instagramId');
   const githubId = watch('githubId');
   const blog = watch('blog');
-  const hashtag = watch('hashtags');
+  // const hashtag = watch('hashtags');
   const password = watch('password');
   const passwordCheck = watch('passwordCheck');
   const { ref: registerRef, ...rest } = register('twitterImage');
@@ -192,19 +193,17 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
 
   return (
     <div className="pb-12">
-      <div className="card glass bg-white shadow-md aspect-nameCard">
-        <div className="card-body">
-          <h1>{twitterNickname}</h1>
-          <div>{twitterId ? `@${twitterId}` : ''}</div>
-          <div>{twitterBio}</div>
-          <div>{twitterImage}</div>
-          <div>{hashtags}</div>
-          <div>{instagramId}</div>
-          <div>{githubId}</div>
-          <div>{blog}</div>
-          <div>{hashtag}</div>
-        </div>
-      </div>
+      <NameCard
+        twitterNickname={twitterNickname}
+        twitterId={twitterId}
+        twitterBio={twitterBio}
+        twitterImage={twitterImage}
+        hashtags={hashtags}
+        instagramId={instagramId}
+        githubId={githubId}
+        blog={blog}
+      />
+
       <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
         <fieldset>
           <legend className="font-bold">
@@ -291,7 +290,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             />
             <Image
               onClick={searchHandler}
-              className="absolute top-2.5 right-3"
+              className="absolute top-2.5 right-3 cursor-pointer"
               width={20}
               height={20}
               src="/search.png"
@@ -381,7 +380,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               name="hashtag"
             />
             {showDropdown && <Dropdown />}
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-3">
               {hashtags?.map((hashtag, index) => (
                 <div
                   className="badge border-none bg-slate-100 text-slate-400 flex items-center justify-center"
