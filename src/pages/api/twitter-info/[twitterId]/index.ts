@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import errorHandler from '@/utils/errorHandler';
 import supabase from '@/utils/supabase';
+import switchCrawler, { currentInstanceIndex, instanceUrls } from '@/utils/switchCrawler';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -13,22 +14,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    const USER_AGENT =
-      'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/120.0.0.0 Mobile/15E148 Safari/604.1';
-    const url = `${process.env.NITTER_HOST}/${twitterId}`;
-
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': USER_AGENT,
-      },
-    });
+    const response = await switchCrawler(`/${twitterId}`);
 
     const html = response && response.data;
     const $ = cheerio.load(html);
 
     const bio = $(`.profile-bio`).text();
     const nickname = $(`.profile-card-fullname`).text();
-    const image = `${process.env.NITTER_HOST}${$('.profile-card-avatar').attr('href')}`;
+    const image = `${instanceUrls[currentInstanceIndex]}${$('.profile-card-avatar').attr('href')}`;
 
     switch (req.method) {
       case 'GET':
