@@ -48,18 +48,24 @@ const NameCard = ({
             </div>
           )}
           <div className="text-end">
-            <div className="flex items-center justify-end">
-              <FontAwesomeIcon icon={faInstagram} className="mr-1" />
-              {instagramId}
-            </div>
-            <div className="flex items-center justify-end">
-              <FontAwesomeIcon icon={faGithub} className="mr-1" />
-              {githubId}
-            </div>
-            <div className="flex items-center justify-end">
-              <FontAwesomeIcon icon={faPaperclip} className="mr-1" />
-              {blog}
-            </div>
+            {instagramId && (
+              <div className="flex items-center justify-end">
+                <FontAwesomeIcon icon={faInstagram} className="mr-1" />
+                {instagramId}
+              </div>
+            )}
+            {githubId && (
+              <div className="flex items-center justify-end">
+                <FontAwesomeIcon icon={faGithub} className="mr-1" />
+                {githubId}
+              </div>
+            )}
+            {blog && (
+              <div className="flex items-center justify-end">
+                <FontAwesomeIcon icon={faPaperclip} className="mr-1" />
+                {blog}
+              </div>
+            )}
           </div>
         </section>
       </div>
