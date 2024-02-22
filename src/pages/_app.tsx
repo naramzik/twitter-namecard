@@ -4,6 +4,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Nanum_Gothic } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import { RecoilRoot } from 'recoil';
 import { NextPageWithLayout } from '@/types';
 import { showToastErrorMessage } from '@/utils/showToastMessage';
 import type { AppProps } from 'next/app';
@@ -33,11 +34,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <NiceModal.Provider>
-        <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
-      </NiceModal.Provider>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <Toaster />
+        <NiceModal.Provider>
+          <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
+        </NiceModal.Provider>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
