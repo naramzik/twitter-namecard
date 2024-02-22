@@ -462,6 +462,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
               <div>
                 <button
+                  type="button"
                   className="text-3xl text-gray-500"
                   onClick={() =>
                     setValue(
@@ -475,15 +476,20 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
             </div>
           ))}
+          <Image
+            onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+            width={22}
+            height={22}
+            src="/add.png"
+            alt="추가"
+            className="mx-auto cursor-pointer"
+          />
         </fieldset>
+
         <button
-          type="button"
-          className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
-          onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+          type="submit"
+          className="btn mb-16 w-full btn-accent max-w-[512px] mx-auto bg-accent text-white font-bold"
         >
-          자유형식 항목 추가하기
-        </button>
-        <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
       </form>
