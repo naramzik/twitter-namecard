@@ -5,7 +5,9 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { showToastPromiseMessage } from '@/utils/showToastMessage';
+import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
+import { useSetRecoilState } from 'recoil';
+import { selectedCardIdState } from '@/store/cardId';
 
 interface Data {
   twitterNickname: string;
@@ -39,6 +41,9 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
+  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
+  const setSelectedCardId = useSetRecoilState(selectedCardIdState);
+
   const {
     register,
     handleSubmit,
@@ -132,7 +137,9 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
+          setSelectedCardId(data.data.newCard[0].id);
           router.push(`/${data.data.newCard[0].id}`);
+          showToastSuccessMessage('명함을 만드는데 성공했어요!');
         },
       });
     }
@@ -484,7 +491,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
 
         <button
           type="submit"
-          className="btn mb-16 w-full btn-accent max-w-[512px] mx-auto bg-accent text-white font-bold"
+          className="btn my-4 w-full btn-accent max-w-[512px] mx-auto bg-accent text-white font-bold"
         >
           저장하기
         </button>

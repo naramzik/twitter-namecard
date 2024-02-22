@@ -29,7 +29,6 @@ export default function BottomNavigation() {
 
   const NavItem = memo(({ href, Icon, label }: NavItemProps) => {
     const router = useRouter();
-    console.log('현재 경로: ', router.asPath);
     const color = navIconColors[getNavItemStatus(router.asPath, href)];
 
     return (
