@@ -22,7 +22,7 @@ const CardItem = ({ card }: { card: CardType }) => {
 
   return (
     // Todo: 명함 컴포넌트 만들기
-    <div key={card.id} className="card bg-base-100 shadow-xl pt-4" onClick={openDetailPageHandler}>
+    <div className="card bg-base-100 shadow-xl pt-4" onClick={openDetailPageHandler}>
       <div className="mx-auto w-11/12 h-40 bg-gray-300 rounded-xl"></div>
       <div className="card-body p-5">
         <div className="flex justify-between">
