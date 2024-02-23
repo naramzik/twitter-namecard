@@ -132,6 +132,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         {
           onSuccess: (data) => {
             router.push(`/${data.data[0].id}`);
+            showToastSuccessMessage('명함이 수정되었어요!');
           },
         },
       );
