@@ -266,7 +266,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
             )}
 
-            {password !== passwordCheck && passwordCheck !== '' && passwordCheck !== undefined && (
+            {password !== passwordCheck && !!passwordCheck && (
               <div className="label pt-0.5">
                 <span className="label-text text-red-500 ">비밀번호가 일치하지 않습니다.</span>
               </div>
