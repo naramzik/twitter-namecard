@@ -16,7 +16,7 @@ interface SubmittedCard {
   hashtags: string[];
   password: string;
   bio: string;
-  image: string;
+  // image_url: string;
 }
 
 export const useCreateCard = () => {
