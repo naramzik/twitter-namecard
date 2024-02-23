@@ -3,11 +3,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
-import { useSetRecoilState } from 'recoil';
 import { selectedCardIdState } from '@/store/cardId';
+import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
 
 interface Data {
   twitterNickname: string;
@@ -117,7 +117,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       nickname: data.twitterNickname,
       twitter: data.twitterId,
       bio: data.twitterBio,
-      image: data.twitterImage,
+      // image_url: data.twitterImage,
       hashtags: hashtagList,
       password: data.password,
     };

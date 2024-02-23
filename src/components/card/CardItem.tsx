@@ -12,7 +12,7 @@ const CardItem = ({ card }: { card: CardType }) => {
   const router = useRouter();
   const openDetailPageHandler = () => {
     setSelectedCardId(card.id);
-    router.push(`/${card.id}`);
+    router.push(`/${card.id}`, undefined, { shallow: true });
   };
 
   useEffect(() => {
