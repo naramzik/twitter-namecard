@@ -67,6 +67,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           }
         : async () =>
             await axios.get(`/api/cards/${cardId}`).then((res) => {
+              setHashtagList(res.data.foundCard.hashtags);
               const { socialMedia, ...rest } = res.data.foundCard;
               return {
                 ...rest,
