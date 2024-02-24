@@ -12,7 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const shortLink = nanoid();
 
-        const { data: link, error } = await supabase.from('links').insert({ shortLink, redirectUrl: cardId });
+        const { data: link, error } = await supabase
+          .from('links')
+          .insert({ shortLink, redirectUrl: cardId })
+          .select('shortLink');
         if (error) throw error;
         res.status(200).json(link);
       });
