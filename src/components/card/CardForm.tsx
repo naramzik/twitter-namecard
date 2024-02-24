@@ -8,6 +8,7 @@ import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
 import { selectedCardIdState } from '@/store/cardId';
 import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
+import NameCard from './NameCard';
 
 interface Data {
   twitterNickname: string;
@@ -195,18 +196,17 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
 
   return (
     <div className="pb-12">
-      <div className="card glass bg-white shadow-md aspect-nameCard">
-        <div className="card-body">
-          <h1>{twitterNickname}</h1>
-          <div>{twitterId ? `@${twitterId}` : ''}</div>
-          <div>{twitterBio}</div>
-          <div>{twitterImage}</div>
-          <div>{hashtagList}</div>
-          <div>{instagramId}</div>
-          <div>{githubId}</div>
-          <div>{blog}</div>
-        </div>
-      </div>
+      <NameCard
+        twitterNickname={twitterNickname}
+        twitterId={twitterId}
+        twitterBio={twitterBio}
+        twitterImage={twitterImage}
+        hashtags={hashtagList}
+        instagramId={instagramId}
+        githubId={githubId}
+        blog={blog}
+      />
+
       <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
         <fieldset>
           <legend className="font-bold">
@@ -294,7 +294,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             />
             <Image
               onClick={searchHandler}
-              className="absolute top-2.5 right-3"
+              className="absolute top-2.5 right-3 cursor-pointer"
               width={20}
               height={20}
               src="/search.png"
@@ -476,7 +476,20 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                     )
                   }
                 >
-                  -
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 hover:text-red-700 active:text-red-700"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
                 </button>
               </div>
             </div>
