@@ -61,14 +61,18 @@ const Page = ({ card }: { card: CardType }) => {
           <div className="text-lg">블로그: {card.socialMedia?.blog}</div>
         </div>
         <div className="pt-5 ">
-          {card.customFields?.map((field) => (
-            <div key={card.twitter} className="flex flex-col pb-5">
+          {card.customFields?.map((field, index) => (
+            <div key={index} className="flex flex-col pb-5">
               <div className="text-sm font-bold pb-1">{field.key}</div>
               <div className="text-lg">{field.contents}</div>
             </div>
           ))}
         </div>
-        <div className="pt-5 ">해시태그: {card.hashtag}</div>
+        {card.hashtags?.map((hashtag, index) => (
+          <div key={index} className="pt-5">
+            {hashtag}
+          </div>
+        ))}
       </div>
     </>
   );

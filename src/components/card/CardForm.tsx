@@ -3,9 +3,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { showToastPromiseMessage } from '@/utils/showToastMessage';
+import { selectedCardIdState } from '@/store/cardId';
+import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
 import NameCard from './NameCard';
 
 interface Data {
@@ -31,7 +33,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const router = useRouter();
   const { mutate: createCard } = useCreateCard();
   const { mutate: updateCard } = useUpdateCard();
-  const [hashtags, setHashtags] = useState<string[]>([]);
+  const [hashtagList, setHashtagList] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
@@ -40,6 +42,9 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
+  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
+  const setSelectedCardId = useSetRecoilState(selectedCardIdState);
+
   const {
     register,
     handleSubmit,
@@ -63,6 +68,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           }
         : async () =>
             await axios.get(`/api/cards/${cardId}`).then((res) => {
+              setHashtagList(res.data.foundCard.hashtags);
               const { socialMedia, ...rest } = res.data.foundCard;
               return {
                 ...rest,
@@ -80,13 +86,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const instagramId = watch('instagramId');
   const githubId = watch('githubId');
   const blog = watch('blog');
-  // const hashtag = watch('hashtags');
   const password = watch('password');
   const passwordCheck = watch('passwordCheck');
   const { ref: registerRef, ...rest } = register('twitterImage');
 
   const removeHashtag = (index: number) => {
-    setHashtags((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
+    setHashtagList((prevHashtags) => prevHashtags.filter((_, i) => i !== index));
   };
 
   const handleHashtagInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -94,8 +99,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
 
-      if (newHashtag && !hashtags.includes(newHashtag)) {
-        setHashtags([...hashtags, newHashtag]); // 새 해시태그 추가
+      if (newHashtag && !hashtagList.includes(newHashtag)) {
+        setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
       }
@@ -114,8 +119,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       nickname: data.twitterNickname,
       twitter: data.twitterId,
       bio: data.twitterBio,
-      image: data.twitterImage,
-      hashtags: data.hashtags,
+      // image_url: data.twitterImage,
+      hashtags: hashtagList,
       password: data.password,
     };
 
@@ -128,13 +133,16 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         {
           onSuccess: (data) => {
             router.push(`/${data.data[0].id}`);
+            showToastSuccessMessage('명함이 수정되었어요!');
           },
         },
       );
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
+          setSelectedCardId(data.data.newCard[0].id);
           router.push(`/${data.data.newCard[0].id}`);
+          showToastSuccessMessage('명함을 만드는데 성공했어요!');
         },
       });
     }
@@ -193,7 +201,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         twitterId={twitterId}
         twitterBio={twitterBio}
         twitterImage={twitterImage}
-        hashtags={hashtags}
+        hashtags={hashtagList}
         instagramId={instagramId}
         githubId={githubId}
         blog={blog}
@@ -370,14 +378,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               placeholder="엔터를 쳐서 태그를 저장할 수  있어요."
               className="input h-10 w-full max-w-xs shadow-s placeholder:text-xs"
               value={hashtagInput}
-              {...register('hashtags')}
               onChange={handleHashtagInputChange}
               onKeyDown={handleHashtagInputKeyDown}
-              name="hashtag"
             />
             {showDropdown && <Dropdown />}
-            <div className="flex flex-wrap gap-2 mt-3">
-              {hashtags?.map((hashtag, index) => (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {hashtagList?.map((hashtag, index) => (
                 <div
                   className="badge border-none bg-slate-100 text-slate-400 flex items-center justify-center"
                   key={index}
@@ -461,6 +467,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
               <div>
                 <button
+                  type="button"
                   className="text-3xl text-gray-500"
                   onClick={() =>
                     setValue(
@@ -487,15 +494,20 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               </div>
             </div>
           ))}
+          <Image
+            onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+            width={22}
+            height={22}
+            src="/add.png"
+            alt="추가"
+            className="mx-auto cursor-pointer"
+          />
         </fieldset>
+
         <button
-          type="button"
-          className="w-full h-12 mt-2 bg-primary text-white hover:brightness-95 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 flex justify-center items-center mb-2"
-          onClick={() => setValue('customFields', [...watch('customFields'), { key: '', contents: '' }])}
+          type="submit"
+          className="btn my-4 w-full btn-accent max-w-[512px] mx-auto bg-accent text-white font-bold"
         >
-          자유형식 항목 추가하기
-        </button>
-        <button type="submit" className="btm-nav btm-nav-md max-w-[512px] mx-auto z-20 bg-accent text-white font-bold">
           저장하기
         </button>
       </form>
