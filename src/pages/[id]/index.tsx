@@ -82,52 +82,60 @@ const Page = ({ card }: { card: CardType }) => {
                 <div className="cursor-pointer btn btn-xs">{card.twitter}</div>
               </CopyToClipboard>
             </div>
-            <div className="flex gap-3">
-              <Image src="/instagram.png" width={24} height={20} alt="인스타그램" />
-              <div className="text-sm w-20">인스타그램</div>
-              <CopyToClipboard
-                text={`${card.socialMedia?.instagram}`}
-                onCopy={() => showToastSuccessMessage('인스타그램 아이디가 복사되었습니다!')}
-              >
-                <div className="cursor-pointer btn btn-xs">{card.socialMedia?.instagram}</div>
-              </CopyToClipboard>
-            </div>
-            <div className="flex gap-3">
-              <Image src="/github.png" width={24} height={24} alt="깃허브" />
-              <div className="text-sm w-20">깃허브</div>
-              <CopyToClipboard
-                text={`${card.socialMedia?.github}`}
-                onCopy={() => showToastSuccessMessage('깃허브 아이디가 복사되었습니다!')}
-              >
-                <div className="cursor-pointer btn btn-xs">{card.socialMedia?.github}</div>
-              </CopyToClipboard>
-            </div>
-            <div className="flex gap-3">
-              <Image src="/link.png" width={24} height={24} alt="블로그" />
-              <div className="text-sm w-20">블로그</div>
-              <CopyToClipboard
-                text={`${card.socialMedia?.blog}`}
-                onCopy={() => showToastSuccessMessage('블로그 아이디가 복사되었습니다!')}
-              >
-                <div className="cursor-pointer btn btn-xs">{card.socialMedia?.blog}</div>
-              </CopyToClipboard>
-            </div>
+            {card.socialMedia?.instagram && (
+              <div className="flex gap-3">
+                <Image src="/instagram.png" width={24} height={20} alt="인스타그램" />
+                <div className="text-sm w-20">인스타그램</div>
+                <CopyToClipboard
+                  text={`${card.socialMedia?.instagram}`}
+                  onCopy={() => showToastSuccessMessage('인스타그램 아이디가 복사되었습니다!')}
+                >
+                  <div className="cursor-pointer btn btn-xs">{card.socialMedia?.instagram}</div>
+                </CopyToClipboard>
+              </div>
+            )}
+            {card.socialMedia?.github && (
+              <div className="flex gap-3">
+                <Image src="/github.png" width={24} height={24} alt="깃허브" />
+                <div className="text-sm w-20">깃허브</div>
+                <CopyToClipboard
+                  text={`${card.socialMedia?.github}`}
+                  onCopy={() => showToastSuccessMessage('깃허브 아이디가 복사되었습니다!')}
+                >
+                  <div className="cursor-pointer btn btn-xs">{card.socialMedia?.github}</div>
+                </CopyToClipboard>
+              </div>
+            )}
+            {card.socialMedia?.blog && (
+              <div className="flex gap-3">
+                <Image src="/link.png" width={24} height={24} alt="블로그" />
+                <div className="text-sm w-20">블로그</div>
+                <CopyToClipboard
+                  text={`${card.socialMedia?.blog}`}
+                  onCopy={() => showToastSuccessMessage('블로그 주소가 복사되었습니다!')}
+                >
+                  <div className="cursor-pointer btn btn-xs">{card.socialMedia?.blog}</div>
+                </CopyToClipboard>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-5 mt-5">
-        <div>
-          <div className="flex flex-row gap-1">
-            <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
-            <div className="font-bold">해시태그</div>
+      <div>
+        <div className="bg-white p-5 rounded-xl flex flex-col mt-5 gap-5">
+          <div>
+            <div className="flex flex-row gap-1">
+              <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+              <div className="font-bold">해시태그</div>
+            </div>
+            <div className="ml-3">
+              {card.hashtags?.map((hashtag, index) => (
+                <span key={index} className=" bg-pink-400 mr-3">
+                  {hashtag}
+                </span>
+              ))}
+            </div>
           </div>
-          {card.hashtags?.map((hashtag, index) => (
-            <span key={index} className=" bg-pink-400 ml-3 mr-2">
-              {hashtag}
-            </span>
-          ))}
-        </div>
-        <div>
           {card.customFields?.map((field, index) => (
             <div key={index}>
               <div className="flex flex-row gap-1">
