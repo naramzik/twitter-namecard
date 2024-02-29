@@ -19,7 +19,7 @@ const Page = ({ card }: { card: CardType }) => {
   };
 
   return (
-    <>
+    <div className="mb-16">
       <h1 className="text-3xl font-bold">{card.nickname}</h1>
       <div className="flex justify-center h-1/4 py-5">
         <Image
@@ -71,7 +71,6 @@ const Page = ({ card }: { card: CardType }) => {
       </div>
       <div>
         <div className="pt-5">
-          <div className="text-lg pb-1 font-extrabold">SNS</div>
           <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-1.5">
             <div className="flex gap-3">
               <Image src="/twitter.png" width={24} height={24} alt="트위터" />
@@ -115,22 +114,32 @@ const Page = ({ card }: { card: CardType }) => {
             </div>
           </div>
         </div>
-
-        <div className="pt-5 ">
+      </div>
+      <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-5 mt-5">
+        <div>
+          <div className="flex flex-row gap-1">
+            <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+            <div className="font-bold">해시태그</div>
+          </div>
+          {card.hashtags?.map((hashtag, index) => (
+            <span key={index} className=" bg-pink-400 ml-3 mr-2">
+              {hashtag}
+            </span>
+          ))}
+        </div>
+        <div>
           {card.customFields?.map((field, index) => (
-            <div key={index} className="flex flex-col pb-5">
-              <div className="text-sm font-bold pb-1">{field.key}</div>
-              <div className="text-lg">{field.contents}</div>
+            <div key={index}>
+              <div className="flex flex-row gap-1">
+                <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+                <div className="font-bold">{field.key}</div>
+              </div>
+              <div className="ml-3">{field.contents}</div>
             </div>
           ))}
         </div>
-        {card.hashtags?.map((hashtag, index) => (
-          <div key={index} className="pt-5">
-            {hashtag}
-          </div>
-        ))}
       </div>
-    </>
+    </div>
   );
 };
 
