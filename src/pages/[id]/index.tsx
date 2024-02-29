@@ -1,13 +1,15 @@
 import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
-import Link from 'next/link';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
+import { useRouter } from 'next/router';
 
 const Page = ({ card }: { card: CardType }) => {
+  const router = useRouter();
+
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet, {
       nickname: card.nickname,
@@ -16,7 +18,8 @@ const Page = ({ card }: { card: CardType }) => {
 
   return (
     <>
-      <div className="flex justify-center h-1/4 ">
+      <h1 className="text-3xl font-bold">{card.nickname}</h1>
+      <div className="flex justify-center h-1/4 py-5">
         <Image
           src="/card.png"
           width={0}
@@ -26,32 +29,48 @@ const Page = ({ card }: { card: CardType }) => {
           alt="명함 이미지"
         />
       </div>
-      <div className="flex gap-3 items-center py-3">
-        <div className="font-bold">{card.nickname}</div>
-        <Image src="/download.png" width={25} height={25} alt="다운로드 이미지" />
-      </div>
       <div className="flex justify-between">
-        <button onClick={handleShowBottomSheet} className="btn w-48 flex justify-around btn-secondary">
-          <Image src="/share.png" width={25} height={25} alt="전달하기 이미지" />
-          <div className="text-sm">명함 전달하기</div>
-        </button>
-        <div className="flex justify-center items-center">
-          <Link
-            href={`/${card.id}/login?mode=edit`}
-            className="w-16 btn-secondary flex flex-col justify-center items-center"
-          >
-            <Image src="/edit.png" width={25} height={25} alt="수정 이미지" />
-            <div className="text-sm">수정하기</div>
-          </Link>
-          <Link
-            href={`/${card.id}/login?mode=delete`}
-            className="w-16 btn-secondary flex flex-col justify-center items-center"
-          >
-            <Image src="/delete.png" width={25} height={25} alt="삭제 이미지" />
-            <div className="text-sm">삭제하기</div>
-          </Link>
+        <div className="flex flex-col justify-center items-center gap-2">
+          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+            <Image onClick={handleShowBottomSheet} src="/share.png" width={25} height={25} alt="전달하기 이미지" />
+          </div>
+          <span className="text-sm">공유하기</span>
+        </div>
+
+        <div className="flex flex-col justify-center items-center gap-2">
+          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+            <Image src="/download.png" width={25} height={25} alt="다운로드 이미지" />
+          </div>
+          <span className="text-sm">다운로드</span>
+        </div>
+
+        <div className="flex flex-col justify-center items-center gap-2">
+          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+            <Image
+              onClick={() => router.push(`/${card.id}/login?mode=edit`)}
+              src="/edit.png"
+              width={25}
+              height={25}
+              alt="수정 이미지"
+            />
+          </div>
+          <span className="text-sm">수정하기</span>
+        </div>
+
+        <div className="flex flex-col justify-center items-center gap-2">
+          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+            <Image
+              onClick={() => router.push(`/${card.id}/login?mode=delete`)}
+              src="/delete.png"
+              width={25}
+              height={25}
+              alt="삭제 이미지"
+            />
+          </div>
+          <span className="text-sm">삭제하기</span>
         </div>
       </div>
+
       <div>
         <div className="pt-5 ">
           <div className="text-sm font-bold pb-1">소셜 미디어</div>

@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const { customImage, twitterProfile, ...rest } = req.body;
         // 트위터 프로필 이미지일 떄,
-        if (!customImage) {
+        if (!customImage && twitterProfile) {
           const imageDownloadResponse = await axios.get(twitterProfile, {
             responseType: 'arraybuffer',
           });
