@@ -137,7 +137,7 @@ const Page = ({ card }: { card: CardType }) => {
                 return (
                   <span
                     key={index}
-                    className="rounded-full px-2 py-1 mr-2 text-xs text-nowrap"
+                    className="rounded-lg px-2 py-1 mr-2 text-xs text-nowrap"
                     style={{ backgroundColor, color: textColor }}
                   >
                     {hashtag}
