@@ -130,7 +130,7 @@ const Page = ({ card }: { card: CardType }) => {
               <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
               <div className="font-bold">해시태그</div>
             </div>
-            <div className="ml-3">
+            <div>
               {card.hashtags?.map((hashtag, index) => {
                 const backgroundColor = randomColor({ hue: 'blue' });
                 const textColor = getTextColor(backgroundColor);
@@ -152,7 +152,7 @@ const Page = ({ card }: { card: CardType }) => {
                 <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
                 <div className="font-bold">{field.key}</div>
               </div>
-              <div className="ml-3">{field.contents}</div>
+              <div>{field.contents}</div>
             </div>
           ))}
         </div>
