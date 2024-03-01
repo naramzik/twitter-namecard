@@ -8,6 +8,8 @@ import type { CardType } from '@/types/cards';
 import { useRouter } from 'next/router';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
+import randomColor from 'randomcolor';
+import { getTextColor } from '@/hooks/styles/getTextColor';
 
 const Page = ({ card }: { card: CardType }) => {
   const router = useRouter();
@@ -129,11 +131,19 @@ const Page = ({ card }: { card: CardType }) => {
               <div className="font-bold">해시태그</div>
             </div>
             <div className="ml-3">
-              {card.hashtags?.map((hashtag, index) => (
-                <span key={index} className=" bg-pink-400 mr-3">
-                  {hashtag}
-                </span>
-              ))}
+              {card.hashtags?.map((hashtag, index) => {
+                const backgroundColor = randomColor({ luminosity: 'light', hue: 'blue' });
+                const textColor = getTextColor(backgroundColor);
+                return (
+                  <span
+                    key={index}
+                    className="rounded-full px-2 py-1 mr-2 text-sm font-bold text-nowrap"
+                    style={{ backgroundColor: backgroundColor }}
+                  >
+                    {hashtag}
+                  </span>
+                );
+              })}
             </div>
           </div>
           {card.customFields?.map((field, index) => (
