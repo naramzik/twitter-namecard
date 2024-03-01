@@ -35,19 +35,19 @@ const Page = ({ card }: { card: CardType }) => {
       </div>
       <div className="flex justify-around">
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
             <Image onClick={handleShowBottomSheet} src="/share.png" width={20} height={20} alt="전달하기 이미지" />
           </div>
-          <span className="text-sm">공유하기</span>
+          <span className="text-xs">공유하기</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
             <Image src="/download.png" width={20} height={20} alt="다운로드 이미지" />
           </div>
-          <span className="text-sm">다운로드</span>
+          <span className="text-xs">다운로드</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
             <Image
               onClick={() => router.push(`/${card.id}/login?mode=edit`)}
               src="/edit.png"
@@ -56,10 +56,10 @@ const Page = ({ card }: { card: CardType }) => {
               alt="수정 이미지"
             />
           </div>
-          <span className="text-sm">수정하기</span>
+          <span className="text-xs">수정하기</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-14 h-14 bg-white rounded-2xl">
+          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
             <Image
               onClick={() => router.push(`/${card.id}/login?mode=delete`)}
               src="/delete.png"
@@ -68,7 +68,7 @@ const Page = ({ card }: { card: CardType }) => {
               alt="삭제 이미지"
             />
           </div>
-          <span className="text-sm">삭제하기</span>
+          <span className="text-xs">삭제하기</span>
         </div>
       </div>
       <div>
