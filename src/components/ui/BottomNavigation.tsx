@@ -33,7 +33,7 @@ export default function BottomNavigation() {
 
     return (
       <Link href={href}>
-        <Icon className="h-12" color={color} />
+        <Icon className="h-10" color={color} />
         <span className="text-xs">{label}</span>
       </Link>
     );
@@ -41,7 +41,7 @@ export default function BottomNavigation() {
   NavItem.displayName = 'NavItem';
 
   return (
-    <nav className="btm-nav btm-nav-lg max-w-[512px] mx-auto z-20">
+    <nav className="btm-nav btm-nav-ㅡㅇ max-w-[512px] mx-auto z-20">
       {NAV_ITEMS.map((navItem) => (
         <NavItem key={navItem.href} {...navItem} />
       ))}

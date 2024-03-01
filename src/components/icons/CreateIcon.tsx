@@ -4,8 +4,8 @@ export default function CreateIcon({ color = '#BDBDBD', ...props }: NavIconProps
   return (
     <svg
       fill="#000000"
-      width="40"
-      height="40"
+      width="30"
+      height="30"
       viewBox="0 0 24 24"
       id="create-note-alt"
       xmlns="http://www.w3.org/2000/svg"
