@@ -22,8 +22,8 @@ const Page = ({ card }: { card: CardType }) => {
 
   return (
     <div className="mb-16">
-      <h1 className="text-3xl font-bold">{card.nickname}</h1>
-      <div className="flex justify-center h-1/4 py-5">
+      <h1 className="text-2xl font-bold">{card.nickname}</h1>
+      <div className="flex justify-center h-1/4 py-3">
         <Image
           src="/card.png"
           width={0}
@@ -72,7 +72,7 @@ const Page = ({ card }: { card: CardType }) => {
         </div>
       </div>
       <div>
-        <div className="pt-5">
+        <div className="pt-3">
           <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-1.5">
             <div className="flex gap-3">
               <Image src="/twitter.png" width={24} height={24} alt="트위터" />
@@ -124,7 +124,7 @@ const Page = ({ card }: { card: CardType }) => {
         </div>
       </div>
       <div>
-        <div className="bg-white p-5 rounded-xl flex flex-col mt-5 gap-5">
+        <div className="bg-white p-5 rounded-xl flex flex-col mt-3 gap-5">
           <div>
             <div className="flex flex-row gap-1">
               <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
@@ -152,7 +152,7 @@ const Page = ({ card }: { card: CardType }) => {
                 <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
                 <div className="font-bold">{field.key}</div>
               </div>
-              <div>{field.contents}</div>
+              <div className="text-sm">{field.contents}</div>
             </div>
           ))}
         </div>
