@@ -124,38 +124,40 @@ const Page = ({ card }: { card: CardType }) => {
         </div>
       </div>
       <div>
-        <div className="bg-white p-5 rounded-xl flex flex-col mt-3 gap-5">
-          <div>
-            <div className="flex flex-row gap-1">
-              <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
-              <div className="font-bold">해시태그</div>
-            </div>
+        {((card.hashtags && card.hashtags.length > 0) || (card.customFields && card.customFields.length > 0)) && (
+          <div className="bg-white p-5 rounded-xl flex flex-col mt-3 gap-5">
             <div>
-              {card.hashtags?.map((hashtag, index) => {
-                const backgroundColor = randomColor({ hue: 'blue' });
-                const textColor = getTextColor(backgroundColor);
-                return (
-                  <span
-                    key={index}
-                    className="rounded-lg px-2 py-1 mr-2 text-xs text-nowrap"
-                    style={{ backgroundColor, color: textColor }}
-                  >
-                    {hashtag}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-          {card.customFields?.map((field, index) => (
-            <div key={index}>
               <div className="flex flex-row gap-1">
                 <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
-                <div className="font-bold">{field.key}</div>
+                <div className="font-bold">해시태그</div>
               </div>
-              <div className="text-sm">{field.contents}</div>
+              <div>
+                {card.hashtags?.map((hashtag, index) => {
+                  const backgroundColor = randomColor({ hue: 'blue' });
+                  const textColor = getTextColor(backgroundColor);
+                  return (
+                    <span
+                      key={index}
+                      className="rounded-lg px-2 py-1 mr-2 text-xs text-nowrap"
+                      style={{ backgroundColor, color: textColor }}
+                    >
+                      {hashtag}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-          ))}
-        </div>
+            {card.customFields?.map((field, index) => (
+              <div key={index}>
+                <div className="flex flex-row gap-1">
+                  <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+                  <div className="font-bold">{field.key}</div>
+                </div>
+                <div className="text-sm">{field.contents}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
