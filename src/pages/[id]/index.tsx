@@ -1,15 +1,15 @@
 import NiceModal from '@ebay/nice-modal-react';
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import randomColor from 'randomcolor';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
+import { getTextColor } from '@/hooks/styles/getTextColor';
+import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
-import { useRouter } from 'next/router';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { showToastSuccessMessage } from '@/utils/showToastMessage';
-import randomColor from 'randomcolor';
-import { getTextColor } from '@/hooks/styles/getTextColor';
 
 const Page = ({ card }: { card: CardType }) => {
   const router = useRouter();
@@ -132,13 +132,13 @@ const Page = ({ card }: { card: CardType }) => {
             </div>
             <div className="ml-3">
               {card.hashtags?.map((hashtag, index) => {
-                const backgroundColor = randomColor({ luminosity: 'light', hue: 'blue' });
+                const backgroundColor = randomColor({ hue: 'blue' });
                 const textColor = getTextColor(backgroundColor);
                 return (
                   <span
                     key={index}
-                    className="rounded-full px-2 py-1 mr-2 text-sm font-bold text-nowrap"
-                    style={{ backgroundColor: backgroundColor }}
+                    className="rounded-full px-2 py-1 mr-2 text-xs text-nowrap"
+                    style={{ backgroundColor, color: textColor }}
                   >
                     {hashtag}
                   </span>
