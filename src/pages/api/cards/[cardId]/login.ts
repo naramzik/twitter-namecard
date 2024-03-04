@@ -9,17 +9,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST':
       await errorHandler(req, res, async () => {
         const { password } = req.body;
-        const { data: card, error } = await supabase.from('cards').select('password').eq('id', cardId).single();
+        const { data: foundEmail } = await supabase.from('cards').select('email').eq('id', cardId);
+        const { data: user, error } = await supabase.auth.signInWithPassword({
+          email: foundEmail && foundEmail[0].email,
+          password,
+        });
 
         if (error) {
-          throw error;
+          // throw error;
+          return res.status(401).json('로그인이 실패했습니다.');
         }
-        // TODO JWT query 를 주기
-        if (password === card?.password) {
-          return res.status(201).json('비밀번호가 일치합니다.');
-        } else {
-          return res.status(401).json('비밀번호가 일치하지 않습니다.');
-        }
+
+        return res
+          .status(201)
+          .json({ access_token: user.session.access_token, refresh_token: user.session.refresh_token });
       });
       break;
 

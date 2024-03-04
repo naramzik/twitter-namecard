@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import errorHandler from '@/utils/errorHandler';
 import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -15,14 +16,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST':
       await errorHandler(req, res, async () => {
         const { nickname, twitter, hashtags, socialMedia, customFields, password } = req.body;
-
-        if (!nickname || !twitter) {
+        if (!nickname && !twitter) {
           return res.status(400).json({ message: '닉네임 또는 트위터 아이디를 적어주세요.' });
         }
-        // TODO JWT 토큰을 확인
-        if (!password) {
-          return res.status(400).json({ message: '비밀번호는 필수입니다.' });
+
+        if (!password || password.length < 6) {
+          return res.status(400).json({ message: '비밀번호는 6자 이상으로 필수입니다.' });
         }
+
+        const userId = nanoid();
+        await supabase.auth.signUp({
+          email: `${userId}@email.com`,
+          password,
+        });
+
         const { data: newCard, error } = await supabase
           .from('cards')
           .insert({
@@ -31,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             hashtags,
             socialMedia,
             customFields,
-            password,
+            email: `${userId}@email.com`,
           })
           .select('*');
         if (error) throw error;
