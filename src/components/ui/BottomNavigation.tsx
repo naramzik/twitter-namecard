@@ -33,7 +33,7 @@ export default function BottomNavigation() {
 
     return (
       <Link href={href}>
-        <Icon className="h-12" color={color} />
+        <Icon className="h-10" color={color} />
         <span className="text-xs">{label}</span>
       </Link>
     );

@@ -8,8 +8,8 @@ export default function HomeIcon({ color = '#BDBDBD', ...props }: NavIconProps) 
       id="Capa_1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="40"
-      height="40"
+      width="30"
+      height="30"
       viewBox="0 0 495.398 495.398"
       xmlSpace="preserve"
       {...props}
