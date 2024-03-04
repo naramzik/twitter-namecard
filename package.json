@@ -29,11 +29,13 @@
     "nanoid": "^5.0.4",
     "next": "14.0.4",
     "qrcode.react": "^3.1.0",
+    "randomcolor": "^0.6.2",
     "react": "^18",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
@@ -41,6 +43,7 @@
     "@eslint/eslintrc": "^2.1.2",
     "@eslint/js": "^8.52.0",
     "@types/node": "^20",
+    "@types/randomcolor": "^0.5.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.7",

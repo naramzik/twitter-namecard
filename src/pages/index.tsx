@@ -8,9 +8,11 @@ export default function Home() {
   const { cards } = useGetCards();
 
   return (
-    <>
-      <main className="flex flex-col gap-5 mx-5">{cards?.map((card: CardType) => <CardItem card={card} />)}</main>
-    </>
+    <div>
+      <main className="flex flex-col gap-5 mx-1 mb-16">
+        {cards?.map((card: CardType) => <CardItem card={card} key={card.id} />)}
+      </main>
+    </div>
   );
 }
 

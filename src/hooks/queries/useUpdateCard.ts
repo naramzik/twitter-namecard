@@ -23,7 +23,6 @@ interface SubmittedCard {
 export const useUpdateCard = () => {
   return useMutation({
     mutationFn: (data: SubmittedCard) => {
-      console.log('data.allData: ', data.allData);
       return axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${data.cardId}`, data.allData);
     },
   });
