@@ -28,11 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case 'PUT':
       await errorHandler(req, res, async () => {
-        // const { data: updatedCard, error } = await supabase.from('cards').update(req.body).eq('id', cardId).select();
-
         const { customImage, twitterProfile, ...rest } = req.body;
-        // 트위터 프로필 이미지일 떄,
-        if (!customImage) {
+
+        if (!customImage && twitterProfile) {
+          // 트위터 프로필 이미지일 떄,
           const imageDownloadResponse = await axios.get(twitterProfile, {
             responseType: 'arraybuffer',
           });
@@ -82,30 +81,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
   }
 }
-
-// case 'POST':
-// await errorHandler(req, res, async () => {
-//   const { customImage, cardId } = req.body;
-//   if (!customImage) {
-//     const imageDownloadResponse = await axios.get(image, {
-//       responseType: 'arraybuffer',
-//     });
-
-//     const imageBuffer = Buffer.from(imageDownloadResponse.data, 'binary');
-
-//     const { error: uploadError } = await supabase.storage.from('image_url').upload(cardId, imageBuffer, {
-//       upsert: true,
-//     });
-//     if (uploadError) {
-//       console.error('이미지 파일을 올릴 수 없습니다.:', uploadError);
-//       return;
-//     }
-//   } else {
-//     const { error: uploadError } = await supabase.storage.from('image_url').upload(cardId, customImage, {
-//       upsert: true,
-//     });
-//     if (uploadError) {
-//       console.error('이미지 파일을 올릴 수 없습니다.:', uploadError);
-//       return;
-//     }
-//   }
