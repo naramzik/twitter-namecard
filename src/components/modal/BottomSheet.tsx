@@ -5,13 +5,12 @@ import QRModal from '@/components/modal/QRModal';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 
-const BottomSheet = ({ nickname }: { nickname: string }) => {
+const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string }) => {
   const { mutate: createShortLink } = useCreateShortLink();
   const modal = useModal();
 
   const handleShowQRModal = () => {
     // TODO: 명함 상세 페이지에서 get 요청으로 가져온 cardId 넣기
-    const cardId = '';
     createShortLink(
       { cardId },
       {

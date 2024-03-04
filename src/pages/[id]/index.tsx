@@ -17,6 +17,7 @@ const Page = ({ card }: { card: CardType }) => {
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet, {
       nickname: card.nickname,
+      cardId: card.id,
     });
   };
 
