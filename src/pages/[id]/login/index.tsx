@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 import { usePostPassword } from '@/hooks/queries/usePostPassword';
+import { remove } from '@/libs/axiosInterceptor';
 import { NextPageWithLayout } from '@/types/page';
 
 interface Password {
@@ -25,7 +25,8 @@ const Page: NextPageWithLayout = () => {
             password: data.password,
           },
           {
-            onSuccess: () => {
+            onSuccess: (data) => {
+              localStorage.setItem('accessToken', data.data.access_token);
               router.push(`/${cardId}/edit`);
             },
           },
@@ -38,8 +39,9 @@ const Page: NextPageWithLayout = () => {
             password: data.password,
           },
           {
-            onSuccess: () => {
-              axios.delete(`/api/cards/${cardId}`);
+            onSuccess: (data) => {
+              localStorage.setItem('accessToken', data.data.access_token);
+              remove(`/api/cards/${cardId}`);
               router.push('/');
             },
           },
