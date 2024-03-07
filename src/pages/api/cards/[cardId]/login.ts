@@ -20,12 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return res.status(401).json('로그인이 실패했습니다.');
         }
 
-        return res
-          .status(201)
-          .json({ access_token: user.session.access_token, refresh_token: user.session.refresh_token });
+        return res.status(201).json({ access_token: user.session.access_token });
       });
       break;
 
     default:
+      res.setHeader('Allow', ['POST']);
+      res.status(405).json({ message: `${req.method}는 허용되지 않습니다.` });
   }
 }
