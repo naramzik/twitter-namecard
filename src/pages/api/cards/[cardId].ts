@@ -19,10 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await errorHandler(req, res, async () => {
         const { data: cardToDelete, error } = await supabase.from('cards').delete().eq('id', cardId).select();
         if (error) throw error;
-        if (!cardToDelete) {
-          return res.status(404).json({ message: '삭제할 명함을 찾을 수 없습니다.' });
+
+        if (cardToDelete.length) {
+          res.status(200).json({ message: '명함이 삭제되었습니다.', data: cardToDelete });
+        } else {
+          return res.status(404).json({ message: '명함을 삭제할 수 없습니다.' });
         }
-        res.status(200).json({ message: '명함이 삭제되었습니다.' });
       });
       break;
 
@@ -65,8 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (updatedCardError) throw updatedCardError;
         if (!updatedCard || updatedCard.length === 0) {
-          // 업데이트할 카드가 없는 경우
-          return res.status(404).json({ message: '카드를 찾을 수 없습니다.' });
+          return res.status(404).json({ message: '업데이트를 할 수 없습니다.' });
         }
 
         res.status(200).json({
