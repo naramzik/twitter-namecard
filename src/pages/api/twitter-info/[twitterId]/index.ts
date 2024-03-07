@@ -6,9 +6,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const twitterId = req.query.twitterId as string;
-    if (!twitterId || twitterId === 'undefined' || twitterId === 'null') {
+    if (!twitterId || twitterId === undefined || twitterId === null) {
       return res.status(400).json({
-        message: '유저이름을 적어주세요.',
+        message: '유저이름을 입력해주세요.',
       });
     }
 
