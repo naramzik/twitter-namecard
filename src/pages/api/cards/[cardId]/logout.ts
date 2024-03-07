@@ -17,5 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
 
     default:
+      res.setHeader('Allow', ['POST']);
+      res.status(405).json({ message: `${req.method}는 허용되지 않습니다.` });
   }
 }
