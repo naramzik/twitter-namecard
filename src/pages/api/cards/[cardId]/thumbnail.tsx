@@ -11,6 +11,9 @@ export default async function handler(request: NextRequest) {
     fetch(new URL('./Pretendard-Regular.woff', import.meta.url)).then((res) => res.arrayBuffer()),
   ]);
 
+  const cardId = request.url.split('/')[5];
+  console.log(cardId);
+
   try {
     return new ImageResponse(
       (
