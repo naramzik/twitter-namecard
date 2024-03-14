@@ -1,38 +1,119 @@
-import errorHandler from '@/utils/errorHandler';
-import satori from 'satori';
-
-import type { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 import { ImageResponse } from 'next/og';
+import { NextRequest } from 'next/server';
 
 export const config = {
   runtime: 'edge',
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  //   const cardId = req.query.cardId as string;
-
-  switch (req.method) {
+export default async function handler(request: NextRequest) {
+  switch (request.method) {
     case 'GET':
-      await errorHandler(req, res, async () => {
-        const Nanum_Gothic_Buffer = await fetch(new URL('./NanumGothic-Regular.ttf', import.meta.url)).then(
-          (response) => response.arrayBuffer(),
-        );
-        return new ImageResponse(
-          (
-            <div style={{ color: 'black', display: 'flex' }}>
-              <h1>hello, world</h1>
-              <h2>할로</h2>
+      // console.log('cardId:', params);
+      const Nanum_Gothic_Buffer = await fetch(new URL('./NanumGothic-Regular.ttf', import.meta.url)).then((response) =>
+        response.arrayBuffer(),
+      );
+      // const { hashtags } = await axios.get(`/api/cards/${cardId}`).then((res) => res.data);
+
+      return new ImageResponse(
+        (
+          <div
+            tw="bg-white shadow-md"
+            style={{
+              color: 'black',
+              display: 'flex',
+              flex: '1 1 auto',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderRadius: '1rem',
+              margin: '1rem',
+              width: '35.6rem',
+              padding: '3rem',
+              height: '23rem',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flexWrap: 'wrap',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <h2>Elon Musk</h2>
+                <h2>@elonmusk</h2>
+                <h2 style={{ fontStyle: 'italic' }}>"안녕하세요 저는 일론머스크입니다"</h2>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                }}
+              >
+                {/* {hashtags.map((hashtag, i) => (
+                  <p className="badge badge-ghost" key={i}>
+                    #{hashtag}
+                  </p>
+                ))} */}
+              </div>
             </div>
-          ),
-          {
-            width: 600,
-            height: 400,
-            fonts: [{ name: 'Nanum_Gothic', data: Nanum_Gothic_Buffer, weight: 600 }],
-          },
-        );
-        // return res.status(201).json({ result });
-      });
-      break;
+            <section
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+              }}
+            >
+              <div
+                tw="aspect-square"
+                style={{ display: 'flex', width: '6rem', borderRadius: '100%', objectFit: 'cover' }}
+              >
+                <img
+                  style={{ borderRadius: '100%' }}
+                  src="https://nitter.privacydev.net/pic/pbs.twimg.com%2Fprofile_images%2F1683899100922511378%2F5lY42eHs.jpg"
+                  alt=""
+                />
+              </div>
+              <section tw="text-end flex flex-col">
+                <div tw="flex items-center justify-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width={18}>
+                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                  </svg>
+                </div>
+                <div tw="flex items-center justify-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" width={18}>
+                    <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+                  </svg>
+                </div>
+                <div tw="flex items-center justify-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width={16}>
+                    <path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z" />
+                  </svg>
+                </div>
+              </section>
+            </section>
+          </div>
+        ),
+        {
+          width: 600,
+          height: 400,
+          fonts: [
+            { name: 'Nanum_Gothic', data: Nanum_Gothic_Buffer, style: 'normal', weight: 600 },
+            { name: 'Nanum_Gothic_italic', data: Nanum_Gothic_Buffer, style: 'italic', weight: 600 },
+          ],
+        },
+      );
+
     default:
+    // res.status(405).json({ message: `${request.method}는 허용되지 않습니다.`, allow: ['GET'] });
   }
 }
