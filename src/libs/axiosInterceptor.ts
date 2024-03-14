@@ -8,30 +8,28 @@ export const instance = axios.create({
 const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   const accessToken = localStorage.getItem('accessToken');
   if (accessToken !== null) {
-    localStorage.setItem('accessToken', accessToken);
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
-
-  if (!config.headers) return config;
-  if (!accessToken) return config;
-
-  config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;
 };
 
 instance.interceptors.request.use(interceptorRequestFulfilled);
 
-const interceptorResponseFulfilled = (res: AxiosResponse) => {
-  if (200 <= res.status && res.status < 300) return res;
+const interceptorResponseFulfilled = (response: AxiosResponse) => {
+  if ('access_token' in response.data) {
+    localStorage.setItem('accessToken', response.data.access_token);
+  }
 
-  return Promise.reject(res);
+  return response.data;
 };
 
 const interceptorResponseRejected = async (error: AxiosError) => {
-  const originalRequest = error.config;
-  if (error.response?.status === 401 && originalRequest) {
-    return Promise.reject(error.response?.data);
+  if (error instanceof AxiosError) {
+    return Promise.reject(error.response?.data ?? error);
   }
+
+  return Promise.reject(error);
 };
 
 instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
