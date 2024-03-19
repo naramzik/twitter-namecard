@@ -112,8 +112,10 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const submitHandler = (data: Data) => {
+    const customFields = data.customFields.filter((field) => field.key.trim() !== '' && field.contents.trim() !== '');
+
     const allData = {
-      customFields: data.customFields,
+      customFields,
       socialMedia: { instagram: data.instagramId.trim(), github: data.githubId.trim(), blog: data.blog.trim() },
       nickname: data.twitterNickname,
       twitter: data.twitterId,
