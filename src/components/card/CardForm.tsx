@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
@@ -98,12 +98,16 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     if (!event.nativeEvent.isComposing && event.key === 'Enter') {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
-      if (newHashtag.length > 15) setIsMaxHashtag(true);
+      if (newHashtag.length > 15) {
+        setIsMaxHashtag(true);
+        return;
+      }
       if (newHashtag && !hashtagList.includes(newHashtag)) {
         if (hashtagList.length > 3) {
           setIsMaxHashtagList(true);
           return;
         }
+        console.log('isMaxHashtagList', isMaxHashtagList);
         setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
@@ -199,6 +203,20 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       setValue('twitterImage', urlImage);
     }
   };
+
+  useEffect(() => {
+    if (hashtagList.length <= 4) {
+      setIsMaxHashtagList(false);
+    }
+  }, [hashtagList]);
+
+  useEffect(() => {
+    hashtagList.map((hashtag) => {
+      if (hashtag.length <= 15) {
+        setIsMaxHashtag(false);
+      }
+    });
+  }, [hashtagList]);
 
   return (
     <div className="pb-12">
