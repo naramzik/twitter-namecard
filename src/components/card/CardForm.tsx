@@ -43,7 +43,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
   const setSelectedCardId = useSetRecoilState(selectedCardIdState);
-
+  const [isMaxHashtagList, setIsMaxHashtagList] = useState(false);
+  const [isMaxHashtag, setIsMaxHashtag] = useState(false);
   const {
     register,
     handleSubmit,
@@ -97,8 +98,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     if (!event.nativeEvent.isComposing && event.key === 'Enter') {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
-
+      if (newHashtag.length > 15) setIsMaxHashtag(true);
       if (newHashtag && !hashtagList.includes(newHashtag)) {
+        if (hashtagList.length > 3) {
+          setIsMaxHashtagList(true);
+          return;
+        }
         setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
@@ -407,6 +412,16 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 </div>
               ))}
             </div>
+            {isMaxHashtag && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500">해시태그는 15글자 이하여야 해요.</span>
+              </div>
+            )}
+            {isMaxHashtagList && (
+              <div className="label pt-0.5">
+                <span className="label-text text-red-500">해시태그는 4개까지 작성할 수 있어요.</span>
+              </div>
+            )}
           </label>
         </fieldset>
         <fieldset>
