@@ -107,7 +107,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           setIsMaxHashtagList(true);
           return;
         }
-        console.log('isMaxHashtagList', isMaxHashtagList);
         setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
