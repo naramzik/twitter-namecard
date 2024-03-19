@@ -42,7 +42,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
-  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
   const setSelectedCardId = useSetRecoilState(selectedCardIdState);
 
   const {
@@ -115,7 +114,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const submitHandler = (data: Data) => {
     const allData = {
       customFields: data.customFields,
-      socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
+      socialMedia: { instagram: data.instagramId.trim(), github: data.githubId.trim(), blog: data.blog.trim() },
       nickname: data.twitterNickname,
       twitter: data.twitterId,
       bio: data.twitterBio,
