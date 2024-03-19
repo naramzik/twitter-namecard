@@ -332,13 +332,18 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label pb-0.5">
-                <span className="label-text">자기소개</span>
+                <span className="label-text">바이오</span>
               </div>
               <textarea
                 className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
                 placeholder=""
                 {...register('twitterBio', { maxLength: 160 })}
               />
+              {errors.twitterBio && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500">바이오는 160자 이하여야 합니다.</span>
+                </div>
+              )}
             </label>
             <div className="form-control w-full max-w-xs">
               <label className="label pb-0.5">
