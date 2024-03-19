@@ -321,7 +321,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-                {...register('twitterNickname', { required: true })}
+                {...register('twitterNickname', { required: true, maxLength: 15 })}
                 name="twitterNickname"
               />
               {errors.twitterNickname && (
@@ -337,7 +337,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               <textarea
                 className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
                 placeholder=""
-                {...register('twitterBio')}
+                {...register('twitterBio', { maxLength: 160 })}
               />
             </label>
             <div className="form-control w-full max-w-xs">
@@ -415,7 +415,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input h-10 w-1/2 max-w-xs shadow-sm placeholder:text-xs"
-                {...register('instagramId')}
+                {...register('instagramId', { maxLength: 30 })}
                 name="instagramId"
               />
             </label>
@@ -427,7 +427,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input w-1/2 h-10 max-w-xs shadow-sm placeholder:text-xs"
-                {...register('githubId')}
+                {...register('githubId', { maxLength: 30 })}
                 name="githubId"
               />
             </label>
