@@ -43,14 +43,13 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
   const setSelectedCardId = useSetRecoilState(selectedCardIdState);
-  const [isMaxHashtagList, setIsMaxHashtagList] = useState(false);
-  const [isMaxHashtag, setIsMaxHashtag] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
     setValue,
+    setError,
   } = useForm<Data>({
     defaultValues:
       cardId === null
@@ -98,13 +97,15 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     if (!event.nativeEvent.isComposing && event.key === 'Enter') {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
+
       if (newHashtag.length > 15) {
-        setIsMaxHashtag(true);
+        setError('hashtags', { message: '해시태그는 15글자 이하여야 해요.' });
         return;
       }
+
       if (newHashtag && !hashtagList.includes(newHashtag)) {
         if (hashtagList.length > 3) {
-          setIsMaxHashtagList(true);
+          setError('hashtags', { message: '해시태그는 4개까지 작성할 수 있어요.' });
           return;
         }
         setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
@@ -112,6 +113,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         setShowDropdown(false);
       }
     }
+    setError('hashtags', { message: '' });
     setShowDropdown(true);
   };
 
@@ -202,20 +204,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       setValue('twitterImage', urlImage);
     }
   };
-
-  useEffect(() => {
-    if (hashtagList.length <= 4) {
-      setIsMaxHashtagList(false);
-    }
-  }, [hashtagList]);
-
-  useEffect(() => {
-    hashtagList.map((hashtag) => {
-      if (hashtag.length <= 15) {
-        setIsMaxHashtag(false);
-      }
-    });
-  }, [hashtagList]);
 
   return (
     <div className="pb-12">
@@ -429,16 +417,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 </div>
               ))}
             </div>
-            {isMaxHashtag && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500">해시태그는 15글자 이하여야 해요.</span>
-              </div>
-            )}
-            {isMaxHashtagList && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500">해시태그는 4개까지 작성할 수 있어요.</span>
-              </div>
-            )}
+            {/* ------------------------- */}
+            {errors.hashtags && <span className="label-text text-red-500">{errors.hashtags.message}</span>}
           </label>
         </fieldset>
         <fieldset>
