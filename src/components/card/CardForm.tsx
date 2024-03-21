@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
@@ -42,15 +42,14 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
-  const [isPasswordDifferent, setIsPasswordDifferent] = useState(false);
   const setSelectedCardId = useSetRecoilState(selectedCardIdState);
-
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
     setValue,
+    setError,
   } = useForm<Data>({
     defaultValues:
       cardId === null
@@ -99,12 +98,22 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       event.preventDefault();
       const newHashtag = (event.target as HTMLInputElement).value.trim();
 
+      if (newHashtag.length > 15) {
+        setError('hashtags', { message: '해시태그는 15글자 이하여야 해요.' });
+        return;
+      }
+
       if (newHashtag && !hashtagList.includes(newHashtag)) {
+        if (hashtagList.length > 3) {
+          setError('hashtags', { message: '해시태그는 4개까지 작성할 수 있어요.' });
+          return;
+        }
         setHashtagList([...hashtagList, newHashtag]); // 새 해시태그 추가
         setHashtagInput('');
         setShowDropdown(false);
       }
     }
+    setError('hashtags', { message: '' });
     setShowDropdown(true);
   };
 
@@ -113,9 +122,11 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   };
 
   const submitHandler = (data: Data) => {
+    const customFields = data.customFields.filter((field) => field.key.trim() !== '' && field.contents.trim() !== '');
+
     const allData = {
-      customFields: data.customFields,
-      socialMedia: { instagram: data.instagramId, github: data.githubId, blog: data.blog },
+      customFields,
+      socialMedia: { instagram: data.instagramId.trim(), github: data.githubId.trim(), blog: data.blog.trim() },
       nickname: data.twitterNickname,
       twitter: data.twitterId,
       bio: data.twitterBio,
@@ -320,7 +331,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-                {...register('twitterNickname', { required: true })}
+                {...register('twitterNickname', { required: true, maxLength: 15 })}
                 name="twitterNickname"
               />
               {errors.twitterNickname && (
@@ -331,13 +342,18 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label pb-0.5">
-                <span className="label-text">자기소개</span>
+                <span className="label-text">바이오</span>
               </div>
               <textarea
                 className="textarea w-full max-w-xs shadow-sm h-28 placeholder:text-xs"
                 placeholder=""
-                {...register('twitterBio')}
+                {...register('twitterBio', { maxLength: 160 })}
               />
+              {errors.twitterBio && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500">바이오는 160자 이하여야 합니다.</span>
+                </div>
+              )}
             </label>
             <div className="form-control w-full max-w-xs">
               <label className="label pb-0.5">
@@ -401,6 +417,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 </div>
               ))}
             </div>
+            {/* ------------------------- */}
+            {errors.hashtags && <span className="label-text text-red-500">{errors.hashtags.message}</span>}
           </label>
         </fieldset>
         <fieldset>
@@ -414,7 +432,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input h-10 w-1/2 max-w-xs shadow-sm placeholder:text-xs"
-                {...register('instagramId')}
+                {...register('instagramId', { maxLength: 30 })}
                 name="instagramId"
               />
             </label>
@@ -426,7 +444,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
                 type="text"
                 placeholder=""
                 className="input w-1/2 h-10 max-w-xs shadow-sm placeholder:text-xs"
-                {...register('githubId')}
+                {...register('githubId', { maxLength: 30 })}
                 name="githubId"
               />
             </label>

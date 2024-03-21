@@ -31,7 +31,6 @@ export const showToastPromiseMessage = (promise, message) => {
     loading: message.loading,
     success: message.success,
     error: (error) => {
-      console.log('error', error);
       return error.response.data.message;
     },
   });
