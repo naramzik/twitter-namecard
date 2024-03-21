@@ -219,7 +219,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       />
 
       <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
-        {router.pathname === '/default/edit' ? (
+        {router.pathname === '/default/edit' && (
           <fieldset>
             <legend className="font-bold">
               비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
@@ -291,8 +291,6 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
               )}
             </label>
           </fieldset>
-        ) : (
-          <></>
         )}
         <fieldset>
           <legend className="font-bold">
