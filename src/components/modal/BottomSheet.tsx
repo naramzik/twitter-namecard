@@ -14,7 +14,8 @@ const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string })
       { cardId },
       {
         onSuccess: (data) => {
-          NiceModal.show(QRModal, { shortLink: data.shortLink });
+          console.log('data: ', data);
+          NiceModal.show(QRModal, { shortLink: data[0].shortLink });
         },
       },
     );
