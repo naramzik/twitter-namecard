@@ -10,8 +10,6 @@ const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string })
   const modal = useModal();
 
   const handleShowQRModal = () => {
-    // TODO: 명함 상세 페이지에서 get 요청으로 가져온 cardId 넣기
-    console.log('handleShowQRModal!!: ', cardId);
     createShortLink(
       { cardId },
       {
