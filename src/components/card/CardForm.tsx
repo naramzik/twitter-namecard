@@ -219,78 +219,81 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
       />
 
       <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col py-5 gap-8">
-        <fieldset>
-          <legend className="font-bold">
-            비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
-          </legend>
-          <label className="form-control w-full max-w-xs mt-2">
-            <div className="label">
-              <span className="label-text">비밀번호</span>
-            </div>
-            <div className="flex h-10 relative">
-              <input
-                type={isPasswordVisible ? 'text' : 'password'}
-                placeholder="비밀번호를 입력해 주세요."
-                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-                {...register('password', { required: true })}
-                name="password"
-              />
-              <button
-                type="button"
-                className="h-10 absolute top-0 right-2"
-                onClick={() => setIsPasswordVisible((prev) => !prev)}
-              >
-                <Image
-                  width={22}
-                  height={22}
-                  src={isPasswordVisible ? '/hide.png' : '/view.png'}
-                  alt={isPasswordCheckVisible ? '숨김' : '보임'}
+        {router.pathname === '/default/edit' ? (
+          <fieldset>
+            <legend className="font-bold">
+              비밀번호<span className="text-xs font-normal text-red-500 ml-1">*</span>
+            </legend>
+            <label className="form-control w-full max-w-xs mt-2">
+              <div className="label">
+                <span className="label-text">비밀번호</span>
+              </div>
+              <div className="flex h-10 relative">
+                <input
+                  type={isPasswordVisible ? 'text' : 'password'}
+                  placeholder="비밀번호를 입력해 주세요."
+                  className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                  {...register('password', { required: true })}
+                  name="password"
                 />
-              </button>
-            </div>
-            {errors.password && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500 ">{requiredSentence}</span>
+                <button
+                  type="button"
+                  className="h-10 absolute top-0 right-2"
+                  onClick={() => setIsPasswordVisible((prev) => !prev)}
+                >
+                  <Image
+                    width={22}
+                    height={22}
+                    src={isPasswordVisible ? '/hide.png' : '/view.png'}
+                    alt={isPasswordCheckVisible ? '숨김' : '보임'}
+                  />
+                </button>
               </div>
-            )}
-          </label>
-          <label className="form-control w-full max-w-xs mt-2">
-            <div className="label">
-              <span className="label-text">비밀번호 확인</span>
-            </div>
-            <div className="flex h-10 relative">
-              <input
-                type={isPasswordCheckVisible ? 'text' : 'password'}
-                placeholder="비밀번호를 한 번 더 입력해주세요."
-                className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
-                {...register('passwordCheck', { required: true })}
-                name="passwordCheck"
-              />
-              <button
-                type="button"
-                className="h-10 absolute top-0 right-2"
-                onClick={() => setIsPasswordCheckVisible((prev) => !prev)}
-              >
-                {isPasswordCheckVisible ? (
-                  <Image width={22} height={22} src="/hide.png" alt="숨김" />
-                ) : (
-                  <Image width={22} height={22} src="/view.png" alt="보임" />
-                )}
-              </button>
-            </div>
-            {errors.passwordCheck && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500 ">{requiredSentence}</span>
+              {errors.password && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500 ">{requiredSentence}</span>
+                </div>
+              )}
+            </label>
+            <label className="form-control w-full max-w-xs mt-2">
+              <div className="label">
+                <span className="label-text">비밀번호 확인</span>
               </div>
-            )}
-
-            {password !== passwordCheck && !!passwordCheck && (
-              <div className="label pt-0.5">
-                <span className="label-text text-red-500 ">비밀번호가 일치하지 않습니다.</span>
+              <div className="flex h-10 relative">
+                <input
+                  type={isPasswordCheckVisible ? 'text' : 'password'}
+                  placeholder="비밀번호를 한 번 더 입력해주세요."
+                  className="input h-10 w-full max-w-xs shadow-sm placeholder:text-xs"
+                  {...register('passwordCheck', { required: true })}
+                  name="passwordCheck"
+                />
+                <button
+                  type="button"
+                  className="h-10 absolute top-0 right-2"
+                  onClick={() => setIsPasswordCheckVisible((prev) => !prev)}
+                >
+                  {isPasswordCheckVisible ? (
+                    <Image width={22} height={22} src="/hide.png" alt="숨김" />
+                  ) : (
+                    <Image width={22} height={22} src="/view.png" alt="보임" />
+                  )}
+                </button>
               </div>
-            )}
-          </label>
-        </fieldset>
+              {errors.passwordCheck && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500 ">{requiredSentence}</span>
+                </div>
+              )}
+              {password !== passwordCheck && !!passwordCheck && (
+                <div className="label pt-0.5">
+                  <span className="label-text text-red-500 ">비밀번호가 일치하지 않습니다.</span>
+                </div>
+              )}
+            </label>
+          </fieldset>
+        ) : (
+          <></>
+        )}
         <fieldset>
           <legend className="font-bold">
             프로필 가져오기 <span className="text-xs text-red-500 ml-1">*</span>
