@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { ShortLink } from '@/types/shortLink';
 
 const QRModal = ({ shortLink }: ShortLink) => {
-  console.log('shortlink: ', shortLink);
   const modal = useModal();
   const qrModalRef = useRef(null);
   const shortLinkUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`;

@@ -142,9 +142,12 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
           allData,
         },
         {
-          onSuccess: (data) => {
-            router.push(`/${data.data.updatedCard[0].id}`);
+          onSuccess: ({ data }) => {
+            router.push(`/${data.updatedCard[0].id}`);
             showToastSuccessMessage('명함이 수정되었어요!');
+          },
+          onError: (error) => {
+            console.error('update error: ', error);
           },
         },
       );

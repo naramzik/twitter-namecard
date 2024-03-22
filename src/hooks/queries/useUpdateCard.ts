@@ -24,7 +24,10 @@ interface SubmittedCard {
 export const useUpdateCard = () => {
   return useMutation({
     mutationFn: (data: SubmittedCard) => {
-      return put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${data.cardId}`, data.allData);
+      return put<{ updatedCard: { id: number }[] }>(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${data.cardId}`,
+        data.allData,
+      );
     },
   });
 };
