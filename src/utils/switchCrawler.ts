@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const instanceUrls = process.env.NITTER_HOST.split(';');
+export const instanceUrls = (process.env.NITTER_HOST ?? '').split(';');
 export let currentInstanceIndex = 0;
 
 export default async function switchCrawler(param: string | null) {

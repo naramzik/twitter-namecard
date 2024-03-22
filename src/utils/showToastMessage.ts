@@ -26,7 +26,7 @@ export const showToastLoadingMessage = (message: string) => {
   });
 };
 
-export const showToastPromiseMessage = (promise, message) => {
+export const showToastPromiseMessage = (promise: Promise<void>, message: { loading: string; success: string }) => {
   toast.promise(promise, {
     loading: message.loading,
     success: message.success,

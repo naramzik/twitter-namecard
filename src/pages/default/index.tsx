@@ -1,5 +1,6 @@
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
 const Page = () => {
   return (
@@ -10,7 +11,7 @@ const Page = () => {
   );
 };
 
-Page.getLayout = function getLayout(page) {
+Page.getLayout = function getLayout(page: ReactNode) {
   return <LayoutWithHeader>{page}</LayoutWithHeader>;
 };
 

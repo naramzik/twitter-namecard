@@ -10,6 +10,7 @@ import { getTextColor } from '@/hooks/styles/getTextColor';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
+import { ReactNode } from 'react';
 
 const Page = ({ card }: { card: CardType }) => {
   const router = useRouter();
@@ -164,7 +165,7 @@ const Page = ({ card }: { card: CardType }) => {
   );
 };
 
-Page.getLayout = function getLayout(page) {
+Page.getLayout = function getLayout(page: ReactNode) {
   return <LayoutWithHeader>{page}</LayoutWithHeader>;
 };
 
