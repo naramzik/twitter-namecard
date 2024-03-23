@@ -13,7 +13,7 @@ const Page: NextPageWithLayout = () => {
   const { mutate: postPassword } = usePostPassword();
 
   const router = useRouter();
-  const cardId = router.query.id as string;
+  const cardId = router.query.cardId as string;
   const mode = router.query.mode;
 
   const handleSubmitHandler = (data: Password) => {
@@ -27,7 +27,7 @@ const Page: NextPageWithLayout = () => {
           {
             onSuccess: (data) => {
               localStorage.setItem('accessToken', data.data.access_token);
-              router.push(`/${cardId}/edit`);
+              router.push(`/card/${cardId}/edit`);
             },
           },
         );

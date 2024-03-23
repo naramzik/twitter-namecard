@@ -34,18 +34,18 @@ const interceptorResponseRejected = async (error: AxiosError) => {
 
 instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
 
-export const get = <T = unknown, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig) => {
-  return instance.get<T, R>(url, config);
+export const get = <T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+  return instance.get(url, config);
 };
 
-export const post = <T = unknown, D = unknown, R = AxiosResponse<T>>(url: string, data?: D) => {
-  return instance.post<T, R>(url, data);
+export const post = <T = unknown, D = unknown>(url: string, data?: D): Promise<T> => {
+  return instance.post(url, data);
 };
 
-export const remove = <T = unknown, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig) => {
-  return instance.delete<T, R>(url, config);
+export const remove = <T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+  return instance.delete(url, config);
 };
 
-export const put = <T = unknown, D = unknown, R = AxiosResponse<T>>(url: string, data?: D) => {
-  return instance.put<T, R>(url, data);
+export const put = <T = unknown, D = unknown>(url: string, data?: D): Promise<T> => {
+  return instance.put(url, data);
 };

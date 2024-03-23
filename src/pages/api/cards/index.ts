@@ -31,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           socialMedia,
           customFields,
           password,
+          bio,
           customImage: customImageSrc = '',
           twitterProfile: twitterPicSrc = '',
         } = req.body;
@@ -105,6 +106,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             customFields,
             image_url: imageUrl,
             email,
+            bio,
           },
         });
 

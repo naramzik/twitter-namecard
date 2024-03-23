@@ -1,24 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { put } from '@/libs/axiosInterceptor';
+import { CardType } from '@/types/cards';
 
 interface SubmittedCard {
   cardId: string;
-  allData: {
-    customFields?: {
-      key: string;
-      contents: string;
-    }[];
-    socialMedia?: {
-      instagram: string;
-      github: string;
-      blog: string;
-    };
-    nickname: string;
-    twitter: string;
-    hashtags?: string[];
-    password: string;
-    bio: string;
-  };
+  allData: CardType;
 }
 
 export const useUpdateCard = () => {

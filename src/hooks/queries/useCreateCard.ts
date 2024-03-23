@@ -2,18 +2,18 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 interface SubmittedCard {
-  customFields: {
+  customFields?: {
     key: string;
     contents: string;
   }[];
-  socialMedia: {
-    instagram: string;
-    github: string;
-    blog: string;
+  socialMedia?: {
+    instagram?: string;
+    github?: string;
+    blog?: string;
   };
   nickname: string;
   twitter: string;
-  hashtags: string[];
+  hashtags?: string[];
   password: string;
   bio: string;
   // image_url: string;

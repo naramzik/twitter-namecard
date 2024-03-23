@@ -7,6 +7,7 @@ export interface CardType {
   nickname: string;
   twitter: string;
   hashtags?: string[];
+  image_url: string;
   socialMedia?: {
     instagram?: string;
     github?: string;

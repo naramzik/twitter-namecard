@@ -22,6 +22,8 @@ export default async function handler(request: NextRequest) {
     });
   }
 
+  const { data: image_url } = await supabase.storage.from('image_url').createSignedUrl(foundCard.image_url ?? '', 60);
+
   try {
     return new ImageResponse(
       (
@@ -77,7 +79,7 @@ export default async function handler(request: NextRequest) {
             }}
           >
             <img
-              src={foundCard.image_url ?? 'https://pbs.twimg.com/media/DKi8pCTUEAA6X-o?format=jpg&name=small'}
+              src={image_url?.signedUrl ?? 'https://pbs.twimg.com/media/DKi8pCTUEAA6X-o?format=jpg&name=small'}
               width={150}
               height={150}
               alt=""

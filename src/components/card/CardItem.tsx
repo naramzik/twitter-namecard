@@ -1,18 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { selectedCardIdState } from '@/store/cardId';
 import { applyDateFormatting } from '@/utils/applyDateFormatting';
 import { checkIsNew } from '@/utils/checkIsNew';
 import type { CardType } from '@/types/cards';
 
 const CardItem = ({ card }: { card: CardType }) => {
-  const setSelectedCardId = useSetRecoilState(selectedCardIdState);
   const [isNew, setIsNew] = useState(false);
   const router = useRouter();
   const openDetailPageHandler = () => {
-    setSelectedCardId(card.id);
-    router.push(`/${card.id}`, undefined, { shallow: true });
+    localStorage.setItem('cardId', card.id);
+    router.push(`/card/${card.id}`, undefined, { shallow: true });
   };
 
   useEffect(() => {
@@ -22,8 +19,12 @@ const CardItem = ({ card }: { card: CardType }) => {
 
   return (
     // Todo: 명함 컴포넌트 만들기
-    <div className="card bg-base-100 shadow-xl pt-4" onClick={openDetailPageHandler}>
-      <div className="mx-auto w-11/12 h-40 bg-gray-300 rounded-xl"></div>
+    <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
+      <img
+        src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+        alt=""
+        className="aspect-nameCard"
+      />
       <div className="card-body p-5">
         <div className="flex justify-between">
           <div className="flex items-center gap-4">

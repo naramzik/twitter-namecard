@@ -18,8 +18,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               id: cardId,
             },
           });
+          const { data: image_url } = await supabase.storage
+            .from('image_url')
+            .createSignedUrl(foundCard.image_url ?? '', 60 * 60 * 4);
 
-          return res.status(200).json({ foundCard });
+          return res.status(200).json({
+            foundCard: {
+              ...foundCard,
+              image_url: image_url?.signedUrl,
+            },
+          });
         } catch (e) {
           if (e instanceof PrismaClientKnownRequestError) {
             return res.status(404).json({ message: '명함을 찾을 수 없습니다.' });
@@ -54,6 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           hashtags,
           socialMedia,
           customFields,
+          bio,
           customImage: customImageSrc = '',
           twitterProfile: twitterPicSrc = '',
         } = req.body;
@@ -115,6 +124,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             hashtags,
             socialMedia,
             customFields,
+            bio,
             image_url: imageUrl,
           },
         });
