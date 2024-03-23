@@ -170,11 +170,20 @@ Page.getLayout = function getLayout(page: ReactNode) {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const cardId = context.params?.id;
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${cardId}`);
-  return {
-    props: { card: data?.foundCard },
-  };
+  try {
+    const cardId = context.params?.cardId;
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${cardId}`);
+    return {
+      props: { card: data?.foundCard },
+    };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
 };
 
 export default Page;

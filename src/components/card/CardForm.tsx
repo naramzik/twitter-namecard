@@ -3,10 +3,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSetRecoilState } from 'recoil';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { selectedCardIdState } from '@/store/cardId';
 import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
 import NameCard from './NameCard';
 
@@ -42,7 +40,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
   // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
-  const setSelectedCardId = useSetRecoilState(selectedCardIdState);
+
   const {
     register,
     handleSubmit,
@@ -156,7 +154,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     } else if (router.pathname === '/default/edit') {
       createCard(allData, {
         onSuccess: (data) => {
-          setSelectedCardId(data.data.newCard[0].id);
+          localStorage.setItem('cardId', data.data.newCard[0].id);
           router.push(`/${data.data.newCard[0].id}`);
           showToastSuccessMessage('명함을 만드는데 성공했어요!');
         },

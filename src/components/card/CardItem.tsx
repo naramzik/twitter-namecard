@@ -1,18 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { selectedCardIdState } from '@/store/cardId';
 import { applyDateFormatting } from '@/utils/applyDateFormatting';
 import { checkIsNew } from '@/utils/checkIsNew';
 import type { CardType } from '@/types/cards';
 
 const CardItem = ({ card }: { card: CardType }) => {
-  const setSelectedCardId = useSetRecoilState(selectedCardIdState);
   const [isNew, setIsNew] = useState(false);
   const router = useRouter();
   const openDetailPageHandler = () => {
-    setSelectedCardId(card.id);
-    router.push(`/${card.id}`, undefined, { shallow: true });
+    localStorage.setItem('cardId', card.id);
+    router.push(`/card/${card.id}`, undefined, { shallow: true });
   };
 
   useEffect(() => {
