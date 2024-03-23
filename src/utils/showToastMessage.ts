@@ -10,9 +10,13 @@ const toastMessage = (message: string, type: ToastType) => {
 };
 
 export const showToastErrorMessage = (error: unknown) => {
-  const axiosError = error as AxiosError;
-  const errorResponse = JSON.stringify(axiosError.response?.data).replace(/"/gi, '');
-  errorResponse && toastMessage(errorResponse, 'error');
+  if (error instanceof AxiosError) {
+    const errorResponse = error.response?.data?.message ?? '서버 에러가 발생했습니다.';
+    toast.error(errorResponse);
+    return;
+  }
+
+  toast.error('에러가 발생했습니다.');
 };
 
 export const showToastSuccessMessage = (message: string) => {
