@@ -11,7 +11,7 @@ interface TwitterInfoResponse {
 
 export function useGetTwitterInfo({ twitterId }: { twitterId: string }) {
   return useQuery({
-    queryKey: ['twitterInfo'],
+    queryKey: ['twitterInfo', twitterId],
     queryFn: () =>
       toast.promise<TwitterInfoResponse>(
         get(`/api/twitter-info/${twitterId}`, {
