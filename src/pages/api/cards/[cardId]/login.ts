@@ -1,7 +1,7 @@
+import { isEmpty } from 'lodash-es';
 import errorHandler from '@/utils/errorHandler';
 import prisma from '@/utils/prisma';
 import supabase from '@/utils/supabase';
-import { isEmpty } from 'lodash-es';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

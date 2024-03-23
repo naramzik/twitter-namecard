@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server';
 import { ImageResponse } from '@vercel/og';
-import supabase from '@/utils/supabase';
+import { NextRequest } from 'next/server';
 import { CardType } from '@/types/cards';
+import supabase from '@/utils/supabase';
 
 export const config = {
   runtime: 'edge',
@@ -137,8 +137,7 @@ export default async function handler(request: NextRequest) {
         ],
       },
     );
-  } catch (e: any) {
-    console.log(e);
+  } catch (e) {
     return new Response(`Failed to generate the image`, {
       status: 500,
     });

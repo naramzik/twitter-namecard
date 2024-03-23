@@ -3,6 +3,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import randomColor from 'randomcolor';
+import { ReactNode } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
@@ -10,7 +11,6 @@ import { getTextColor } from '@/hooks/styles/getTextColor';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
-import { ReactNode } from 'react';
 
 const Page = ({ card }: { card: CardType }) => {
   const router = useRouter();

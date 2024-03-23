@@ -1,10 +1,10 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import axios from 'axios';
+import { isEmpty } from 'lodash-es';
 import errorHandler from '@/utils/errorHandler';
+import prisma from '@/utils/prisma';
 import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '@/utils/prisma';
-import { isEmpty, omit } from 'lodash-es';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await errorHandler(req, res, async () => {
@@ -74,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // TODO: 이미지 업로드 로직을 함수로 분리
-        let imageUrl: string = '';
+        let imageUrl = '';
 
         // 트위터 프로필 이미지일 때
         if (isEmpty(customImageSrc) && !isEmpty(twitterPicSrc)) {

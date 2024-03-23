@@ -9,11 +9,12 @@
     "fix": "pnpm run '/^fix:.+$/'",
     "fix:eslint": "pnpm lint:eslint --fix",
     "fix:prettier": "pnpm lint:prettier --write",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && husky install",
     "lint": "pnpm run '/^lint:.+$/'",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:prettier": "prettier --check --ignore-unknown '**/*'",
     "pre-commit": "lint-staged --verbose --no-stash",
+    "prepare": "husky",
     "start": "next start"
   },
   "dependencies": {
@@ -63,7 +64,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "fakebase": "^0.3.0",
     "globals": "^13.24.0",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "ignore": "^5.2.4",
     "lint-staged": "^15.0.2",
     "postcss": "^8",

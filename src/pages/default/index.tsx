@@ -1,6 +1,6 @@
-import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 
 const Page = () => {
   return (
