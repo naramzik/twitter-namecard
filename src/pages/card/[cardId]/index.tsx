@@ -37,12 +37,16 @@ const Page = ({ card }: { card: CardType }) => {
           </div>
           <span className="text-xs">공유하기</span>
         </div>
-        <div className="flex flex-col justify-center items-center gap-2">
+        <a
+          href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+          download={`${card.nickname}님의_명함.png`}
+          className="flex flex-col justify-center items-center gap-2"
+        >
           <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
             <Image src="/download.png" width={20} height={20} alt="다운로드 이미지" />
           </div>
           <span className="text-xs">다운로드</span>
-        </div>
+        </a>
         <div className="flex flex-col justify-center items-center gap-2">
           <Link
             href={`/card/${card.id}/login?mode=edit`}
