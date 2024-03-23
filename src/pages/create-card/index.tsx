@@ -3,7 +3,7 @@ import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 
 const Page = () => {
-  return <CardForm cardId={null} />;
+  return <CardForm />;
 };
 
 Page.getLayout = function getLayout(page: ReactNode) {

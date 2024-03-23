@@ -3,41 +3,28 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateCard } from '@/hooks/queries/useCreateCard';
-import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
-import { showToastPromiseMessage, showToastSuccessMessage } from '@/utils/showToastMessage';
+import { CardType } from '@/types/cards';
+import { showToastPromiseMessage } from '@/utils/showToastMessage';
 import NameCard from './NameCard';
 
-interface Data {
-  twitterNickname: string;
-  twitterId: string;
-  twitterBio: string;
-  twitterImage: string;
-  instagramId: string;
-  githubId: string;
-  blog: string;
-  hashtags: string[];
-  password: string;
+interface CardFormData extends CardType {
   passwordCheck: string;
-  customFields: CustomFields[];
 }
 
-interface CustomFields {
-  key: string;
-  contents: string;
+interface CardFormProps {
+  card?: CardType;
 }
 
-const CardForm = ({ cardId }: { cardId: string | null }) => {
+const CardForm = ({ card }: CardFormProps) => {
   const router = useRouter();
-  const { mutate: createCard } = useCreateCard();
-  const { mutate: updateCard } = useUpdateCard();
+  // const { mutate: createCard } = useCreateCard();
+  // const { mutate: updateCard } = useUpdateCard();
   const [hashtagList, setHashtagList] = useState<string[]>([]);
   const [hashtagInput, setHashtagInput] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isTwitterFieldVisible, setIsTwitterFieldVisible] = useState(false);
   const hiddenInputRef = useRef<HTMLInputElement | null>(null);
   const requiredSentence = <p>필수 문항입니다.</p>;
-  // const renderError = (error?: ErrorObject) => error.message && <p>{error.message}</p>
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordCheckVisible, setIsPasswordCheckVisible] = useState(false);
 
@@ -49,32 +36,33 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     setValue,
     setError,
     clearErrors,
-  } = useForm<Data>({
-    defaultValues:
-      cardId === null
-        ? {
-            twitterNickname: '',
-            twitterId: '',
-            twitterBio: '',
-            twitterImage: '',
-            instagramId: '',
-            githubId: '',
-            blog: '',
-            hashtags: [],
-            password: '',
-            customFields: [],
-          }
-        : async () =>
-            await axios.get(`/api/cards/${cardId}`).then((res) => {
-              setHashtagList(res.data.foundCard.hashtags);
-              const { socialMedia, ...rest } = res.data.foundCard;
-              return {
-                ...rest,
-                blog: socialMedia.blog,
-                githubId: socialMedia.github,
-                instagramId: socialMedia.instagram,
-              };
-            }),
+  } = useForm<CardFormData>({
+    defaultValues: card,
+    // defaultValues:
+    //   cardId === null
+    //     ? {
+    //         twitterNickname: '',
+    //         twitterId: '',
+    //         twitterBio: '',
+    //         twitterImage: '',
+    //         instagramId: '',
+    //         githubId: '',
+    //         blog: '',
+    //         hashtags: [],
+    //         password: '',
+    //         customFields: [],
+    //       }
+    //     : async () =>
+    //         await axios.get(`/api/cards/${cardId}`).then((res) => {
+    //           setHashtagList(res.data.foundCard.hashtags);
+    //           const { socialMedia, ...rest } = res.data.foundCard;
+    //           return {
+    //             ...rest,
+    //             blog: socialMedia.blog,
+    //             githubId: socialMedia.github,
+    //             instagramId: socialMedia.instagram,
+    //           };
+    //         }),
   });
 
   const twitterNickname = watch('twitterNickname');
@@ -121,45 +109,43 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     setHashtagInput(event.target.value);
   };
 
-  const submitHandler = (data: Data) => {
-    const customFields = data.customFields.filter((field) => field.key.trim() !== '' && field.contents.trim() !== '');
-
-    const allData = {
-      customFields,
-      socialMedia: { instagram: data.instagramId.trim(), github: data.githubId.trim(), blog: data.blog.trim() },
-      nickname: data.twitterNickname,
-      twitter: data.twitterId,
-      bio: data.twitterBio,
-      // image_url: data.twitterImage,
-      hashtags: hashtagList,
-      password: data.password,
-    };
-
-    if (router.pathname === '/[id]/edit') {
-      updateCard(
-        {
-          cardId: cardId as string,
-          allData,
-        },
-        {
-          onSuccess: ({ data }) => {
-            router.push(`/${data.updatedCard[0].id}`);
-            showToastSuccessMessage('명함이 수정되었어요!');
-          },
-          onError: (error) => {
-            console.error('update error: ', error);
-          },
-        },
-      );
-    } else if (router.pathname === '/default/edit') {
-      createCard(allData, {
-        onSuccess: (data) => {
-          localStorage.setItem('cardId', data.data.newCard[0].id);
-          router.push(`/${data.data.newCard[0].id}`);
-          showToastSuccessMessage('명함을 만드는데 성공했어요!');
-        },
-      });
-    }
+  const submitHandler = (data: CardFormData) => {
+    // const customFields = data.customFields.filter((field) => field.key.trim() !== '' && field.contents.trim() !== '');
+    // const allData = {
+    //   customFields,
+    //   socialMedia: { instagram: data.instagramId.trim(), github: data.githubId.trim(), blog: data.blog.trim() },
+    //   nickname: data.twitterNickname,
+    //   twitter: data.twitterId,
+    //   bio: data.twitterBio,
+    //   // image_url: data.twitterImage,
+    //   hashtags: hashtagList,
+    //   password: data.password,
+    // };
+    // if (router.pathname === '/[id]/edit') {
+    //   updateCard(
+    //     {
+    //       cardId: cardId as string,
+    //       allData,
+    //     },
+    //     {
+    //       onSuccess: ({ data }) => {
+    //         router.push(`/${data.updatedCard[0].id}`);
+    //         showToastSuccessMessage('명함이 수정되었어요!');
+    //       },
+    //       onError: (error) => {
+    //         console.error('update error: ', error);
+    //       },
+    //     },
+    //   );
+    // } else if (router.pathname === '/default/edit') {
+    //   createCard(allData, {
+    //     onSuccess: (data) => {
+    //       localStorage.setItem('cardId', data.data.newCard[0].id);
+    //       router.push(`/${data.data.newCard[0].id}`);
+    //       showToastSuccessMessage('명함을 만드는데 성공했어요!');
+    //     },
+    //   });
+    // }
   };
 
   const searchHandler = async () => {

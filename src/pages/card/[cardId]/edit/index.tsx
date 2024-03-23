@@ -2,9 +2,11 @@ import { GetServerSidePropsContext } from 'next';
 import { ReactNode } from 'react';
 import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
+import { CardType } from '@/types/cards';
+import prisma from '@/utils/prisma';
 
-const Page = ({ cardId }: { cardId: string }) => {
-  return <CardForm cardId={cardId} />;
+const Page = ({ card }: { card: CardType }) => {
+  return <CardForm card={card} />;
 };
 
 Page.getLayout = function getLayout(page: ReactNode) {
@@ -12,10 +14,24 @@ Page.getLayout = function getLayout(page: ReactNode) {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const cardId = context.params?.id;
-  return {
-    props: { cardId },
-  };
+  try {
+    const cardId = context.params?.id as string;
+    const card = await prisma.cards.findUniqueOrThrow({
+      where: {
+        id: cardId,
+      },
+    });
+    return {
+      props: { card },
+    };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
 };
 
 export default Page;
