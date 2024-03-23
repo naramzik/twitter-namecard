@@ -2,83 +2,129 @@ import axios from 'axios';
 import errorHandler from '@/utils/errorHandler';
 import supabase from '@/utils/supabase';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '@/utils/prisma';
+import { isEmpty, omit } from 'lodash-es';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const cardId = req.query.cardId as string;
+  await errorHandler(req, res, async () => {
+    const cardId = req.query.cardId as string;
 
-  switch (req.method) {
-    case 'GET':
-      await errorHandler(req, res, async () => {
-        const { data: foundCard, error } = await supabase.from('cards').select('*').eq('id', cardId).single();
-        if (error) throw error;
-        res.status(200).json({ foundCard });
-      });
-      break;
+    switch (req.method) {
+      case 'GET': {
+        try {
+          const foundCard = await prisma.cards.findUniqueOrThrow({
+            where: {
+              id: cardId,
+            },
+          });
 
-    case 'DELETE':
-      await errorHandler(req, res, async () => {
-        const { data: cardToDelete, error } = await supabase.from('cards').delete().eq('id', cardId).select();
-        if (error) throw error;
+          return res.status(200).json(foundCard);
+        } catch (e) {
+          if (e instanceof PrismaClientKnownRequestError) {
+            return res.status(404).json({ message: '명함을 찾을 수 없습니다.' });
+          }
 
-        if (cardToDelete.length) {
-          res.status(200).json({ message: '명함이 삭제되었습니다.', data: cardToDelete });
-        } else {
-          return res.status(404).json({ message: '명함을 삭제할 수 없습니다.' });
+          throw e;
         }
-      });
-      break;
+      }
 
-    case 'PUT':
-      await errorHandler(req, res, async () => {
-        const { customImage, twitterProfile, ...rest } = req.body;
+      case 'DELETE': {
+        try {
+          await prisma.cards.delete({
+            where: {
+              id: cardId,
+            },
+          });
 
-        if (!customImage && twitterProfile) {
-          // 트위터 프로필 이미지일 떄,
-          const imageDownloadResponse = await axios.get(twitterProfile, {
+          return res.status(200).json({ message: '명함이 삭제되었습니다.' });
+        } catch (e) {
+          if (e instanceof PrismaClientKnownRequestError) {
+            return res.status(404).json({ message: '명함을 찾을 수 없습니다.' });
+          }
+
+          throw e;
+        }
+      }
+
+      case 'PUT': {
+        const {
+          nickname,
+          twitter,
+          hashtags,
+          socialMedia,
+          customFields,
+          customImage: customImageSrc = '',
+          twitterProfile: twitterPicSrc = '',
+        } = req.body;
+        const { authorization } = req.headers;
+        const [, token] = authorization?.split('Bearer ') ?? [];
+
+        if (isEmpty(token)) {
+          return res.status(401).json({ message: '로그인이 필요합니다.' });
+        }
+
+        const { data: userResponse, error: userError } = await supabase.auth.getUser(token);
+        if (userError || isEmpty(userResponse)) {
+          return res.status(401).json({ message: '로그인이 필요합니다.' });
+        }
+
+        if (userResponse.user.id !== cardId) {
+          return res.status(403).json({ message: '본인의 명함만 수정할 수 있습니다.' });
+        }
+
+        // TODO: 이미지 업로드 로직을 함수로 분리
+        let imageUrl: string = '';
+
+        // 트위터 프로필 이미지일 때
+        if (isEmpty(customImageSrc) && !isEmpty(twitterPicSrc)) {
+          const {
+            data,
+            headers: { 'Content-Type': contentType },
+          } = await axios.get(twitterPicSrc, {
             responseType: 'arraybuffer',
           });
-          const imageBuffer = Buffer.from(imageDownloadResponse.data, 'binary');
 
-          const { error: uploadError } = await supabase.storage.from('image_url').upload(cardId, imageBuffer, {
-            upsert: true,
-          });
-          if (uploadError) {
-            console.error('이미지 파일을 올릴 수 없습니다.:', uploadError);
-            return;
-          }
-        } else {
-          // 커스텀 이미지를 추가할 때
-          const { error: uploadError } = await supabase.storage.from('image_url').upload(cardId, customImage, {
-            upsert: true,
-          });
-          if (uploadError) {
-            console.error('이미지 파일을 올릴 수 없습니다.:', uploadError);
-            return;
-          }
-        }
-        // Supabase Storage에서 공개적으로 접근가능한 URL 생성하기
-        const { data: imageUrl } = supabase.storage.from('image_url').getPublicUrl(cardId);
-        //  Supbase Table에 저장하기
-        const { data: updatedCard, error: updatedCardError } = await supabase
-          .from('cards')
-          .update({ image_url: imageUrl.publicUrl, ...rest })
-          .eq('id', cardId)
-          .select();
+          const buffer = Buffer.from(data, 'binary');
+          const { error: uploadError, data: uploadResponse } = await supabase.storage
+            .from('image_url')
+            .upload(cardId, buffer, {
+              contentType: (contentType as string | undefined) ?? 'image/png',
+              upsert: true,
+            });
 
-        if (updatedCardError) throw updatedCardError;
-        if (!updatedCard || updatedCard.length === 0) {
-          return res.status(404).json({ message: '업데이트를 할 수 없습니다.' });
+          if (uploadError || isEmpty(uploadResponse)) {
+            return res.status(500).json({ message: '이미지 파일을 업로드할 수 없습니다.' });
+          }
+
+          imageUrl = uploadResponse.path;
         }
 
-        res.status(200).json({
-          updatedCard,
+        // 커스텀 프로필 이미지일 때
+        if (!isEmpty(customImageSrc)) {
+          imageUrl = customImageSrc;
+        }
+
+        await prisma.cards.update({
+          where: {
+            id: cardId,
+          },
+          data: {
+            nickname,
+            twitter,
+            hashtags,
+            socialMedia,
+            customFields,
+            image_url: imageUrl,
+          },
         });
-      });
-      break;
 
-    default:
-      res.setHeader('Allow', ['GET', 'DELETE', 'PUT']);
-      res.status(405).json({ message: `${req.method}는 허용되지 않습니다.` });
-      break;
-  }
+        return res.status(200).json({ message: '명함이 수정되었습니다.' });
+      }
+
+      default:
+        res.setHeader('Allow', ['GET', 'DELETE', 'PUT']);
+        return res.status(405).json({ message: `${req.method}는 허용되지 않습니다.` });
+    }
+  });
 }
