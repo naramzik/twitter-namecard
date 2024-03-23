@@ -29,6 +29,7 @@
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@vercel/og": "^0.6.2",
     "axios": "^1.6.5",
+    "clsx": "^2.1.0",
     "lodash-es": "^4.17.21",
     "nanoid": "^5.0.4",
     "next": "14.0.4",
