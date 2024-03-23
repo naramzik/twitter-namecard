@@ -15,6 +15,7 @@ import NameCard from './NameCard';
 interface CardFormData extends CardType {
   hashtag: string;
   passwordCheck: string;
+  twitterProfile: string;
 }
 
 interface CardFormProps {
@@ -48,6 +49,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
         setValue('nickname', twitterInfo.nickname);
         setValue('bio', twitterInfo.bio);
         setValue('image_url', twitterInfo.image);
+        setValue('twitterProfile', twitterInfo.image);
       }
     },
     [clearErrors, isSuccess, setValue, twitterInfo],
