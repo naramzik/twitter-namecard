@@ -74,7 +74,7 @@ const NameCard = ({
         }}
       >
         <img
-          src={twitterImage ?? 'https://pbs.twimg.com/media/DKi8pCTUEAA6X-o?format=jpg&name=small'}
+          src={twitterImage}
           width={100}
           height={100}
           alt=""

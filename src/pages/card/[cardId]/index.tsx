@@ -24,12 +24,9 @@ const Page = ({ card }: { card: CardType }) => {
     <div className="mb-16">
       <h1 className="text-2xl font-bold">{card.nickname}</h1>
       <div className="flex justify-center h-1/4 py-3">
-        <Image
-          src="/card.png"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: '100%', height: 'auto' }}
+        <img
+          src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+          className="w-full aspect-nameCard"
           alt="명함 이미지"
         />
       </div>

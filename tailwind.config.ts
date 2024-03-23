@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       aspectRatio: {
-        nameCard: '16/9',
+        nameCard: '60/35',
       },
       fontFamily: {
         sans: ['var(--font-nanum-gothic)'],

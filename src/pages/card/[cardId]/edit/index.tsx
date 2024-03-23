@@ -7,6 +7,7 @@ import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
 import { useUpdateCard } from '@/hooks/queries/useUpdateCard';
 import { CardType } from '@/types/cards';
 import prisma from '@/utils/prisma';
+import supabase from '@/utils/supabase';
 
 const Page = ({ card }: { card: CardType }) => {
   const { push } = useRouter();
@@ -54,8 +55,18 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         email: true,
       },
     });
+
+    const { data: image_url } = await supabase.storage
+      .from('image_url')
+      .createSignedUrl(card.image_url ?? '', 60 * 60 * 4);
+
     return {
-      props: { card },
+      props: {
+        card: {
+          ...card,
+          image_url: image_url?.signedUrl ?? '',
+        },
+      },
     };
   } catch (e) {
     console.log(e);

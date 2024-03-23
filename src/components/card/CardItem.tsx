@@ -19,8 +19,12 @@ const CardItem = ({ card }: { card: CardType }) => {
 
   return (
     // Todo: 명함 컴포넌트 만들기
-    <div className="card bg-base-100 shadow-xl pt-4" onClick={openDetailPageHandler}>
-      <div className="mx-auto w-11/12 h-40 bg-gray-300 rounded-xl"></div>
+    <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
+      <img
+        src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+        alt=""
+        className="aspect-nameCard"
+      />
       <div className="card-body p-5">
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
