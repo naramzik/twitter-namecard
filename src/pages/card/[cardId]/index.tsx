@@ -1,20 +1,18 @@
 import NiceModal from '@ebay/nice-modal-react';
-import axios from 'axios';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import randomColor from 'randomcolor';
 import { ReactNode } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
 import { getTextColor } from '@/hooks/styles/getTextColor';
+import prisma from '@/utils/prisma';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 
 const Page = ({ card }: { card: CardType }) => {
-  const router = useRouter();
-
   const handleShowBottomSheet = () => {
     NiceModal.show(BottomSheet, {
       nickname: card.nickname,
@@ -49,27 +47,21 @@ const Page = ({ card }: { card: CardType }) => {
           <span className="text-xs">다운로드</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
-            <Image
-              onClick={() => router.push(`/${card.id}/login?mode=edit`)}
-              src="/edit.png"
-              width={20}
-              height={20}
-              alt="수정 이미지"
-            />
-          </div>
+          <Link
+            href={`/card/${card.id}/login?mode=edit`}
+            className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl"
+          >
+            <Image src="/edit.png" width={20} height={20} alt="수정 이미지" />
+          </Link>
           <span className="text-xs">수정하기</span>
         </div>
         <div className="flex flex-col justify-center items-center gap-2">
-          <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
-            <Image
-              onClick={() => router.push(`/${card.id}/login?mode=delete`)}
-              src="/delete.png"
-              width={20}
-              height={20}
-              alt="삭제 이미지"
-            />
-          </div>
+          <Link
+            href={`/card/${card.id}/login?mode=delete`}
+            className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl"
+          >
+            <Image src="/delete.png" width={20} height={20} alt="삭제 이미지" />
+          </Link>
           <span className="text-xs">삭제하기</span>
         </div>
       </div>
@@ -172,11 +164,21 @@ Page.getLayout = function getLayout(page: ReactNode) {
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   try {
     const cardId = context.params?.cardId;
-    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cards/${cardId}`);
+    const card = await prisma.cards.findFirstOrThrow({
+      where: {
+        id: cardId as string,
+      },
+    });
     return {
-      props: { card: data?.foundCard },
+      props: {
+        card: {
+          ...card,
+          updated_at: card.updated_at.toString(),
+        },
+      },
     };
   } catch (e) {
+    console.log(e);
     return {
       redirect: {
         destination: '/404',

@@ -8,10 +8,10 @@ interface ProfileCardProps {
   twitterId: string;
   twitterBio: string;
   twitterImage: string;
-  hashtags: string[];
-  instagramId: string;
-  githubId: string;
-  blog: string;
+  hashtags?: string[];
+  instagramId?: string;
+  githubId?: string;
+  blog?: string;
 }
 
 const NameCard = ({
@@ -34,9 +34,7 @@ const NameCard = ({
             {twitterBio && <div className="text-xs italic mt-2">"{twitterBio}"</div>}
           </div>
           <div className="flex flex-wrap gap-1">
-            {hashtags.map((hashtag) => (
-              <div className="badge badge-ghost">#{hashtag}</div>
-            ))}
+            {hashtags?.map((hashtag) => <div className="badge badge-ghost">#{hashtag}</div>)}
           </div>
         </section>
         <section className="flex flex-col justify-between items-end">

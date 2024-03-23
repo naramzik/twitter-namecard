@@ -13,6 +13,9 @@ export default async function switchCrawler(param: string | null, currentInstanc
     });
     return { data: response.data, instanceUrl: instanceUrls[currentInstanceIndex] };
   } catch (error) {
+    if (currentInstanceIndex === instanceUrls.length - 1) {
+      throw error;
+    }
     return switchCrawler(param, (currentInstanceIndex + 1) % instanceUrls?.length);
   }
 }
