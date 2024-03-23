@@ -1,44 +1,43 @@
-import * as cheerio from 'cheerio';
+import { load } from 'cheerio';
 import errorHandler from '@/utils/errorHandler';
-import switchCrawler, { currentInstanceIndex, instanceUrls } from '@/utils/switchCrawler';
+import switchCrawler from '@/utils/switchCrawler';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { isEmpty } from 'lodash-es';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const twitterId = req.query.twitterId as string;
-    if (!twitterId || twitterId === undefined || twitterId === null) {
-      return res.status(400).json({
-        message: '유저이름을 입력해주세요.',
-      });
-    }
-
-    const response = await switchCrawler(`/${twitterId}`);
-
-    const html = response && response.data;
-    const $ = cheerio.load(html);
-
-    const bio = $(`.profile-bio`).text();
-    const nickname = $(`.profile-card-fullname`).text();
-    const image = `${instanceUrls[currentInstanceIndex]}${$('.profile-card-avatar').attr('href')}`;
-
+  await errorHandler(req, res, async () => {
     switch (req.method) {
-      case 'GET':
-        await errorHandler(req, res, async () => {
-          res.status(200).json({
-            bio,
-            nickname,
-            image,
+      case 'GET': {
+        const twitterId = req.query.twitterId as string | undefined;
+        if (isEmpty(twitterId)) {
+          return res.status(400).json({
+            message: '유저이름을 입력해주세요.',
           });
+        }
+
+        const { data, instanceUrl } = await switchCrawler(`/${twitterId}`);
+        if (isEmpty(data)) {
+          return res.status(500).json({
+            message: '크롤링에 실패했습니다.',
+          });
+        }
+
+        const $ = load(data);
+
+        const bio = $(`.profile-bio`).text();
+        const nickname = $(`.profile-card-fullname`).text();
+        const image = `${instanceUrl}${$('.profile-card-avatar').attr('href')}`;
+
+        return res.status(200).json({
+          bio,
+          nickname,
+          image,
         });
-        break;
+      }
 
       default:
         res.setHeader('Allow', ['GET']);
         res.status(405).json(`${req.method}는 허용되지 않습니다.`);
     }
-  } catch (error) {
-    if (error) {
-      throw res.status(404).json({ message: '유저를 찾을 수 없습니다.' });
-    }
-  }
+  });
 }
