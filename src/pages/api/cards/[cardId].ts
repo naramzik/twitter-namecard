@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           });
 
-          return res.status(200).json(omit(foundCard, ['password']));
+          return res.status(200).json(foundCard);
         } catch (e) {
           if (e instanceof PrismaClientKnownRequestError) {
             return res.status(404).json({ message: '명함을 찾을 수 없습니다.' });

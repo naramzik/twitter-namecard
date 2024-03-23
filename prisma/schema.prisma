@@ -15,7 +15,6 @@ model cards {
   twitter      String?
   socialMedia  Json?
   customFields Json?
-  password     String?
   hashtags     String[]
   image_url    String?
   bio          String?
