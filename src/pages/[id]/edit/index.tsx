@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
+import { ReactNode } from 'react';
 import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
-import { ReactNode } from 'react';
 
 const Page = ({ cardId }: { cardId: string }) => {
   return <CardForm cardId={cardId} />;

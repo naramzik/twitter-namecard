@@ -1,6 +1,6 @@
+import { ReactNode } from 'react';
 import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
-import { ReactNode } from 'react';
 
 const Page = () => {
   return <CardForm cardId={null} />;
