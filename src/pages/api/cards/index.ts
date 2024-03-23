@@ -104,6 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             socialMedia,
             customFields,
             image_url: imageUrl,
+            email,
           },
         });
 

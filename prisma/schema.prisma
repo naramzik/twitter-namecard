@@ -18,7 +18,7 @@ model cards {
   hashtags     String[]
   image_url    String?
   bio          String?
-  email        String?
+  email        String   @unique
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
