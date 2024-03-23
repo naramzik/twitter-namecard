@@ -125,7 +125,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             socialMedia,
             customFields,
             bio,
-            image_url: imageUrl,
+            image_url: imageUrl || undefined,
           },
         });
 
