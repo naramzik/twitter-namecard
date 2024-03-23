@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model cards {
+  id           String   @id @default(dbgenerated("auth.uid()")) @db.Uuid
+  updated_at   DateTime @default(now()) @db.Timestamptz(6)
+  nickname     String?
+  twitter      String?
+  socialMedia  Json?
+  customFields Json?
+  password     String?
+  hashtags     String[]
+  image_url    String?
+  bio          String?
+  email        String?
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model links {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  shortLink   String?
+  redirectUrl String?
+}
