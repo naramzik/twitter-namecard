@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        return res.status(200).json(cards);
+        return res.status(200).json({ cards });
       }
 
       case 'POST': {
@@ -108,7 +108,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
 
-        return res.status(201).json(newCard);
+        return res.status(201).json({ newCard });
       }
 
       default: {
