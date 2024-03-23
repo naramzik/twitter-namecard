@@ -50,6 +50,7 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
     formState: { errors },
     setValue,
     setError,
+    clearErrors,
   } = useForm<Data>({
     defaultValues:
       cardId === null
@@ -113,7 +114,8 @@ const CardForm = ({ cardId }: { cardId: string | null }) => {
         setShowDropdown(false);
       }
     }
-    setError('hashtags', { message: '' });
+
+    clearErrors('hashtags');
     setShowDropdown(true);
   };
 
