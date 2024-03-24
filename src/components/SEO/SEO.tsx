@@ -12,7 +12,7 @@ export default function SEO({ title, description }: Props) {
   const pageTitle = title ? `${title} | 트위터 명함` : '트위터 명함';
   const pageDescription = description || '나만의 트위터 명함을 만들고 공유해보아요! 🐥';
   const pageUrl = 'https://twitter-namecard.vercel.app' + router.asPath;
-  const pageImage = '/naramzik-namecard.png';
+  const pageImage = '/image/naramzik-namecard.png';
 
   return (
     <Head>
