@@ -1,29 +1,34 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import Image from 'next/image';
+import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import QRModal from '@/components/modal/QRModal';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
+import type { CardType } from '@/types/cards';
 
-const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string }) => {
+const BottomSheet = (card: CardType) => {
+  const [shortLink, setShortLink] = useState('');
   const { mutate: createShortLink } = useCreateShortLink();
   const modal = useModal();
 
   const handleShowQRModal = () => {
     createShortLink(
-      { cardId },
+      { cardId: card.id },
       {
         onSuccess: (data) => {
-          NiceModal.show(QRModal, { shortLink: data[0].shortLink });
+          setShortLink(data[0].shortLink);
+          console.log('card: ', card);
+          console.log('success image_url', card.image_url);
+          NiceModal.show(QRModal, { shortLink: data[0].shortLink, imageUrl: card.image_url });
         },
       },
     );
   };
 
   const handleShareOnTwitter = () => {
-    const share_text = `${nickname}의 명함을 공유합니다! 🎉`;
-    const link = window.location.href;
-    const twitterIntent = `https://twitter.com/intent/tweet?text=${share_text}&url=${link}`;
+    const share_text = `${card.nickname}의 명함을 공유합니다! 🎉`;
+    const twitterIntent = `https://twitter.com/intent/tweet?text=${share_text}&url=${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`;
     window.open(twitterIntent, '_blank');
   };
 
@@ -37,13 +42,13 @@ const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string })
         className="max-w-lg w-full min-h-screen mx-auto fixed bottom-0 left-0 right-0 opacity-60 bg-slate-900 z-30"
         onClick={handleCloseBottomSheet}
       />
-      <div className="z-40 max-w-lg w-full mx-auto fixed bottom-0 left-0 right-0 flex flex-col justify-around items-start bg-white h-64 rounded-t-2xl px-5 pt-10 pb-3">
+      <div className="z-40 max-w-lg w-full mx-auto fixed bottom-0 left-0 right-0 flex flex-col justify-around items-start bg-white h-60 rounded-t-2xl px-3 py-5 pt-10">
         <button className="flex w-full gap-3 ml-3" onClick={handleShowQRModal}>
           <Image width={25} height={25} src="/images/qr-code.png" alt="qr코드" />
           QR코드로 공유하기
         </button>
         <CopyToClipboard
-          text={`${window.location.href}`}
+          text={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`}
           onCopy={() => showToastSuccessMessage('명함 링크가 복사되었습니다.')}
         >
           <button className="w-full flex gap-3 ml-3">

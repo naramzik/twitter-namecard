@@ -3,10 +3,15 @@ import { QRCodeCanvas } from 'qrcode.react';
 import { useRef } from 'react';
 import { ShortLink } from '@/types/shortLink';
 
-const QRModal = ({ shortLink }: ShortLink) => {
+interface QRModalProp {
+  shortLink: ShortLink;
+  imageUrl: string;
+}
+
+const QRModal = ({ shortLink, imageUrl }: QRModalProp) => {
+  console.log('qrmodal image_url', imageUrl);
   const modal = useModal();
   const qrModalRef = useRef(null);
-  const shortLinkUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`;
   const handleCloseQRModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.target !== qrModalRef.current) return;
     modal.remove();
@@ -24,10 +29,9 @@ const QRModal = ({ shortLink }: ShortLink) => {
           className="border-primary border-4 rounded-xl"
           fgColor="#393E46"
           size={250}
-          value={shortLinkUrl}
+          value={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`}
           imageSettings={{
-            // TODO: 명함 페이지에 있는 정보 중 이미지 가져오기
-            src: 'https://www.wonju.go.kr/DATA/bbs/136/202107031124275466AEAEDB644417BBG.jpg',
+            src: imageUrl,
             width: 60,
             height: 60,
             excavate: false,
