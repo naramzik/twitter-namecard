@@ -9,7 +9,6 @@ interface QRModalProp {
 }
 
 const QRModal = ({ shortLink, imageUrl }: QRModalProp) => {
-  console.log('qrmodal image_url', imageUrl);
   const modal = useModal();
   const qrModalRef = useRef(null);
   const handleCloseQRModal = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,6 +1,6 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import QRModal from '@/components/modal/QRModal';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
@@ -8,22 +8,12 @@ import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { CardType } from '@/types/cards';
 
 const BottomSheet = (card: CardType) => {
-  const [shortLink, setShortLink] = useState('');
+  const [shortLink, setShortLink] = useState<string>('');
   const { mutate: createShortLink } = useCreateShortLink();
   const modal = useModal();
 
   const handleShowQRModal = () => {
-    createShortLink(
-      { cardId: card.id },
-      {
-        onSuccess: (data) => {
-          setShortLink(data[0].shortLink);
-          console.log('card: ', card);
-          console.log('success image_url', card.image_url);
-          NiceModal.show(QRModal, { shortLink: data[0].shortLink, imageUrl: card.image_url });
-        },
-      },
-    );
+    NiceModal.show(QRModal, { shortLink, imageUrl: card.image_url });
   };
 
   const handleShareOnTwitter = () => {
@@ -35,6 +25,20 @@ const BottomSheet = (card: CardType) => {
   const handleCloseBottomSheet = () => {
     modal.remove();
   };
+
+  useEffect(() => {
+    createShortLink(
+      { cardId: card.id },
+      {
+        onSuccess: (data) => {
+          setShortLink(data[0].shortLink);
+        },
+        onError: () => {
+          setShortLink('');
+        },
+      },
+    );
+  }, [card.id, createShortLink]);
 
   return (
     <>
