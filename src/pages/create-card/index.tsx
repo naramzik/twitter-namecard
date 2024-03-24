@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import toast from 'react-hot-toast';
 import CardForm from '@/components/card/CardForm';
 import LayoutWithTitle from '@/components/layout/LayoutWithTitle';
+import SEO from '@/components/SEO/SEO';
 import { useCreateCard } from '@/hooks/queries/useCreateCard';
 import { CardType } from '@/types/cards';
 
@@ -24,7 +25,12 @@ const Page = () => {
     }
   }
 
-  return <CardForm onSubmit={handleSubmit} />;
+  return (
+    <>
+      <SEO title="트위터 명함 생성" description="나만의 트위터 명함을 만들어보세요." />
+      <CardForm onSubmit={handleSubmit} />
+    </>
+  );
 };
 
 Page.getLayout = function getLayout(page: ReactNode) {
