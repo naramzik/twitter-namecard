@@ -33,7 +33,13 @@ const Page = ({ card }: { card: CardType }) => {
       <div className="flex justify-around">
         <div className="flex flex-col justify-center items-center gap-2">
           <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
-            <Image onClick={handleShowBottomSheet} src="/share.png" width={20} height={20} alt="전달하기 이미지" />
+            <Image
+              onClick={handleShowBottomSheet}
+              src="/images/share.png"
+              width={20}
+              height={20}
+              alt="전달하기 이미지"
+            />
           </div>
           <span className="text-xs">공유하기</span>
         </div>
@@ -43,7 +49,7 @@ const Page = ({ card }: { card: CardType }) => {
           className="flex flex-col justify-center items-center gap-2"
         >
           <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
-            <Image src="/download.png" width={20} height={20} alt="다운로드 이미지" />
+            <Image src="/images/download.png" width={20} height={20} alt="다운로드 이미지" />
           </div>
           <span className="text-xs">다운로드</span>
         </a>
@@ -52,7 +58,7 @@ const Page = ({ card }: { card: CardType }) => {
             href={`/card/${card.id}/login?mode=edit`}
             className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl"
           >
-            <Image src="/edit.png" width={20} height={20} alt="수정 이미지" />
+            <Image src="/images/edit.png" width={20} height={20} alt="수정 이미지" />
           </Link>
           <span className="text-xs">수정하기</span>
         </div>
@@ -61,7 +67,7 @@ const Page = ({ card }: { card: CardType }) => {
             href={`/card/${card.id}/login?mode=delete`}
             className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl"
           >
-            <Image src="/delete.png" width={20} height={20} alt="삭제 이미지" />
+            <Image src="/images/delete.png" width={20} height={20} alt="삭제 이미지" />
           </Link>
           <span className="text-xs">삭제하기</span>
         </div>
@@ -70,7 +76,7 @@ const Page = ({ card }: { card: CardType }) => {
         <div className="pt-3">
           <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-1.5">
             <div className="flex gap-3">
-              <Image src="/twitter.png" width={24} height={24} alt="트위터" />
+              <Image src="/images/twitter.png" width={24} height={24} alt="트위터" />
               <div className="text-sm w-20">트위터</div>
               <CopyToClipboard
                 text={`${card.twitter}`}
@@ -81,7 +87,7 @@ const Page = ({ card }: { card: CardType }) => {
             </div>
             {card.socialMedia?.instagram && (
               <div className="flex gap-3">
-                <Image src="/instagram.png" width={24} height={20} alt="인스타그램" />
+                <Image src="/images/instagram.png" width={24} height={20} alt="인스타그램" />
                 <div className="text-sm w-20">인스타그램</div>
                 <CopyToClipboard
                   text={`${card.socialMedia?.instagram}`}
@@ -93,7 +99,7 @@ const Page = ({ card }: { card: CardType }) => {
             )}
             {card.socialMedia?.github && (
               <div className="flex gap-3">
-                <Image src="/github.png" width={24} height={24} alt="깃허브" />
+                <Image src="/images/github.png" width={24} height={24} alt="깃허브" />
                 <div className="text-sm w-20">깃허브</div>
                 <CopyToClipboard
                   text={`${card.socialMedia?.github}`}
@@ -105,7 +111,7 @@ const Page = ({ card }: { card: CardType }) => {
             )}
             {card.socialMedia?.blog && (
               <div className="flex gap-3">
-                <Image src="/link.png" width={24} height={24} alt="블로그" />
+                <Image src="/images/link.png" width={24} height={24} alt="블로그" />
                 <div className="text-sm w-20">블로그</div>
                 <CopyToClipboard
                   text={`${card.socialMedia?.blog}`}
@@ -123,7 +129,7 @@ const Page = ({ card }: { card: CardType }) => {
           <div className="bg-white p-5 rounded-xl flex flex-col mt-3 gap-5">
             <div>
               <div className="flex flex-row gap-1">
-                <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+                <Image src="/images/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
                 <div className="font-bold">해시태그</div>
               </div>
               <div>
@@ -145,7 +151,7 @@ const Page = ({ card }: { card: CardType }) => {
             {card.customFields?.map((field, index) => (
               <div key={index}>
                 <div className="flex flex-row gap-1">
-                  <Image src="/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
+                  <Image src="/images/twitter-blue-mark.png" width={24} height={24} alt="트위터 블루마크" />
                   <div className="font-bold">{field.key}</div>
                 </div>
                 <div className="text-sm">{field.contents}</div>

@@ -22,7 +22,7 @@ export const Password = forwardRef<HTMLInputElement, PasswordProps>(function Pas
         <Image
           width={22}
           height={22}
-          src={showPassword ? '/view.png' : '/hide.png'}
+          src={showPassword ? '/images/view.png' : '/images/hide.png'}
           alt={showPassword ? '보임' : '숨김'}
         />
       </button>

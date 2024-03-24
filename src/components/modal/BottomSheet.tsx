@@ -39,7 +39,7 @@ const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string })
       />
       <div className="z-40 max-w-lg w-full mx-auto fixed bottom-0 left-0 right-0 flex flex-col justify-around items-start bg-white h-64 rounded-t-2xl px-5 pt-10 pb-3">
         <button className="flex w-full gap-3 ml-3" onClick={handleShowQRModal}>
-          <Image width={25} height={25} src="/qr-code.png" alt="qr코드" />
+          <Image width={25} height={25} src="/images/qr-code.png" alt="qr코드" />
           QR코드로 공유하기
         </button>
         <CopyToClipboard
@@ -47,12 +47,12 @@ const BottomSheet = ({ nickname, cardId }: { nickname: string; cardId: string })
           onCopy={() => showToastSuccessMessage('명함 링크가 복사되었습니다.')}
         >
           <button className="w-full flex gap-3 ml-3">
-            <Image width={25} height={25} src="/copy.png" alt="링크 복사" />
+            <Image width={25} height={25} src="/images/copy.png" alt="링크 복사" />
             링크 복사하기
           </button>
         </CopyToClipboard>
         <button className="flex gap-3 btn w-full btn-primary" onClick={handleShareOnTwitter}>
-          <Image width={25} height={25} src="/twitter.png" alt="트위터" />
+          <Image width={25} height={25} src="/images/twitter.png" alt="트위터" />
           트위터에 공유하기
         </button>
       </div>

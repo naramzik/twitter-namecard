@@ -7,7 +7,7 @@ const Custom404 = () => {
     <div className="flex flex-col justify-center items-center gap-10 h-[90vh]">
       <h1 className="text-4xl font-bold text-red-400">404 Error</h1>
       <div className="flex flex-col items-center">
-        <Image src="/404.png" alt="404 error" width={150} height={150} />
+        <Image src="/images/404.png" alt="404 error" width={150} height={150} />
         <div className="text-center mt-5">
           <p className="text-xl font-bold">페이지를 찾을 수 없습니다.</p>
           <p className="text-md mt-3 text-gray-700">
