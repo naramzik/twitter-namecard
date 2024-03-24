@@ -297,7 +297,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
           ))}
 
           <button onClick={handleAddCustomField} type="button" className="btn btn-ghost hover:bg-slate-300">
-            <Image width={22} height={22} src="/add.png" alt="추가" />
+            <Image width={22} height={22} src="/images/add.png" alt="추가" />
           </button>
         </section>
 

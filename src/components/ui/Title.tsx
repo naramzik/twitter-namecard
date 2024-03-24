@@ -17,7 +17,7 @@ const Title = ({ title }: Title) => {
       <Image
         width={25}
         height={25}
-        src="/left-arrow.png"
+        src="/images/left-arrow.png"
         onClick={handleBack}
         className="flex justify-start ml-2"
         alt="뒤로가기"
