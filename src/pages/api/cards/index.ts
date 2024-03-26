@@ -79,10 +79,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const buffer = Buffer.from(data, 'binary');
           const { error: uploadError, data: uploadResponse } = await supabase.storage
             .from('image_url')
-            .upload(userId, buffer, {
+            .upload(data, buffer, {
               contentType: (contentType as string | undefined) ?? 'image/png',
               upsert: true,
             });
+          console.log(data, '누긔..');
 
           if (uploadError || isEmpty(uploadResponse)) {
             return res.status(500).json({ message: '이미지 파일을 업로드할 수 없습니다.' });
