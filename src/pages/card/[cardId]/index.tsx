@@ -7,18 +7,24 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
 import SEO from '@/components/SEO/SEO';
+import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { getTextColor } from '@/hooks/styles/getTextColor';
 import prisma from '@/utils/prisma';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
-
 const Page = ({ card }: { card: CardType }) => {
+  const { mutate: createShortLink } = useCreateShortLink();
+
   const handleShowBottomSheet = () => {
-    NiceModal.show(BottomSheet, {
-      nickname: card.nickname,
-      cardId: card.id,
-    });
+    createShortLink(
+      { cardId: card.id },
+      {
+        onSuccess: (data) => {
+          NiceModal.show(BottomSheet, { card, shortLink: data[0].shortLink });
+        },
+      },
+    );
   };
 
   return (
