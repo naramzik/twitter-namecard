@@ -29,7 +29,7 @@ const Page = ({ card }: { card: CardType }) => {
 
   return (
     <>
-      <SEO title="명함 상세 페이지" description="궁금한 트친의 명함을 둘러보세요." />
+      <SEO description={`${card.nickname}님의 명함을 둘러보세요.`} />
       <div className="mb-16">
         <h1 className="text-2xl font-bold">{card.nickname}</h1>
         <div className="flex justify-center h-1/4 py-3">
