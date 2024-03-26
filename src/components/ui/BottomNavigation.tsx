@@ -15,10 +15,11 @@ export const navIconColors = {
 } as const;
 
 export default function BottomNavigation() {
+  const cardId = globalThis.localStorage?.getItem('cardId');
   const NAV_ITEMS = [
     { href: '/', Icon: HomeIcon, label: '홈' },
     {
-      href: `/card/${globalThis.localStorage?.getItem('cardId') ?? ''}`,
+      href: cardId ? `/card/${cardId}` : '/card',
       Icon: CardIcon,
       label: '명함 보기',
     },
@@ -29,6 +30,8 @@ export default function BottomNavigation() {
 
   const NavItem = memo(({ href, Icon, label }: NavItemProps) => {
     const router = useRouter();
+    console.log('router.asPath: ', router.asPath);
+    console.log('href: ', href);
     const color = navIconColors[href === router.asPath ? 'selected' : 'default'];
 
     return (
