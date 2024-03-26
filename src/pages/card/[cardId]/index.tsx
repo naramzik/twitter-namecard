@@ -26,10 +26,13 @@ const Page = ({ card }: { card: CardType }) => {
       },
     );
   };
-
+  console.log('card.image_url', card.image_url);
   return (
     <>
-      <SEO description={`${card.nickname}님의 명함을 둘러보세요.`} />
+      <SEO
+        description={`${card.nickname}님의 명함을 둘러보세요.`}
+        imageUrl={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+      />
       <div className="mb-16">
         <h1 className="text-2xl font-bold">{card.nickname}</h1>
         <div className="flex justify-center h-1/4 py-3">
