@@ -30,8 +30,6 @@ export default function BottomNavigation() {
 
   const NavItem = memo(({ href, Icon, label }: NavItemProps) => {
     const router = useRouter();
-    console.log('router.asPath: ', router.asPath);
-    console.log('href: ', href);
     const color = navIconColors[href === router.asPath ? 'selected' : 'default'];
 
     return (
