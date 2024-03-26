@@ -22,8 +22,9 @@ const CardItem = ({ card }: { card: CardType }) => {
       <div className="m-2 border-gray-400 border">
         <img
           src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
-          alt=""
+          alt="트위터 명함"
           className="aspect-nameCard"
+          style={{ width: '100rem', backgroundColor: 'white' }}
         />
       </div>
       <div className="card-body px-5 py-3">
