@@ -26,7 +26,6 @@ const Page = ({ card }: { card: CardType }) => {
       },
     );
   };
-  console.log('card.image_url', card.image_url);
   return (
     <>
       <SEO
