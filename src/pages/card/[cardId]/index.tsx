@@ -1,4 +1,5 @@
 import NiceModal from '@ebay/nice-modal-react';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import randomColor from 'randomcolor';
@@ -9,7 +10,6 @@ import BottomSheet from '@/components/modal/BottomSheet';
 import SEO from '@/components/SEO/SEO';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { getTextColor } from '@/hooks/styles/getTextColor';
-import prisma from '@/utils/prisma';
 import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
@@ -26,10 +26,12 @@ const Page = ({ card }: { card: CardType }) => {
       },
     );
   };
-
   return (
     <>
-      <SEO description={`${card.nickname}님의 명함을 둘러보세요.`} />
+      <SEO
+        description={`${card.nickname}님의 명함을 둘러보세요.`}
+        imageUrl={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+      />
       <div className="mb-16">
         <h1 className="text-2xl font-bold">{card.nickname}</h1>
         <div className="flex justify-center h-1/4 py-3">
@@ -182,16 +184,12 @@ Page.getLayout = function getLayout(page: ReactNode) {
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   try {
     const cardId = context.params?.cardId;
-    const card = await prisma.cards.findFirstOrThrow({
-      where: {
-        id: cardId as string,
-      },
-    });
+    const card = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${cardId}`);
     return {
       props: {
         card: {
-          ...card,
-          updated_at: card.updated_at.toString(),
+          ...card.data.foundCard,
+          updated_at: card.data.foundCard.updated_at.toString(),
         },
       },
     };
