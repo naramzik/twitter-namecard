@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { type ComponentProps, memo } from 'react';
+import { useEffect, useState } from 'react';
 import CardIcon from '../icons/CardIcon';
 import CreateIcon from '../icons/CreateIcon';
 import HomeIcon from '../icons/HomeIcon';
@@ -15,6 +16,7 @@ export const navIconColors = {
 } as const;
 
 export default function BottomNavigation() {
+  const [isClient, setIsClient] = useState(false);
   const cardId = globalThis.localStorage?.getItem('cardId');
   const NAV_ITEMS = [
     { href: '/', Icon: HomeIcon, label: '홈' },
@@ -41,11 +43,19 @@ export default function BottomNavigation() {
   });
   NavItem.displayName = 'NavItem';
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <nav className="btm-nav btm-nav-lg max-w-[512px] mx-auto z-20">
-      {NAV_ITEMS.map((navItem) => (
-        <NavItem key={navItem.href} {...navItem} />
-      ))}
-    </nav>
+    <>
+      {isClient && (
+        <nav className="btm-nav btm-nav-lg max-w-[512px] mx-auto z-20">
+          {NAV_ITEMS.map((navItem) => (
+            <NavItem key={navItem.href} {...navItem} />
+          ))}
+        </nav>
+      )}
+    </>
   );
 }

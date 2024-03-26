@@ -37,6 +37,7 @@ const Page = ({ card }: { card: CardType }) => {
             src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
             className="w-full aspect-nameCard"
             alt="명함 이미지"
+            style={{ width: '100rem', backgroundColor: 'white' }}
           />
         </div>
         <div className="flex justify-around">
