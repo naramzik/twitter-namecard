@@ -1,9 +1,11 @@
 import '@/styles/globals.css';
 
+import * as ChannelService from '@channel.io/channel-web-sdk-loader';
 import NiceModal from '@ebay/nice-modal-react';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Nanum_Gothic } from 'next/font/google';
 import Script from 'next/script';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { RecoilRoot } from 'recoil';
 import * as gtag from '@/libs/gtags';
@@ -35,6 +37,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   });
 
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  useEffect(function initChannelIO() {
+    if (!process.env.NEXT_PUBLIC_CHANNEL_API_KEY) {
+      return;
+    }
+
+    ChannelService.loadScript();
+    ChannelService.boot({
+      pluginKey: process.env.NEXT_PUBLIC_CHANNEL_API_KEY,
+    });
+  }, []);
 
   return (
     <>

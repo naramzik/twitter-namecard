@@ -41,6 +41,11 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@channel.io/channel-web-sdk-loader@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@channel.io/channel-web-sdk-loader/-/channel-web-sdk-loader-1.1.7.tgz#468f3c0e9eab215b05f8ba998532b54e853f47b3"
+  integrity sha512-wIHvOQpYTPpHGg0mS/CW/WKNONF1phmhHlGpfXGbHai81OgeUiyLtkwuNaiM7bR4QF8uIB+p0RrM/evn2Zb7pw==
+
 "@commitlint/cli@^18.2.0":
   version "18.4.4"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-18.4.4.tgz#24bdb295f0e9e87dfe5371e9a16aacac92017c5d"

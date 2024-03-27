@@ -18,6 +18,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@channel.io/channel-web-sdk-loader": "^1.1.7",
     "@ebay/nice-modal-react": "^1.2.13",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
