@@ -1,13 +1,7 @@
-import { load } from 'cheerio';
+import axios from 'axios';
 import { isEmpty } from 'lodash-es';
 import errorHandler from '@/utils/errorHandler';
-import switchCrawler from '@/utils/switchCrawler';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-export const runtime = 'nodejs';
-export const config = {
-  maxDuration: 300,
-};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await errorHandler(req, res, async () => {
@@ -20,23 +14,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           });
         }
 
-        const { data, instanceUrl } = await switchCrawler(`/${twitterId}`);
-        if (isEmpty(data)) {
-          return res.status(500).json({
-            message: '크롤링에 실패했습니다.',
-          });
-        }
-
-        const $ = load(data);
-
-        const bio = $(`.profile-bio`).text();
-        const nickname = $(`.profile-card-fullname`).text();
-        const image = `${instanceUrl}${$('.profile-card-avatar').attr('href')}`;
+        const {
+          data: { data },
+        } = await axios.get(`https://api.twitter.com/2/users/by/username/${twitterId}`, {
+          headers: {
+            Authorization: `Bearer ${process.env.TWITTER_API_KEY}`,
+          },
+          params: {
+            'user.fields': 'name,description,username,profile_image_url',
+          },
+        });
 
         return res.status(200).json({
-          bio,
-          nickname,
-          image,
+          bio: data.description,
+          nickname: data.name,
+          image: data.profile_image_url.replace('_normal', ''),
         });
       }
 
