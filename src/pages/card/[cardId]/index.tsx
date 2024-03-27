@@ -44,7 +44,7 @@ const Page = ({ card }: { card: CardType }) => {
         </div>
         <div className="flex justify-around">
           <div className="flex flex-col justify-center items-center gap-2">
-            <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
+            <div className="flex justify-center items-center w-12 h-12 bg-white rounded-2xl cursor-pointer">
               <Image
                 onClick={handleShowBottomSheet}
                 src="/images/share.png"
