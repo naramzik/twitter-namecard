@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import CardItem from '@/components/card/CardItem';
-import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
+import HomeLayout from '@/components/layout/HomeLayout';
 import SEO from '@/components/SEO/SEO';
 import { useGetCards } from '@/hooks/queries/useGetCards';
 import type { CardType } from '@/types/cards';
@@ -18,4 +18,4 @@ export default function Home() {
   );
 }
 
-Home.getLayout = (page: ReactNode) => <LayoutWithHeader>{page}</LayoutWithHeader>;
+Home.getLayout = (page: ReactNode) => <HomeLayout>{page}</HomeLayout>;
