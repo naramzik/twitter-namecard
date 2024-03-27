@@ -18,6 +18,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             updated_at: true,
             bio: true,
           },
+          orderBy: {
+            updated_at: 'desc',
+          },
         });
 
         return res.status(200).json({ cards });
