@@ -61,6 +61,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
 
   function handleAddCustomField() {
     const customFields = watch('customFields') ?? [];
+
     setValue('customFields', [...customFields, { id: nanoid(4), key: '', contents: '' }]);
   }
 
@@ -99,6 +100,23 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
     setValue('hashtags', [...hashtags, hashtag.replace(/[#]/g, '').replace(/\s/g, '_')]);
   }
 
+  function handleFormSubmit(data: CardFormData) {
+    const customFields = data.customFields ?? [];
+    const hashtags = data.hashtags ?? [];
+
+    if (customFields.some((field) => !field.key || !field.contents)) {
+      setError('customFields', { message: '모든 항목을 입력해 주세요.' });
+      return;
+    }
+
+    if (hashtags.length >= 5) {
+      setError('hashtag', { message: '태그는 5개까지만 입력할 수 있습니다.' });
+      return;
+    }
+
+    onSubmit(data);
+  }
+
   const removeHashtag = (index: number) => () => {
     const hashtags = watch('hashtags') ?? [];
     setValue(
@@ -111,7 +129,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
 
   return (
     <div className="pb-12">
-      <form onSubmit={handleSubmit(onSubmit, handleFormError)} className="flex flex-col gap-8 py-5">
+      <form onSubmit={handleSubmit(handleFormSubmit, handleFormError)} className="flex flex-col gap-8 py-5">
         <section className="flex flex-col gap-4">
           <h2 className="font-bold text-xl">명함 미리보기</h2>
           <NameCard
@@ -265,11 +283,15 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
         </section>
         <section className="flex flex-col gap-4">
           <h2 className="font-bold text-xl">추가 정보</h2>
+          {errors.customFields && <p className="text-red-500 text-sm">{errors.customFields.message}</p>}
 
           {watch('customFields')?.map((customField, index) => (
             <article key={customField.id} className="flex flex-col gap-2 flex-1">
               <div className="flex gap-2">
-                <TextField {...register(`customFields.${index}.key`)} placeholder={'제목을 입력해주세요'} />
+                <TextField
+                  {...register(`customFields.${index}.key`, { onChange: () => clearErrors('customFields') })}
+                  placeholder={'제목을 입력해주세요'}
+                />
                 <button
                   onClick={handleDeleteCustomField(index)}
                   type="button"
@@ -292,7 +314,11 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
                 </button>
               </div>
 
-              <TextArea {...register(`customFields.${index}.contents`)} placeholder={'내용을 입력해주세요'} rows={3} />
+              <TextArea
+                {...register(`customFields.${index}.contents`, { onChange: () => clearErrors('customFields') })}
+                placeholder={'내용을 입력해주세요'}
+                rows={3}
+              />
             </article>
           ))}
 
