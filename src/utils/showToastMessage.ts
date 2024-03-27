@@ -12,7 +12,8 @@ const toastMessage = (message: string, type: ToastType) => {
 export const showToastErrorMessage = (error: unknown) => {
   if (error instanceof AxiosError) {
     const errorResponse = error.response?.data?.message ?? '서버 에러가 발생했습니다.';
-    if (errorResponse === '비밀번호가 일치하지 않습니다.') {
+    console.log(errorResponse);
+    if (errorResponse === '비밀번호가 일치하지 않습니다.' || errorResponse === '비밀번호는 6자 이상으로 필수입니다.') {
       toast.error(errorResponse);
     } else {
       toast.error('서버 에러가 발생했습니다.');
