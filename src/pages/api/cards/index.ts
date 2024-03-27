@@ -18,6 +18,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             updated_at: true,
             bio: true,
           },
+          orderBy: {
+            updated_at: 'desc',
+          },
         });
 
         return res.status(200).json({ cards });
@@ -79,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const buffer = Buffer.from(data, 'binary');
           const { error: uploadError, data: uploadResponse } = await supabase.storage
             .from('image_url')
-            .upload(data, buffer, {
+            .upload(userId, buffer, {
               contentType: (contentType as string | undefined) ?? 'image/png',
               upsert: true,
             });
