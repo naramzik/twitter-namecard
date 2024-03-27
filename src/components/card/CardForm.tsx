@@ -292,7 +292,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
                 </button>
               </div>
 
-              <TextArea {...register(`customFields.${index}.contents`)} placeholder={'내용을 입력해주세요'} rows={6} />
+              <TextArea {...register(`customFields.${index}.contents`)} placeholder={'내용을 입력해주세요'} rows={3} />
             </article>
           ))}
 
