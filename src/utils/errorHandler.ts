@@ -4,7 +4,7 @@ export default async function errorHandler(req: NextApiRequest, res: NextApiResp
   try {
     await fn();
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: '서버 에러가 발생했습니다.' });
+    console.log((error as Error).message, (error as Error).stack);
+    res.status(500).json({ message: '서버 에러가 발생했습니다.' + (error as Error).message + (error as Error).stack });
   }
 }
