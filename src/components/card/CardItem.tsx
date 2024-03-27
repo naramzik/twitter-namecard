@@ -25,7 +25,7 @@ const CardItem = ({ card }: { card: CardType }) => {
           width={650}
           height={300}
           src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail?ts=${card.updated_at}`}
-          alt="트위터 명함"
+          alt={`${card.nickname}님의 명함 이미지`}
           className="aspect-nameCard"
           style={{ width: '100rem', backgroundColor: 'white' }}
         />

@@ -38,23 +38,17 @@ const Page = ({ card }: { card: CardType }) => {
           <img
             src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail?ts=${card.updated_at}`}
             className="w-full aspect-nameCard"
-            alt="명함 이미지"
+            alt={`${card.nickname}님의 명함 이미지`}
             style={{ width: '100rem', backgroundColor: 'white' }}
           />
         </div>
         <div className="flex justify-around">
-          <div className="flex flex-col justify-center items-center gap-2">
+          <button onClick={handleShowBottomSheet} className="flex flex-col justify-center items-center gap-2">
             <div className=" flex justify-center items-center w-12 h-12 bg-white rounded-2xl">
-              <Image
-                onClick={handleShowBottomSheet}
-                src="/images/share.png"
-                width={20}
-                height={20}
-                alt="전달하기 이미지"
-              />
+              <Image src="/images/share.png" width={20} height={20} alt="전달하기 이미지" />
             </div>
             <span className="text-xs">공유하기</span>
-          </div>
+          </button>
           <a
             href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
             download={`${card.nickname}님의_명함.png`}
@@ -94,7 +88,7 @@ const Page = ({ card }: { card: CardType }) => {
                   text={`${card.twitter}`}
                   onCopy={() => showToastSuccessMessage('트위터 아이디가 복사되었습니다!')}
                 >
-                  <div className="cursor-pointer btn btn-xs">{card.twitter}</div>
+                  <button className="cursor-pointer btn btn-xs">{card.twitter}</button>
                 </CopyToClipboard>
               </div>
               {card.socialMedia?.instagram && (
@@ -105,7 +99,7 @@ const Page = ({ card }: { card: CardType }) => {
                     text={`${card.socialMedia?.instagram}`}
                     onCopy={() => showToastSuccessMessage('인스타그램 아이디가 복사되었습니다!')}
                   >
-                    <div className="cursor-pointer btn btn-xs">{card.socialMedia?.instagram}</div>
+                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.instagram}</button>
                   </CopyToClipboard>
                 </div>
               )}
@@ -117,7 +111,7 @@ const Page = ({ card }: { card: CardType }) => {
                     text={`${card.socialMedia?.github}`}
                     onCopy={() => showToastSuccessMessage('깃허브 아이디가 복사되었습니다!')}
                   >
-                    <div className="cursor-pointer btn btn-xs">{card.socialMedia?.github}</div>
+                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.github}</button>
                   </CopyToClipboard>
                 </div>
               )}
@@ -129,7 +123,7 @@ const Page = ({ card }: { card: CardType }) => {
                     text={`${card.socialMedia?.blog}`}
                     onCopy={() => showToastSuccessMessage('블로그 주소가 복사되었습니다!')}
                   >
-                    <div className="cursor-pointer btn btn-xs">{card.socialMedia?.blog}</div>
+                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.blog}</button>
                   </CopyToClipboard>
                 </div>
               )}
