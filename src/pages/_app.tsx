@@ -3,8 +3,10 @@ import '@/styles/globals.css';
 import NiceModal from '@ebay/nice-modal-react';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Nanum_Gothic } from 'next/font/google';
+import Script from 'next/script';
 import { Toaster } from 'react-hot-toast';
 import { RecoilRoot } from 'recoil';
+import * as gtag from '@/libs/gtags';
 import { NextPageWithLayout } from '@/types';
 import { showToastErrorMessage } from '@/utils/showToastMessage';
 import type { AppProps } from 'next/app';
@@ -20,6 +22,7 @@ const single = Nanum_Gothic({
 });
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  gtag.useGtag();
   const queryClient = new QueryClient({
     defaultOptions: {
       mutations: {
@@ -34,13 +37,36 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <NiceModal.Provider>
-          <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
-        </NiceModal.Provider>
-      </QueryClientProvider>
-    </RecoilRoot>
+    <>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <NiceModal.Provider>
+            <main className={`${single.variable} font-sans`}>{getLayout(<Component {...pageProps} />)}</main>
+          </NiceModal.Provider>
+        </QueryClientProvider>
+      </RecoilRoot>
+      <>
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gtag.GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+          }}
+        />
+      </>
+    </>
   );
 }
