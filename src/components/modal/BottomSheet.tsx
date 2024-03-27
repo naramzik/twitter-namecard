@@ -40,7 +40,7 @@ const BottomSheet = ({ card, shortLink }: Prop) => {
           QR코드로 공유하기
         </button>
         <CopyToClipboard
-          text={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`}
+          text={`${process.env.NEXT_PUBLIC_BACKEND_URL}/s/${shortLink}`}
           onCopy={() => showToastSuccessMessage('명함 링크가 복사되었습니다.')}
         >
           <button className="w-full flex gap-3 ml-3">
