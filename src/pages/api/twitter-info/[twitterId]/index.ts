@@ -4,6 +4,8 @@ import errorHandler from '@/utils/errorHandler';
 import switchCrawler from '@/utils/switchCrawler';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+export const maxDuration = 300;
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await errorHandler(req, res, async () => {
     switch (req.method) {

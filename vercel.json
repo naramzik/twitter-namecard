@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "pages/api/twitter-info/**/*": {
+      "maxDuration": 300
+    }
+  }
+}
