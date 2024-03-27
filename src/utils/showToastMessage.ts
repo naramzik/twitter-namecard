@@ -11,8 +11,7 @@ const toastMessage = (message: string, type: ToastType) => {
 
 export const showToastErrorMessage = (error: unknown) => {
   if (error instanceof AxiosError) {
-    const errorResponse = error.response?.data?.message ?? '서버 에러가 발생했습니다.';
-    toast.error(errorResponse);
+    toast.error('서버 에러가 발생했습니다.');
     return;
   }
 
