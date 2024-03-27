@@ -3,7 +3,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import randomColor from 'randomcolor';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
@@ -26,6 +26,11 @@ const Page = ({ card }: { card: CardType }) => {
       },
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem('cardId', card.id);
+  }, [card.id]);
+
   return (
     <>
       <SEO
