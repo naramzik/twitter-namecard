@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { applyDateFormatting } from '@/utils/applyDateFormatting';
@@ -19,7 +20,13 @@ const CardItem = ({ card }: { card: CardType }) => {
   }, [card.updated_at]);
 
   return (
-    <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
+    <Link
+      href={`/card/${card.id}`}
+      passHref
+      tabIndex={0}
+      className="card bg-base-100 shadow-xl overflow-hidden cursor-pointer"
+      onClick={openDetailPageHandler}
+    >
       <div className="m-3 border-gray-400 border">
         <Image
           width={650}
@@ -43,7 +50,7 @@ const CardItem = ({ card }: { card: CardType }) => {
           업데이트: {applyDateFormatting(card.updated_at)}
         </time>
       </div>
-    </div>
+    </Link>
   );
 };
 
