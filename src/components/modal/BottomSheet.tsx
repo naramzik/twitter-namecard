@@ -19,7 +19,7 @@ const BottomSheet = ({ card, shortLink }: Prop) => {
   };
 
   const handleShareOnTwitter = () => {
-    const share_text = `${card.nickname}의 명함을 공유합니다!🎉 #트위터명함`;
+    const share_text = `${card.nickname}의 명함을 공유합니다!🎉`;
     const twitterIntent = `https://twitter.com/intent/tweet?text=${share_text}&url=${process.env.NEXT_PUBLIC_BACKEND_URL}/s/${shortLink}`;
     window.open(twitterIntent, '_blank');
   };
