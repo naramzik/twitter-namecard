@@ -19,7 +19,7 @@ const CardItem = ({ card }: { card: CardType }) => {
 
   return (
     <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
-      <div className="m-2 border-gray-400 border">
+      <div className="m-3 border-gray-400 border">
         <img
           src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
           alt="트위터 명함"
