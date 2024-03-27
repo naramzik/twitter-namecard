@@ -154,7 +154,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
               <TextField
                 {...register('twitter', { required: '필수 문항입니다.' })}
                 className="flex-1"
-                placeholder="트위터 아이디를 입력해주세요"
+                placeholder="트위터 아이디"
               />
               <button
                 type="button"

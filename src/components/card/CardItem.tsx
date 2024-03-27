@@ -18,14 +18,16 @@ const CardItem = ({ card }: { card: CardType }) => {
   }, [card.updated_at]);
 
   return (
-    // Todo: 명함 컴포넌트 만들기
     <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
-      <img
-        src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
-        alt=""
-        className="aspect-nameCard"
-      />
-      <div className="card-body p-5">
+      <div className="m-2 border-gray-400 border">
+        <img
+          src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail`}
+          alt="트위터 명함"
+          className="aspect-nameCard"
+          style={{ width: '100rem', backgroundColor: 'white' }}
+        />
+      </div>
+      <div className="card-body px-5 py-3">
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
             <h2 className="card-title">{card.nickname}</h2>
@@ -34,7 +36,6 @@ const CardItem = ({ card }: { card: CardType }) => {
           {isNew && <div className="badge bg-purple-400 border-none h-8 w-14">NEW</div>}
         </div>
         <p className="w-full text-sm line-clamp-2">{card.bio}</p>
-        {/* TODO: 추후 updatedAt api가 추가되면 수정 예정 */}
         <time className="justify-start text-xs text-gray-600 pt-3">
           업데이트: {applyDateFormatting(card.updated_at)}
         </time>

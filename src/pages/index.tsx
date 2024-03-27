@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div>
-      <SEO />
+      <SEO description={`트친들의 명함을 둘러보세요🐥`} />
       <main className="flex flex-col gap-5 mx-1 mb-16">
         {cards?.map((card: CardType) => <CardItem card={card} key={card.id} />)}
       </main>
