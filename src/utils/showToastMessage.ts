@@ -11,7 +11,12 @@ const toastMessage = (message: string, type: ToastType) => {
 
 export const showToastErrorMessage = (error: unknown) => {
   if (error instanceof AxiosError) {
-    toast.error('서버 에러가 발생했습니다.');
+    const errorResponse = error.response?.data?.message ?? '서버 에러가 발생했습니다.';
+    if (errorResponse === '비밀번호가 일치하지 않습니다.') {
+      toast.error(errorResponse);
+    } else {
+      toast.error('서버 에러가 발생했습니다.');
+    }
     return;
   }
 
