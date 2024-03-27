@@ -12,10 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (error) throw error;
 
         if (links && links.length > 0) {
-          const redirectUrl = links[0].redirectUrl;
-          res.status(200).json({ redirectUrl: `/${redirectUrl}` });
+          const redirectUrl: string = links[0].redirectUrl ?? '';
+          res.redirect(`/card/${redirectUrl}`);
         } else {
-          res.status(404).json({ redirectUrl: `/404` });
+          res.redirect(`/404`);
         }
       });
       break;
