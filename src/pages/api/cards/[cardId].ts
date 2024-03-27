@@ -97,7 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const buffer = Buffer.from(data, 'binary');
           const { error: uploadError, data: uploadResponse } = await supabase.storage
             .from('image_url')
-            .upload(data, buffer, {
+            .upload(cardId, buffer, {
               contentType: (contentType as string | undefined) ?? 'image/png',
               upsert: true,
             });
