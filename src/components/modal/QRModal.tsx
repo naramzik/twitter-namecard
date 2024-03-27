@@ -28,7 +28,7 @@ const QRModal = ({ shortLink, imageUrl }: QRModalProp) => {
           className="border-primary border-4 rounded-xl"
           fgColor="#393E46"
           size={250}
-          value={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${shortLink}`}
+          value={`${process.env.NEXT_PUBLIC_BACKEND_URL}/s/${shortLink}`}
           imageSettings={{
             src: imageUrl,
             width: 60,
