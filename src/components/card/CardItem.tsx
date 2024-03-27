@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { applyDateFormatting } from '@/utils/applyDateFormatting';
@@ -20,7 +21,9 @@ const CardItem = ({ card }: { card: CardType }) => {
   return (
     <div className="card bg-base-100 shadow-xl overflow-hidden" onClick={openDetailPageHandler}>
       <div className="m-3 border-gray-400 border">
-        <img
+        <Image
+          width={650}
+          height={300}
           src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail?ts=${card.updated_at}`}
           alt="트위터 명함"
           className="aspect-nameCard"
