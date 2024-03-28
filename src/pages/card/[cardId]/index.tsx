@@ -4,13 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import randomColor from 'randomcolor';
 import { ReactNode, useEffect } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import LayoutWithHeader from '@/components/layout/LayoutWithHeader';
 import BottomSheet from '@/components/modal/BottomSheet';
 import SEO from '@/components/SEO/SEO';
 import { useCreateShortLink } from '@/hooks/queries/useCreateShortLink';
 import { getTextColor } from '@/hooks/styles/getTextColor';
-import { showToastSuccessMessage } from '@/utils/showToastMessage';
 import type { GetServerSidePropsContext } from 'next';
 import type { CardType } from '@/types/cards';
 const Page = ({ card }: { card: CardType }) => {
@@ -89,47 +87,55 @@ const Page = ({ card }: { card: CardType }) => {
               <div className="flex gap-3">
                 <Image src="/images/twitter.png" width={24} height={24} alt="트위터" />
                 <div className="text-sm w-20">트위터</div>
-                <CopyToClipboard
-                  text={`${card.twitter}`}
-                  onCopy={() => showToastSuccessMessage('트위터 아이디가 복사되었습니다!')}
+                <Link
+                  href={`https://twitter.com/${card.twitter}`}
+                  className="cursor-pointer btn btn-xs"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <button className="cursor-pointer btn btn-xs">{card.twitter}</button>
-                </CopyToClipboard>
+                  {card.twitter}
+                </Link>
               </div>
               {card.socialMedia?.instagram && (
                 <div className="flex gap-3">
                   <Image src="/images/instagram.png" width={24} height={20} alt="인스타그램" />
                   <div className="text-sm w-20">인스타그램</div>
-                  <CopyToClipboard
-                    text={`${card.socialMedia?.instagram}`}
-                    onCopy={() => showToastSuccessMessage('인스타그램 아이디가 복사되었습니다!')}
+                  <Link
+                    href={`https://instagram.com/${card.socialMedia.instagram}`}
+                    className="cursor-pointer btn btn-xs"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.instagram}</button>
-                  </CopyToClipboard>
+                    {card.socialMedia.instagram}
+                  </Link>
                 </div>
               )}
               {card.socialMedia?.github && (
                 <div className="flex gap-3">
                   <Image src="/images/github.png" width={24} height={24} alt="깃허브" />
                   <div className="text-sm w-20">깃허브</div>
-                  <CopyToClipboard
-                    text={`${card.socialMedia?.github}`}
-                    onCopy={() => showToastSuccessMessage('깃허브 아이디가 복사되었습니다!')}
+                  <Link
+                    href={`https://github.com/${card.socialMedia.github}`}
+                    className="cursor-pointer btn btn-xs"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.github}</button>
-                  </CopyToClipboard>
+                    {card.socialMedia.github}
+                  </Link>
                 </div>
               )}
               {card.socialMedia?.blog && (
                 <div className="flex gap-3">
                   <Image src="/images/link.png" width={24} height={24} alt="블로그" />
                   <div className="text-sm w-20">블로그</div>
-                  <CopyToClipboard
-                    text={`${card.socialMedia?.blog}`}
-                    onCopy={() => showToastSuccessMessage('블로그 주소가 복사되었습니다!')}
+                  <Link
+                    href={card.socialMedia.blog}
+                    className="cursor-pointer btn btn-xs"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <button className="cursor-pointer btn btn-xs">{card.socialMedia?.blog}</button>
-                  </CopyToClipboard>
+                    {card.socialMedia.blog}
+                  </Link>
                 </div>
               )}
             </div>

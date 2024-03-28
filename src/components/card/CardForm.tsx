@@ -278,7 +278,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
           </FormLabel>
 
           <FormLabel label="URL" errorMessage={errors.socialMedia?.blog?.message}>
-            <TextField {...register('socialMedia.blog')} placeholder="웹사이트 주소를 입력해주세요" />
+            <TextField {...register('socialMedia.blog')} placeholder="웹사이트 주소를 입력해주세요" type="url" />
           </FormLabel>
         </section>
         <section className="flex flex-col gap-4">
