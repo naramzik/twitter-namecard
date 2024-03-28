@@ -14,7 +14,7 @@ export default function Home() {
     <div>
       <SEO description={`트친들의 명함을 둘러보세요🐥`} />
       <main className="flex flex-col gap-5 mx-1 mb-16">
-        <label className="input input-bordered border-gray-200 flex items-center gap-2">
+        <label className="input flex items-center gap-2">
           <input
             type="search"
             className="grow"
