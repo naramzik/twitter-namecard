@@ -86,7 +86,7 @@ const Page = ({ card }: { card: CardType }) => {
             <div className="bg-white px-4 py-5 rounded-xl flex flex-col gap-1.5">
               <div className="flex gap-3">
                 <Image src="/images/twitter.png" width={24} height={24} alt="트위터" />
-                <div className="text-sm w-20">트위터</div>
+                <div className="text-sm w-12">트위터</div>
                 <Link
                   href={`https://twitter.com/${card.twitter}`}
                   className="cursor-pointer btn btn-xs"
@@ -99,10 +99,10 @@ const Page = ({ card }: { card: CardType }) => {
               {card.socialMedia?.instagram && (
                 <div className="flex gap-3">
                   <Image src="/images/instagram.png" width={24} height={20} alt="인스타그램" />
-                  <div className="text-sm w-20">인스타그램</div>
+                  <div className="text-sm w-12">인스타</div>
                   <Link
                     href={`https://instagram.com/${card.socialMedia.instagram}`}
-                    className="cursor-pointer btn btn-xs"
+                    className="cursor-pointer btn btn-xs break-all max-w-52"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -113,10 +113,10 @@ const Page = ({ card }: { card: CardType }) => {
               {card.socialMedia?.github && (
                 <div className="flex gap-3">
                   <Image src="/images/github.png" width={24} height={24} alt="깃허브" />
-                  <div className="text-sm w-20">깃허브</div>
+                  <div className="text-sm w-12">깃허브</div>
                   <Link
                     href={`https://github.com/${card.socialMedia.github}`}
-                    className="cursor-pointer btn btn-xs"
+                    className="cursor-pointer btn btn-xs break-all max-w-52"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -127,10 +127,10 @@ const Page = ({ card }: { card: CardType }) => {
               {card.socialMedia?.blog && (
                 <div className="flex gap-3">
                   <Image src="/images/link.png" width={24} height={24} alt="블로그" />
-                  <div className="text-sm w-20">블로그</div>
+                  <div className="text-sm w-12">블로그</div>
                   <Link
                     href={card.socialMedia.blog}
-                    className="cursor-pointer btn btn-xs"
+                    className="cursor-pointer btn btn-xs break-all max-w-52"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
