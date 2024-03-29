@@ -45,7 +45,6 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
       if (isSuccess && twitterInfo) {
         clearErrors('twitter');
         clearErrors('nickname');
-
         setValue('nickname', twitterInfo.nickname);
         setValue('bio', twitterInfo.bio);
         setValue('image_url', twitterInfo.image);
@@ -81,8 +80,8 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
       return;
     }
 
-    if (hashtag.length > 15) {
-      setError('hashtag', { message: '태그는 15자 이내로 입력해주세요' });
+    if (hashtag.length > 12) {
+      setError('hashtag', { message: '태그는 12자 이내로 입력해주세요' });
       return;
     }
 
@@ -127,6 +126,7 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
 
   const isCreateMode = isEmpty(card);
 
+  console.log('github: ', watch('socialMedia.github'));
   return (
     <div className="pb-12">
       <form onSubmit={handleSubmit(handleFormSubmit, handleFormError)} className="flex flex-col gap-8 py-5">
@@ -270,15 +270,49 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
           <h2 className="font-bold text-xl">SNS</h2>
 
           <FormLabel label="깃허브" errorMessage={errors.socialMedia?.github?.message}>
-            <TextField {...register('socialMedia.github')} placeholder="깃허브 아이디를 입력해주세요" />
+            <TextField
+              {...register('socialMedia.github', {
+                onChange: (e) => {
+                  if (e.target.value.length > 39) {
+                    setError('socialMedia.github', { message: '깃허브 아이디는 39자 이하여야 합니다.' });
+                  } else {
+                    clearErrors('socialMedia.github');
+                  }
+                },
+              })}
+              placeholder="깃허브 아이디를 입력해주세요"
+            />
           </FormLabel>
 
           <FormLabel label="인스타그램" errorMessage={errors.socialMedia?.instagram?.message}>
-            <TextField {...register('socialMedia.instagram')} placeholder="인스타그램 아이디를 입력해주세요" />
+            <TextField
+              {...register('socialMedia.instagram', {
+                onChange: (e) => {
+                  if (e.target.value.length > 30) {
+                    setError('socialMedia.instagram', { message: '인스타그램 아이디는 30자 이하여야 합니다.' });
+                  } else {
+                    clearErrors('socialMedia.instagram');
+                  }
+                },
+              })}
+              placeholder="인스타그램 아이디를 입력해주세요"
+            />
           </FormLabel>
 
           <FormLabel label="URL" errorMessage={errors.socialMedia?.blog?.message}>
-            <TextField {...register('socialMedia.blog')} placeholder="웹사이트 주소를 입력해주세요" type="url" />
+            <TextField
+              {...register('socialMedia.blog', {
+                onChange: (e) => {
+                  if (e.target.value.length > 50) {
+                    setError('socialMedia.blog', { message: 'URL은 50자 이하여야 합니다.' });
+                  } else {
+                    clearErrors('socialMedia.blog');
+                  }
+                },
+              })}
+              placeholder="웹사이트 주소를 입력해주세요"
+              type="url"
+            />
           </FormLabel>
         </section>
         <section className="flex flex-col gap-4">
