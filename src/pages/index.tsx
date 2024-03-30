@@ -17,7 +17,7 @@ export default function Home() {
         <label className="input flex items-center gap-2">
           <input
             type="search"
-            className="grow"
+            className="grow bg-white"
             placeholder="닉네임 혹은 아이디 찾기"
             onChange={debounce((e) => setQuery(e.target.value), 300)}
           />
