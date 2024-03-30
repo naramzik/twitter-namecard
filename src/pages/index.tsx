@@ -18,7 +18,7 @@ export default function Home() {
           <input
             type="search"
             className="grow"
-            placeholder="검색어를 입력하세요."
+            placeholder="닉네임 혹은 아이디 찾기"
             onChange={debounce((e) => setQuery(e.target.value), 300)}
           />
         </label>
