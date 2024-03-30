@@ -10,26 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await errorHandler(req, res, async () => {
     switch (req.method) {
       case 'GET': {
-        const query = req.query.query as string | undefined;
         const cards = await prisma.cards.findMany({
-          ...(query
-            ? {
-                where: {
-                  OR: [
-                    {
-                      nickname: {
-                        contains: query,
-                      },
-                    },
-                    {
-                      twitter: {
-                        contains: query,
-                      },
-                    },
-                  ],
-                },
-              }
-            : {}),
           select: {
             id: true,
             nickname: true,
