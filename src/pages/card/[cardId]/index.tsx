@@ -129,7 +129,7 @@ const Page = ({ card }: { card: CardType }) => {
                   <Image src="/images/link.png" width={24} height={24} alt="블로그" />
                   <div className="text-sm w-12">블로그</div>
                   <Link
-                    href={card.socialMedia.blog}
+                    href={`https://${card.socialMedia.blog}`}
                     className="cursor-pointer btn btn-xs break-all max-w-52"
                     target="_blank"
                     rel="noopener noreferrer"
