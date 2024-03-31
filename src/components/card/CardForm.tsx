@@ -168,7 +168,8 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
         <section className="flex flex-col gap-4">
           <h2 className="font-bold text-xl">프로필 작성하기</h2>
           <FormLabel required label="트위터 아이디" errorMessage={errors.twitter?.message}>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
+              <div className="m-auto">@</div>
               <TextField
                 {...register('twitter', { required: '필수 문항입니다.' })}
                 className="flex-1"
@@ -270,49 +271,57 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
           <h2 className="font-bold text-xl">SNS</h2>
 
           <FormLabel label="깃허브" errorMessage={errors.socialMedia?.github?.message}>
-            <TextField
-              {...register('socialMedia.github', {
-                onChange: (e) => {
-                  if (e.target.value.length > 39) {
-                    setError('socialMedia.github', { message: '깃허브 아이디는 39자 이하여야 합니다.' });
-                  } else {
-                    clearErrors('socialMedia.github');
-                  }
-                },
-              })}
-              placeholder="깃허브 아이디를 입력해주세요"
-            />
+            <div className="flex gap-1">
+              <div className="m-auto">@</div>
+              <TextField
+                {...register('socialMedia.github', {
+                  onChange: (e) => {
+                    if (e.target.value.length > 39) {
+                      setError('socialMedia.github', { message: '깃허브 아이디는 39자 이하여야 합니다.' });
+                    } else {
+                      clearErrors('socialMedia.github');
+                    }
+                  },
+                })}
+                placeholder="깃허브 아이디를 입력해주세요"
+              />
+            </div>
           </FormLabel>
 
           <FormLabel label="인스타그램" errorMessage={errors.socialMedia?.instagram?.message}>
-            <TextField
-              {...register('socialMedia.instagram', {
-                onChange: (e) => {
-                  if (e.target.value.length > 30) {
-                    setError('socialMedia.instagram', { message: '인스타그램 아이디는 30자 이하여야 합니다.' });
-                  } else {
-                    clearErrors('socialMedia.instagram');
-                  }
-                },
-              })}
-              placeholder="인스타그램 아이디를 입력해주세요"
-            />
+            <div className="flex gap-1">
+              <div className="m-auto">@</div>
+              <TextField
+                {...register('socialMedia.instagram', {
+                  onChange: (e) => {
+                    if (e.target.value.length > 30) {
+                      setError('socialMedia.instagram', { message: '인스타그램 아이디는 30자 이하여야 합니다.' });
+                    } else {
+                      clearErrors('socialMedia.instagram');
+                    }
+                  },
+                })}
+                placeholder="인스타그램 아이디를 입력해주세요"
+              />
+            </div>
           </FormLabel>
 
           <FormLabel label="URL" errorMessage={errors.socialMedia?.blog?.message}>
-            <TextField
-              {...register('socialMedia.blog', {
-                onChange: (e) => {
-                  if (e.target.value.length > 50) {
-                    setError('socialMedia.blog', { message: 'URL은 50자 이하여야 합니다.' });
-                  } else {
-                    clearErrors('socialMedia.blog');
-                  }
-                },
-              })}
-              placeholder="웹사이트 주소를 입력해주세요"
-              type="url"
-            />
+            <div className="flex gap-1">
+              <div className="m-auto">https://</div>
+              <TextField
+                {...register('socialMedia.blog', {
+                  onChange: (e) => {
+                    if (e.target.value.length > 50) {
+                      setError('socialMedia.blog', { message: 'URL은 50자 이하여야 합니다.' });
+                    } else {
+                      clearErrors('socialMedia.blog');
+                    }
+                  },
+                })}
+                placeholder="웹사이트 주소를 입력해주세요"
+              />
+            </div>
           </FormLabel>
         </section>
         <section className="flex flex-col gap-4">
