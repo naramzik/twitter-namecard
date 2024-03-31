@@ -39,7 +39,7 @@ const Page = ({ card }: { card: CardType }) => {
         <h1 className="text-2xl font-bold">{card.nickname}</h1>
         <div className="flex justify-center h-1/4 py-3">
           <img
-            src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail?dp=${process.env.VERCEL_DEPLOYMENT_ID}`}
+            src={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/cards/${card.id}/thumbnail?ts=${card.updated_at}`}
             className="w-full aspect-nameCard"
             alt={`${card.nickname}님의 명함 이미지`}
             style={{ width: '100rem', backgroundColor: 'white' }}
