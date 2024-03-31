@@ -38,15 +38,15 @@ const CardItem = ({ card }: { card: CardType }) => {
         />
       </div>
       <div className="card-body px-5 py-3">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4">
-            <h2 className="card-title">{card.nickname}</h2>
-            <h3 className="">@{card.twitter}</h3>
+        <div className="flex justify-between sm:gap-4 gap-2">
+          <div className="flex flex-col">
+            <h2 className="card-title break-all">{card.nickname}</h2>
+            <h3 className="break-all">@{card.twitter}</h3>
           </div>
-          {isNew && <div className="badge bg-purple-400 border-none h-8 w-14">NEW</div>}
+          {isNew && <div className="badge badge-md bg-purple-400 border-none h-8">NEW</div>}
         </div>
-        <p className="w-full text-sm line-clamp-2">{card.bio}</p>
-        <time className="justify-start text-xs text-gray-600 pt-3">
+        <p className="w-full text-sm line-clamp-2 text-gray-700">{card.bio}</p>
+        <time className="justify-start text-xs text-gray-400 pt-3">
           업데이트: {applyDateFormatting(card.updated_at)}
         </time>
       </div>
