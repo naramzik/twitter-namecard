@@ -48,8 +48,10 @@ export default async function handler(request: NextRequest) {
           >
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span style={{ fontSize: '2em', lineHeight: 1, fontWeight: 'bold' }}>{foundCard.nickname}</span>
-              <span style={{ fontSize: '1em', lineHeight: 1 }}>@{foundCard.twitter ?? 'anonymous'}</span>
-              {foundCard.bio && <span style={{ fontSize: '0.73em', marginTop: '0.5em' }}>"{foundCard.bio}"</span>}
+              <span style={{ fontSize: '1.5em', lineHeight: 1 }}>@{foundCard.twitter ?? 'anonymous'}</span>
+              {foundCard.bio && (
+                <span style={{ fontSize: '1em', marginTop: '0.5em', width: '26.1em' }}>"{foundCard.bio}"</span>
+              )}
             </div>
             {foundCard.hashtags && (
               <div

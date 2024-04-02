@@ -210,7 +210,15 @@ const CardForm = ({ card, onSubmit = noop }: CardFormProps) => {
 
           <FormLabel label="바이오" errorMessage={errors.bio?.message}>
             <TextArea
-              {...register('bio')}
+              {...register('bio', {
+                onChange: (e) => {
+                  if (e.target.value.length > 80) {
+                    setError('bio', { message: '바이오는 80자 이하여야 합니다.' });
+                  } else {
+                    clearErrors('bio');
+                  }
+                },
+              })}
               placeholder="바이오를 입력해주세요"
               rows={7}
               readOnly={isCreateMode && !isSuccess}

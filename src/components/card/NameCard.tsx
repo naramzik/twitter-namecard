@@ -43,8 +43,8 @@ const NameCard = ({
       >
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontSize: '1.5em', lineHeight: 1, fontWeight: 'bold' }}>{twitterNickname}</span>
-          <span style={{ fontSize: '1em', lineHeight: 1 }}>@{twitterId ?? 'anonymous'}</span>
-          {twitterBio && <span style={{ fontSize: '0.5em', marginTop: '0.5em' }}>"{twitterBio}"</span>}
+          <span style={{ fontSize: '1.1em', lineHeight: 1 }}>@{twitterId ?? 'anonymous'}</span>
+          {twitterBio && <span style={{ fontSize: '0.7em', marginTop: '0.5em' }}>"{twitterBio}"</span>}
         </div>
         {hashtags && (
           <div style={{ display: 'flex', gap: '0.5em', flexWrap: 'wrap', width: '200px' }}>
