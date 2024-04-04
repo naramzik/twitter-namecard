@@ -147,37 +147,38 @@
 <tr>
  <td align="center">언어</td>
  <td>
-  <img src=""/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=ffffff"/>
  </td>
 </tr>
 <tr>
  <td align="center">프레임워크</td>
  <td>
-  <img src=""/>
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=ffffff"/>
  </td>
 </tr>
 <tr>
- <td align="center">라이브러리</td>
+ <td align="center">데이터 관리 및 요청</td>
  <td>
-  <img src=""/>&nbsp
+  <img src="https://img.shields.io/badge/Axios-6028e0?style=for-the-badge&logo=Axios&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=React Query&logoColor=ffffff"/>&nbsp
  </td>
 </tr>
 <tr>
- <td align="center">CSS 프레임워크</td>
+ <td align="center">웹 크롤링</td>
  <td>
-  <img src=""/>&nbsp
+  <img src="https://img.shields.io/badge/-Cheerio-blue" /> &nbsp
  </td>
 </tr>
 <tr>
- <td align="center">패키지</td>
+ <td align="center">데이터베이스 관리</td>
  <td>
-    <img src=""/>
+     <img src="https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white"/>
   </td>
 </tr>
 <tr>
- <td align="center">포맷터 및 린터</td>
+ <td align="center">ORM</td>
  <td>
-  <img src=""/>&nbsp 
+     <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"/>
  </td>
 </tr>
 </table>
