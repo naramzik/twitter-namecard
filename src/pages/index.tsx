@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import CardItem from '@/components/card/CardItem';
 import HomeLayout from '@/components/layout/HomeLayout';
 import SEO from '@/components/SEO/SEO';
@@ -8,10 +8,25 @@ import type { CardType } from '@/types/cards';
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const { cards } = useGetCards(query);
+  const { cards, fetchNextPage } = useGetCards(query);
+
+  useEffect(() => {
+    function handleScroll() {
+      const { scrollTop, scrollHeight } = document.documentElement;
+      if (scrollTop + window.innerHeight >= scrollHeight) {
+        fetchNextPage();
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [fetchNextPage]);
 
   return (
-    <div>
+    <>
       <SEO description={`트친들의 명함을 둘러보세요🐥`} />
       <main className="flex flex-col gap-5 mx-1 mb-16">
         <label className="input flex items-center gap-2">
@@ -24,7 +39,7 @@ export default function Home() {
         </label>
         {cards?.map((card: CardType) => <CardItem card={card} key={card.id} />)}
       </main>
-    </div>
+    </>
   );
 }
 

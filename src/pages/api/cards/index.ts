@@ -38,8 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             updated_at: true,
             bio: true,
           },
-          skip: 4 * page,
-          take: 4,
+          skip: 10 * page,
+          take: 10,
           orderBy: {
             updated_at: 'desc',
           },
