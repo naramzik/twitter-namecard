@@ -45,8 +45,8 @@ const CardItem = ({ card }: { card: CardType }) => {
           </div>
           {isNew && <div className="badge badge-md bg-purple-400 border-none h-8">NEW</div>}
         </div>
-        <p className="w-full text-sm line-clamp-2 text-gray-700">{card.bio}</p>
-        <time className="justify-start text-xs text-gray-400 pt-3">
+        <p className="w-full text-sm line-clamp-2">{card.bio}</p>
+        <time className="justify-start text-xs text-gray-800 pt-3">
           업데이트: {applyDateFormatting(card.updated_at)}
         </time>
       </div>
