@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case 'GET': {
         const query = req.query.query as string | undefined;
+        const page = Number(req.query.page);
         const cards = await prisma.cards.findMany({
           ...(query
             ? {
@@ -37,6 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             updated_at: true,
             bio: true,
           },
+          skip: 10 * page,
+          take: 10,
           orderBy: {
             updated_at: 'desc',
           },
