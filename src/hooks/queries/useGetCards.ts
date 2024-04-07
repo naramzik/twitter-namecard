@@ -11,7 +11,7 @@ const getCards = async (pageParam: number, query: string) => {
 
 export const useGetCards = (query: string) => {
   const { data: cards, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['cards'],
+    queryKey: ['cards', query],
     queryFn: (pageParam) => getCards(pageParam.pageParam, query),
     initialPageParam: 0,
     getNextPageParam: (_lastPage, _allPages, lastPageParam) => lastPageParam + 1,
