@@ -52,47 +52,6 @@
             <br/>
             <a href="https://github.com/biyamn">https://github.com/biyamn</a>
         </td>
-    <!-- </tr>
-    <tr align="center">
-        <td style="width: 50%;">
-            한 번 시작한 일은 절대 포기하지 않아요😊
-            <br/>
-            <b>Springboot</b>, <b>Mybatis</b>, <b>Mysql</b>, <b>JPA</b> 경험이 있으며 현재 JPA를 공부 중 입니다!!
-            <br/>
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - sns 로그인
-            <br/>
-            - 사용자 초대에 관련 API
-        </td>
-        <td style="width: 50%;">
-            개발을 좋아하고 문제 해결이 재밌어요!
-            <br />
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - Refresh token
-            <br/>
-            - 로그아웃
-            <br/>
-            - 질문, 답변 관련 API
-            <br/>
-            - 배포
-        </td>
-        <td style="width: 50%;">
-            컴포넌트화, 모듈화, 클래스화를 좋아합니다.
-            <br/>
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - 온보딩 ui 구현
-            <br/>
-            - 카카오 소셜 로그인 
-            <br/>
-            - 레이아웃 구현
-        </td>
-    </tr> -->
 </table>
 
 <br/>
@@ -187,16 +146,6 @@
 </tr>
 </table>
 
-</br>
-
-# 🙋 프로젝트 소개
-
-### 기획 의도
-
-### 프로젝트 설명
-
-### 나중에 추가하고 싶은 기능
-
 <br/>
 
 # 프로젝트 주요 기능 소개
@@ -208,61 +157,58 @@
   </tr>
   <tr>
     <td align="center">
-      <b>메인 페이지에서 ‘카카오 로그인’ 버튼을 누르면 카카오 소셜 로그인 페이지로 </b>
+      <b>트위터 아이디를 검색하여 트위터 정보를 불러오고</b>
       <br/>
-      <b>이동하여 카카오 로그인을 할 수 있습니다.</b>
+      <b>트위터 프로필, 타 SNS 정보, 해시태그 등을 입력하여</b>
+      <br/>
+      <b>명함을 생성할 수 있습니다.</b>
     </td>
     <td align="center">
-      <img src='./docs/login.gif' width='80%'>
+      <img src='./public/docs/create.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
-    <td>나의 명함 확인</td>
+    <td>명함 공유 - QR코드, 링크 복사하기</td>
     <td>동작</td>
   </tr>
   <tr>
     <td align="center">
-     <b>상대방에게 묻고 싶은 질문을 선택하고, 카카오톡 친구에게 공유하여 초대할 수 있습니다.</b>
+     <b>QR코드로 공유하거나, 링크를 복사하여 공유할 수 있습니다.</b>
+     <br/>
+     <b>트윗으로 바로 공유할 수도 있습니다.</b>
+      <br/>
+     <b></b>
     </td>
-    <td align="center">   
-      <img src='./docs/send-invitation.gif' width='80%'>
-    </td>
+    <td align="center">
+      <img src='./public/docs/share.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
-    <td>명함 공유</td>
+    <td>명함 공유 - 트윗으로 공유하기</td>
     <td>동작</td>
   </tr>
   <tr>
     <td align="center">
-     <b>- 초대받은 사용자는 카카오톡으로 공유된 링크에 접속하여 질문에 대한 답변을 작성할 수 있습니다.</b>
+     <b>트윗으로 링크를 바로 공유할 수 있습니다.</b>
       <br/>
-      <br/>
-     <b>- 초대받은 사용자가 답변을 등록하려면 로그인을 해야 하며, 답변 작성 후 등록시 카카오 로그인 페이지로 리다이렉트됩니다.</b>
-      <br/>
-      <br/>
-     <b>- 로그인에 성공하면 로그인 전에 작성한 답변을 등록할 수 있으며, 커플이 맺어짐과 동시에 서로의 답변을 확인할 수 있습니다.</b>
+     <b>이때 공유할 명함을 썸네일로 미리 볼 수 있습니다.</b>
+     <br/>
     </td>
-    <td align="center">   
-      <img src='./docs/accept-invitation.gif' width='80%'>
-    </td>
+    <td align="center">
+      <img src='./public/docs/twitter-share.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
-    <td>트친들의 명함 구경</td>
+    <td>명함 모아보기</td>
     <td>동작</td>
   </tr>
   <tr align="center">
     <td>
-     <b>커플이 답변할 질문을 질문 선택 페이지에서 매일 한개씩 선택할 수 있습니다.</b>
+     <b>다른 사람들이 만든 명함들을 확인할 수 있습니다. </b>
       <br/>
-      <br/>
-     <b>질문을 선택하면 대화 상세 페이지로 이동하며, 선택한 질문이 하단에 추가된 것을</b>
-      <br/>
-      <b>확인할 수 있습니다.</b>
     </td>
     <td align="center">
-      <img src='./docs/question.gif' width='80%'>
+      <img src='./public/docs/mainpage.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
@@ -271,43 +217,11 @@
   </tr>
   <tr align="center">
     <td>
-     <b>대화 상세 페이지에서 선택한 질문을 클릭하여 답변을 작성할 수 있습니다.</b>
+     <b>명함을 검색할 수 있습니다.</b>
       <br/>
-      <br/>
-     <b>두 사람 모두 작성한 후 답변을 확인할 수 있으며, 둘 중 한 명만 답변했을 경우</b>
-      <br/>
-      <b>안내 메시지가 오버레이되며 답변을 확인할 수 없습니다.</b>
     </td>
     <td align="center">
-      <img src='./docs/answer.gif' width='80%'>
+      <img src='./public/docs/search.gif' width='80%'>
     </td>
   </tr>
 </table>
-
-# 🚀 프로젝트 실행 방법
-
-### 설치 및 실행
-
-1. 프로젝트를 로컬 환경으로 복제합니다.
-
-```shell
-git clone https://github.com/ramgee-zzik-nabi/application
-```
-
-2. 프로젝트 루트 디렉토리에서 아래 명령어를 입력하여 의존성 패키지를 설치합니다.
-
-```shell
-$ yarn
-```
-
-3. 프로젝트 루트 디렉토리에 `.env` 파일을 생성하여 아래와 같이 변수를 설정합니다.
-
-```
-
-```
-
-4. 프로젝트 루트 디렉토리에서 아래 명령어를 입력하여 프로젝트를 실행합니다.
-
-```shell
-$ yarn dev
-```
