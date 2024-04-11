@@ -8,6 +8,10 @@
 </b>나만의 트위터 명함을 만들고 QR코드, 이미지, URL 등으로 공유해보아요.<br />
 
 👉 배포 주소: https://twitter-namecard.vercel.app/
+<br/>
+📢 서비스 운영: https://twitter.com/naramzik
+<br/>
+🔮 피드백&문의: https://naramzik.channel.io
 
 <br/>
 
@@ -26,7 +30,7 @@
             <br/>
             <b style='font-size:12px'>풀스택</b>
             <br/>
-            <img src='public/docs/github_nabi.png' width='40%'>
+            <img src='docs/github_nabi.png' width='40%'>
             <br/>
             <a href="https://github.com/nabi-chan">https://github.com/nabi-chan</a>    
         </td>
@@ -35,7 +39,7 @@
             <br/>
             <b style='font-size:12px'>백엔드</b>
             <br/>
-            <img src='public/docs/github_cottonup.png' width='40%'>
+            <img src='docs/github_cottonup.png' width='40%'>
             <br/>
             <a href="https://github.com/cottonpup">https://github.com/cottonpup</a>
         </td>
@@ -44,51 +48,10 @@
             <br/>
             <b style='font-size:12px'>프론트</b>
             <br/>
-            <img src='public/docs/github_biyam.jpg' width='40%'>
+            <img src='docs/github_biyam.jpg' width='40%'>
             <br/>
             <a href="https://github.com/biyamn">https://github.com/biyamn</a>
         </td>
-    <!-- </tr>
-    <tr align="center">
-        <td style="width: 50%;">
-            한 번 시작한 일은 절대 포기하지 않아요😊
-            <br/>
-            <b>Springboot</b>, <b>Mybatis</b>, <b>Mysql</b>, <b>JPA</b> 경험이 있으며 현재 JPA를 공부 중 입니다!!
-            <br/>
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - sns 로그인
-            <br/>
-            - 사용자 초대에 관련 API
-        </td>
-        <td style="width: 50%;">
-            개발을 좋아하고 문제 해결이 재밌어요!
-            <br />
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - Refresh token
-            <br/>
-            - 로그아웃
-            <br/>
-            - 질문, 답변 관련 API
-            <br/>
-            - 배포
-        </td>
-        <td style="width: 50%;">
-            컴포넌트화, 모듈화, 클래스화를 좋아합니다.
-            <br/>
-            <br/>
-            <b>[담당기능]</b>
-            <br/>
-            - 온보딩 ui 구현
-            <br/>
-            - 카카오 소셜 로그인 
-            <br/>
-            - 레이아웃 구현
-        </td>
-    </tr> -->
 </table>
 
 <br/>
@@ -183,78 +146,82 @@
 </tr>
 </table>
 
-</br>
-
-# 🙋 프로젝트 소개
-
-### 기획 의도
-
-### 프로젝트 설명
-
-### 나중에 추가하고 싶은 기능
-
 <br/>
 
 # 프로젝트 주요 기능 소개
 
-### 명함 생성하기
-
--
-
-<!-- | ![닉입력](https://github.com/biyamn/Quiz-App/assets/101965666/a1b6ae39-a790-4d94-b6e2-dc39688faa6d) | ![로딩](https://github.com/biyamn/Quiz-App/assets/101965666/79ce1974-d209-4a15-bdef-bd0ce82b94cb) |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
-|                                             닉네임 입력                                             |                                           로딩 화면<br>                                           | -->
-
-### 나의 명함 확인하기
-
--
-
-<!-- | ![닉입력](https://github.com/biyamn/Quiz-App/assets/101965666/a1b6ae39-a790-4d94-b6e2-dc39688faa6d) | ![로딩](https://github.com/biyamn/Quiz-App/assets/101965666/79ce1974-d209-4a15-bdef-bd0ce82b94cb) |
-| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
-|                                             닉네임 입력                                             |                                           로딩 화면<br>                                           | -->
-
-### 명함 공유하기
-
--
-
-<!-- - | ![문항선택](https://github.com/biyamn/Quiz-App/assets/101965666/34f74fc2-54f4-433f-bf49-4e25b4e32c3f) | ![알림](https://github.com/biyamn/Quiz-App/assets/101965666/6f76986d-3349-43d7-9a64-17c1ef2bb657) |
-  | :---------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
-  |                                     문항 선택후 다음 문제로 이동                                      |                                      문항 미선택시 알림<br>                                       | -->
-
-### 트친들의 명함 둘러보기
-
--
-
-<!-- | ![결과페이지로이동](https://github.com/biyamn/Quiz-App/assets/101965666/ef5f7970-dd0f-4ca2-aaa6-5bb789cae096) | ![결과페이지](https://github.com/biyamn/Quiz-App/assets/101965666/093dea6a-1914-49c0-90dc-49b7d5b06d8e) |
-| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
-|                                              결과 페이지로 이동                                               |                                             결과 페이지<br>                                             | -->
-
-<br/>
-
-# 🚀 프로젝트 실행 방법
-
-### 설치 및 실행
-
-1. 프로젝트를 로컬 환경으로 복제합니다.
-
-```shell
-git clone https://github.com/ramgee-zzik-nabi/application
-```
-
-2. 프로젝트 루트 디렉토리에서 아래 명령어를 입력하여 의존성 패키지를 설치합니다.
-
-```shell
-$ yarn
-```
-
-3. 프로젝트 루트 디렉토리에 `.env` 파일을 생성하여 아래와 같이 변수를 설정합니다.
-
-```
-
-```
-
-4. 프로젝트 루트 디렉토리에서 아래 명령어를 입력하여 프로젝트를 실행합니다.
-
-```shell
-$ yarn dev
-```
+<table align="center">
+  <tr align="center">
+    <td>명함 생성</td>
+    <td>동작</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>트위터 아이디를 검색하여 트위터 정보를 불러오고</b>
+      <br/>
+      <b>트위터 프로필, 타 SNS 정보, 해시태그 등을 입력하여</b>
+      <br/>
+      <b>명함을 생성할 수 있습니다.</b>
+    </td>
+    <td align="center">
+      <img src='docs/create-card.gif' width='50%'>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>명함 공유 - QR코드, 링크 복사하기</td>
+    <td>동작</td>
+  </tr>
+  <tr>
+    <td align="center">
+     <b>QR코드로 공유하거나, 링크를 복사하여 공유할 수 있습니다.</b>
+     <br/>
+     <b>트윗으로 바로 공유할 수도 있습니다.</b>
+      <br/>
+     <b></b>
+    </td>
+    <td align="center">
+      <img src='docs/qrcode-share.gif' width='50%'>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>명함 공유 - 트윗으로 공유하기</td>
+    <td>동작</td>
+  </tr>
+  <tr>
+    <td align="center">
+     <b>트윗으로 링크를 바로 공유할 수 있습니다.</b>
+      <br/>
+     <b>이때 공유할 명함을 썸네일로 미리 볼 수 있습니다.</b>
+     <br/>
+    </td>
+    <td align="center">
+      <img src='docs/twitter-share.gif' width='50%'>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>명함 모아보기</td>
+    <td>동작</td>
+  </tr>
+  <tr align="center">
+    <td>
+     <b>다른 사람들이 만든 명함들을 확인할 수 있습니다. </b>
+      <br/>
+    </td>
+    <td align="center">
+      <img src='docs/mainpage.gif' width='50%'>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>명함 검색</td>
+    <td>동작</td>
+  </tr>
+  <tr align="center">
+    <td>
+     <b>명함을 검색할 수 있습니다.</b>
+      <br/>
+    </td>
+    <td align="center">
+      <img src='docs/search.gif' width='50%'>
+    </td>
+  </tr>
+</table>
