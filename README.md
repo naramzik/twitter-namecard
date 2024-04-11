@@ -30,7 +30,7 @@
             <br/>
             <b style='font-size:12px'>풀스택</b>
             <br/>
-            <img src='public/docs/github_nabi.png' width='40%'>
+            <img src='docs/github_nabi.png' width='40%'>
             <br/>
             <a href="https://github.com/nabi-chan">https://github.com/nabi-chan</a>    
         </td>
@@ -39,7 +39,7 @@
             <br/>
             <b style='font-size:12px'>백엔드</b>
             <br/>
-            <img src='public/docs/github_cottonup.png' width='40%'>
+            <img src='docs/github_cottonup.png' width='40%'>
             <br/>
             <a href="https://github.com/cottonpup">https://github.com/cottonpup</a>
         </td>
@@ -48,7 +48,7 @@
             <br/>
             <b style='font-size:12px'>프론트</b>
             <br/>
-            <img src='public/docs/github_biyam.jpg' width='40%'>
+            <img src='docs/github_biyam.jpg' width='40%'>
             <br/>
             <a href="https://github.com/biyamn">https://github.com/biyamn</a>
         </td>
