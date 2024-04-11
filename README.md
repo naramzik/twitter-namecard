@@ -164,7 +164,7 @@
       <b>명함을 생성할 수 있습니다.</b>
     </td>
     <td align="center">
-      <img src='./public/docs/create.gif' width='80%'>
+      <img src='docs/create-card.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
@@ -180,7 +180,7 @@
      <b></b>
     </td>
     <td align="center">
-      <img src='./public/docs/share.gif' width='80%'>
+      <img src='docs/qrcode-share.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
@@ -195,7 +195,7 @@
      <br/>
     </td>
     <td align="center">
-      <img src='./public/docs/twitter-share.gif' width='80%'>
+      <img src='docs/twitter-share.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
@@ -208,7 +208,7 @@
       <br/>
     </td>
     <td align="center">
-      <img src='./public/docs/mainpage.gif' width='80%'>
+      <img src='docs/mainpage.gif' width='80%'>
     </td>
   </tr>
   <tr align="center">
@@ -221,7 +221,7 @@
       <br/>
     </td>
     <td align="center">
-      <img src='./public/docs/search.gif' width='80%'>
+      <img src='docs/search.gif' width='80%'>
     </td>
   </tr>
 </table>
