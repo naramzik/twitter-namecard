@@ -13,7 +13,8 @@ export default function Home() {
   useEffect(() => {
     function handleScroll() {
       const { scrollTop, scrollHeight } = document.documentElement;
-      if (scrollTop + window.innerHeight >= scrollHeight) {
+      const gap = 500;
+      if (scrollTop + window.innerHeight >= scrollHeight - gap) {
         fetchNextPage();
       }
     }
