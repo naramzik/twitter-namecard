@@ -15,7 +15,6 @@ export default function Home() {
       const { scrollTop, scrollHeight } = document.documentElement;
       const gap = 500;
       if (scrollTop + window.innerHeight >= scrollHeight - gap) {
-        console.log('fetchNextPage');
         fetchNextPage();
       }
     }
